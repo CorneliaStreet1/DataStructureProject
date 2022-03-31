@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: junit:junit:4.13.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../CS 61B Spring 2021 Codes/sp21-s1121/library-sp21/javalib/junit/junit/4.13.2/junit-4.13.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../CS 61B Spring 2021 Codes/sp21-s1121/library-sp21/javalib/junit/junit/4.13.2/junit-4.13.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../CS 61B Spring 2021 Codes/sp21-s1121/library-sp21/javalib/junit/junit/4.13.2/junit-4.13.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
