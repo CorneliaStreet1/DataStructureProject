@@ -28,7 +28,7 @@ public class System_models extends System_model{
         model.run();
     }
 
-//    @Override
+
     public void run() throws Close {
         try{//没有子模块的模块重载一下就好了
             while(true){

@@ -7,7 +7,7 @@ public class System_log extends System_models{
         super(s);
     }
 
-    @Override
+
     public void run() throws Close {
         super.run();
     }

@@ -7,12 +7,12 @@ public class System_main extends System_models{
         //如上把各模块加到主模块上
     }
 
-//    @Override
+
     public void add_model(String i, System_model m) {
         super.add_model(i, m);
     }
 
-//    @Override
+
     public void run() throws Close {
         super.run();
     }
