@@ -1,7 +1,9 @@
 package HYH;
 
-public class CourseManager extends System_model{
+public class CourseManager extends System_models{
     public CourseManager(String s) {
         super(s);
     }
+
+
 }
