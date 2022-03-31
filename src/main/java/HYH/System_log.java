@@ -9,6 +9,9 @@ public class System_log extends System_models{
 
 
     public void run() throws Close {
-        super.run();
+        while(true){
+            super.introduce_model();
+            super.select_model();
+        }
     }
 }
