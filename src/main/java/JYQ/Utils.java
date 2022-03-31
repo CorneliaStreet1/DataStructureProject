@@ -215,7 +215,8 @@ class Utils {
             objectStream.close();
             return stream.toByteArray();
         } catch (IOException excp) {
-            throw error("Internal error serializing commit.");
+            throw new RuntimeException();
+            // error("Internal error serializing commit.");
         }
     }
 
@@ -225,9 +226,9 @@ class Utils {
 
     /** Return a GitletException whose message is composed from MSG and ARGS as
      *  for the String.format method. */
-    static GitletException error(String msg, Object... args) {
+   /* static GitletException error(String msg, Object... args) {
         return new GitletException(String.format(msg, args));
-    }
+    }*/
 
     /** Print a message composed from MSG and ARGS as for the String.format
      *  method, followed by a newline. */
