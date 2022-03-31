@@ -25,7 +25,8 @@ public class System_models extends System_model{
         Scanner scan = new Scanner(System.in);
         String words = scan.next();
         System_model model = models.get(words);
-        model.run();
+        if(model!=null) model.run();
+        else System.out.println("输入指令不对");
     }
 
 
