@@ -1,5 +1,6 @@
 package HYH;
 
+import HYH.Model.Close;
 import HYH.Model.System_models;
 
 public class CourseManager extends System_models{

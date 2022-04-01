@@ -1,5 +1,5 @@
 package HYH;
-
+import HYH.Model.*;
 public class System_log extends System_models{
 
 

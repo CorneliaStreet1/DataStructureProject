@@ -1,5 +1,5 @@
 package HYH;
-
+import HYH.Model.*;
 public class System_main extends System_models{
     public System_main(String s){
         super(s);
@@ -17,7 +17,7 @@ public class System_main extends System_models{
         super.run();
     }
 
-    public static void main(String arg[]){
+    public static void main(String[] arg){
         System_main centre=new System_main(" ");
         System_log log=new System_log(" ");//只写了个框架
         try{
