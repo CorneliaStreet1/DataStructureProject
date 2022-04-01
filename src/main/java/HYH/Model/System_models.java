@@ -1,4 +1,4 @@
-package HYH;
+package HYH.Model;
 
 import java.util.HashMap;
 import java.util.Scanner;
