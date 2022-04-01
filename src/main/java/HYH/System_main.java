@@ -1,9 +1,11 @@
 package HYH;
 import HYH.Model.*;
-public class System_main extends System_models{
+import HYH.CourseManager.*;
+import HYH.System_log.*;
+public class System_main extends Total_models{
     public System_main(String s){
         super(s);
-        add_model("1",new CourseManager("course"));
+        add_model("1",new CourseManager("课程查询管理"));
         //如上把各模块加到主模块上
     }
 
@@ -18,13 +20,12 @@ public class System_main extends System_models{
     }
 
     public static void main(String[] arg){
-        System_main centre=new System_main(" ");
-        System_log log=new System_log(" ");//只写了个框架
+        System_main total=new System_main("主页面");
+        System_log log=new System_log("登录");//只写了个框架
         try{
             while(true){
                 log.run();
-                centre.run();
-
+                total.run();
             }
         }catch (Close a){
 
