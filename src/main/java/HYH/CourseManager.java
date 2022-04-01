@@ -1,7 +1,6 @@
 package HYH;
 
-import HYH.Model.Close;
-import HYH.Model.System_models;
+import HYH.Model.*;
 
 public class CourseManager extends System_models{
     public CourseManager(String s) {
