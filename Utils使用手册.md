@@ -125,3 +125,61 @@ File f = new File("dummy.txt");
 
   
 
+# SHA-1 Hash
+
+- SHA-1 Hash：一个160位的二进制值，一般写作16进制的40位的值。
+- 在进行文件去重的时候我们可以通过计算两个文件的SHA-1 Hash来确定两个文件是否相同。
+
+```java
+/**
+*返回由一系列对象的构成的东西的哈希值
+*以40位字符串的形式返回
+*要求传递给函数的对象必须是字节数组或者是字符串
+*/
+static String sha1(Object... vals)
+```
+
+# 读写文件内容
+
+```java
+/**
+*读取文件的内容，将其作为字节数组返回
+*/
+static byte[] readContents(File file)
+/**
+*将文件的内容作为字符串返回
+*/
+static String readContentsAsString(File file)
+/**
+*将一个字符串或字节数组的内容写入文件中
+*/
+static void writeContents(File file, Object... contents)
+/**
+*将文件中的内容读取出来，强制转换为需要的类型并返回
+*/
+static <T extends Serializable> T readObject(File file,Class<T>)
+/**
+*将对象写入文件
+*/
+static void writeObject(File file, Serializable obj)
+```
+
+# 目录
+
+```java
+/**
+*读取处于给定目录下的非文件夹文件，并按字典序放入一个List<String>
+*/
+static List<String> plainFilenamesIn(File dir)
+static List<String> plainFilenamesIn(String dir)
+```
+
+```java
+/**
+*将给定的文件目录（字符串或者文件形式）First和others拼接起来，返回一个新的文件
+*比如给定first 为CWD，第二个参数为main，则返回的是代表目录CWD/m
+*/
+static File join(String first, String... others)
+static File join(File first, String... others)
+```
+
