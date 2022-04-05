@@ -177,7 +177,7 @@ static List<String> plainFilenamesIn(String dir)
 ```java
 /**
 *将给定的文件目录（字符串或者文件形式）First和others拼接起来，返回一个新的文件
-*比如给定first 为CWD，第二个参数为main，则返回的是代表目录CWD/m
+*比如给定first 为CWD，第二个参数为main，则返回的是代表目录CWD/main
 */
 static File join(String first, String... others)
 static File join(File first, String... others)

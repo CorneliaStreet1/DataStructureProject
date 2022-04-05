@@ -11,7 +11,7 @@ public class DuplicateCheckingDemo {
         File CWD = new File(System.getProperty("user.dir"));
         File file1 = Utils.join(CWD, "时间线.md");
         File file2 = Utils.join(CWD, "需求.md");
-        File result = Utils.join(CWD, "3.txt");
-        DuplicateUtils.getAnalysisResult(file1.toString(), file2.toString(), result.toString());
+        double r = DuplicateUtils.getAnalysisResult(file1.toString(), file2.toString());
+        System.out.println(r);
     }
 }
