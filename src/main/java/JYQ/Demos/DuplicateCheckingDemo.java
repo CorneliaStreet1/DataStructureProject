@@ -3,12 +3,15 @@ package JYQ.Demos;
 import JYQ.Utils;
 
 import java.io.File;
-public class DuplicateCheckingDemo {
-    public static void main(String[] args) {
-        File CWD = new File(System.getProperty("user.dir"));
-        File file1 = Utils.join(CWD, "Test1.txt");
-        File file2 = Utils.join(CWD, "Test2.txt");
-        File result = Utils.join(CWD, "Result.txt");
+import java.io.IOException;
 
+import JYQ.DuplicateRate.*;
+public class DuplicateCheckingDemo {
+    public static void main(String[] args) throws IOException {
+        File CWD = new File(System.getProperty("user.dir"));
+        File file1 = Utils.join(CWD, "时间线.md");
+        File file2 = Utils.join(CWD, "需求.md");
+        File result = Utils.join(CWD, "3.txt");
+        DuplicateUtils.getAnalysisResult(file1.toString(), file2.toString(), result.toString());
     }
 }
