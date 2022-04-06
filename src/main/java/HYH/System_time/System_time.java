@@ -52,6 +52,8 @@ public class System_time extends System_models{
         }catch (Exception e){
             System.out.println("Time_init文件内容格式不对");
         }
+        Thread time_thread=new Thread(timeRun,"时间线程");
+        time_thread.start();
     }
     private void create_file(){
         if(!time_init.exists()){
