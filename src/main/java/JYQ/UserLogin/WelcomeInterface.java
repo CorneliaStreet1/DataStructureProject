@@ -11,9 +11,9 @@ public class WelcomeInterface implements Boolean_model {
         System.out.println("=====================欢迎来到北京邮电大学校园导航及课程管理系统!===============");
         System.out.println("输入1选择已有用户登录，输入2选择新用户注册:");
         boolean LoginSuccess = false;
-        int option = scanner.nextInt();
+        String option = scanner.next();
         try {
-            if (option == 1) {
+            if (option.equals("1")) {
                 System.out.println("请注意，由于Windows的文件系统是大小写不敏感的，所以用户名也是大小写不敏感的。");
                 System.out.println("请在下一行输入您的用户名:");
                 String name = scanner.next();
@@ -35,7 +35,7 @@ public class WelcomeInterface implements Boolean_model {
                     return false;
                 }
             }
-            else if (option == 2) {
+            else if (option.equals("2")) {
                 System.out.println("请注意，由于Windows的文件系统是大小写不敏感的，所以用户名也是大小写不敏感的。");
                 System.out.println("您要以学生身份注册还是老师身份注册?输入y表示以学生身份，输入n表示以老师身份。");
                 String Y = scanner.next();
