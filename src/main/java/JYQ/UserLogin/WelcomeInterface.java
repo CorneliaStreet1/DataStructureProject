@@ -43,8 +43,12 @@ public class WelcomeInterface implements Boolean_model {
                 if (Y.compareToIgnoreCase("y") == 0) {
                     isStudent = true;
                 }
-                else {
+                else if (Y.compareToIgnoreCase("n") == 0){
                     isStudent = false;
+                }
+                else {
+                    System.out.println("请输入y或n,大小写不敏感。");
+                    return false;
                 }
                 System.out.println("请在下一行输入一个令您满意的用户名:");
                 String name = scanner.next();
@@ -53,11 +57,12 @@ public class WelcomeInterface implements Boolean_model {
                 UserInformation userInformation = new UserInformation(name, Password, isStudent);
                 if (UserManager.hasUser(userInformation)) {
                     System.out.println("用户已存在，创建用户失败，请直接登录");
-                    System.out.println("请在下一行输入您的用户名:");
-                    String Name = scanner.next();
-                    System.out.println("请在下一行输入您的密码:");
-                    String password = scanner.next();
-                    UserManager.UserLogin(new UserInformation(Name,  password, false));
+                    //System.out.println("请在下一行输入您的用户名:");
+                    //String Name = scanner.next();
+                    //System.out.println("请在下一行输入您的密码:");
+                    //String password = scanner.next();
+                    //UserManager.UserLogin(new UserInformation(Name,  password, false));
+                    return WelcomeInterface.PrintWelcomeMessage();
                 }
                 else {
                     UserManager.CreateUser(userInformation);
