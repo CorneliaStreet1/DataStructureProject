@@ -61,8 +61,8 @@ public class WelcomeInterface implements Boolean_model {
                 }
                 else {
                     UserManager.CreateUser(userInformation);
-                    System.out.println("创建用户成功，请重启程序以登录。");
-                    System.exit(0);
+                    System.out.println("创建用户成功。");
+                    return false;
                 }
             }
             else {
