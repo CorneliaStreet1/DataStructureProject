@@ -3,11 +3,11 @@ package JYQ.Demos;
 import java.io.Serializable;
 
 public class Demo implements Serializable {
-    public String meassage;
+    public String message;
     public Demo(String st) {
-        meassage = st;
+        message = st;
     }
     public void PrintMessage() {
-        System.out.println(meassage);
+        System.out.println(message);
     }
 }
