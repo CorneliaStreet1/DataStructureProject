@@ -13,6 +13,7 @@ public class System_main extends Total_models{
     public static void main(String[] arg){
         System_main total=new System_main("主页面");
         System_log log=new System_log("登录");//只写了个框架
+        System_model.recordClean();
         try{
             while(true){
                 log.run();

@@ -18,6 +18,7 @@ public class System_log extends System_models{
         }
     }
     public void run() throws Close {
+        dailyRecord();
         run_key=true;
         while(run_key){
             super.introduce_model();

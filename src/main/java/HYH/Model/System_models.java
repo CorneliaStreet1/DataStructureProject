@@ -46,6 +46,7 @@ public class System_models extends System_model{//选择模块
     public void run() throws Close {
         try{
             while(true){
+                dailyRecord();
                 introduce_model();
                 select_model(scan());
             }
