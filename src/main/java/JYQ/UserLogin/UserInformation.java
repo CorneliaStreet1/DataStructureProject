@@ -6,9 +6,11 @@ public class UserInformation implements Serializable {
     //用户名是不能更改的，因为需要使用用户名来和用户数据绑定，更改用户名
     private final String UserName;
     private String PassWord;
-    public UserInformation(String userName, String PassWord) {
+    private boolean isStudent;
+    public UserInformation(String userName, String PassWord, boolean isStudent) {
         this.UserName = userName;
         this.PassWord = PassWord;
+        this.isStudent = isStudent;
     }
     public String getUserName() {
         return this.UserName;
@@ -31,5 +33,8 @@ public class UserInformation implements Serializable {
         else {
             System.out.println("旧密码错误，请重试");
         }
+    }
+    public boolean isStudent() {
+        return this.isStudent;
     }
 }

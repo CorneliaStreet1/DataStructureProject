@@ -12,6 +12,7 @@ public class WelcomeInterface {
         try {
             if (option == 1) {
                 System.out.println("请注意，由于Windows的文件系统是大小写不敏感的，所以用户名也是大小写不敏感的。");
+                System.out.println("您要以学生身份注册还是老师身份注册?输入y表示以学生身份，输入n表示以老师身份。");
                 System.out.println("请在下一行输入您的用户名:");
                 String name = scanner.next();
                 System.out.println("请在下一行输入您的密码:");
