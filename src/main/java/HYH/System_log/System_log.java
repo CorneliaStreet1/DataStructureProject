@@ -6,7 +6,8 @@ public class System_log extends System_models{
     public System_log(String s) {
         super(s);
         run_key=true;
-        super.add_model("e",new enter("登录"));
+        add_model("e",new enter("跳过登录"));
+        add_model("1",new user_log("登录"));
     }
 
     public class enter extends System_model{
@@ -15,6 +16,19 @@ public class System_log extends System_models{
         }
         public void run() throws Close {
             run_key=false;
+        }
+    }
+    public class user_log extends System_model{
+        private Boolean_model log;
+
+        public user_log(String s) {
+            super(s);
+        }
+        @Override
+        public void run() throws Close {
+            super.run();
+            boolean log_status=log.run();
+            if(log_status) run_key=false;
         }
     }
     public void run() throws Close {
