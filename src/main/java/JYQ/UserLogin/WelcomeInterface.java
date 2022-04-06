@@ -71,7 +71,7 @@ public class WelcomeInterface implements Boolean_model {
         }
         catch (IOException e) {
             System.out.println("您输入的选项有误，请重新输入。已重启程序。");
-            WelcomeInterface.PrintWelcomeMessage();
+//            WelcomeInterface.PrintWelcomeMessage();
         }
         return false;
     }
