@@ -13,8 +13,6 @@ public class System_main extends Total_models{
     public static void main(String[] arg){
         System_main total=new System_main("主页面");
         System_log log=new System_log("登录");//只写了个框架
-        Thread time_thread=new Thread(Total_models.system_time.timeRun,"时间线程");
-        time_thread.start();
         try{
             while(true){
                 log.run();
