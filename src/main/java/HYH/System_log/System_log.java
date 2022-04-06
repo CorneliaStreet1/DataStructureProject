@@ -1,5 +1,6 @@
 package HYH.System_log;
 import HYH.Model.*;
+import JYQ.UserLogin.*;
 public class System_log extends System_models{
     private boolean run_key;
 
@@ -19,7 +20,7 @@ public class System_log extends System_models{
         }
     }
     public class user_log extends System_model{
-        private Boolean_model log;
+        private WelcomeInterface log=new WelcomeInterface();
 
         public user_log(String s) {
             super(s);
