@@ -1,9 +1,9 @@
 package HYH.CourseManager.HomeworkSearch.SearchByPublishTime;
 
 import HYH.Model.*;
-public class SearchByPublishTime extends System_model{
+public class SearchByTimeBlock extends System_model{
 
-    public SearchByPublishTime(String s) {
+    public SearchByTimeBlock(String s) {
         super(s);
     }
 

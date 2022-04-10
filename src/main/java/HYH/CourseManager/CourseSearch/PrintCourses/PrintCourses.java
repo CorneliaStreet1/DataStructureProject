@@ -2,6 +2,7 @@ package HYH.CourseManager.CourseSearch.PrintCourses;
 
 import HYH.Model.*;
 public class PrintCourses extends System_model{
+    Boolean_model boolean_model=new test_run();
 
     public PrintCourses(String s) {
         super(s);
@@ -9,5 +10,6 @@ public class PrintCourses extends System_model{
 
     public void run() throws Close {
         super.run();
+        boolean_model.run();
     }
 }

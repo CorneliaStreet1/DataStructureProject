@@ -20,7 +20,7 @@ public class System_log extends System_models{
         }
     }
     public class user_log extends System_model{
-        private WelcomeInterface log=new WelcomeInterface();
+        private Boolean_model log=new WelcomeInterface();
 
         public user_log(String s) {
             super(s);
