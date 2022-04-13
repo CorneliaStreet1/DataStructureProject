@@ -28,7 +28,7 @@
 
 在IntelliJ中，CWD可以在运行 ===》编辑配置==》工作目录找到
 
-<img src="C:/Users/jiangyiqing/AppData/Roaming/Typora/typora-user-images/image-20220404134317320.png" alt="image-20220404134317320" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/CorneliaStreet1/PictureBed/master/202204101121752.png" alt="image-20220404134317320" style="zoom:50%;" />
 
 ## Java中的文件和目录操纵
 
