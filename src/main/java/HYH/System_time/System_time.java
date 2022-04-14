@@ -22,7 +22,7 @@ public class System_time extends System_models{
     private SimpleDateFormat simpleDateFormat_2;
     private boolean stop_status;
     private Object stop;
-    private int realSecond_to_thisSecond;
+    private float realSecond_to_thisSecond;
 
     //初始化
     public System_time(String s)  {
@@ -114,11 +114,16 @@ public class System_time extends System_models{
             run_key=true;
         }
         public void run() {//时间线程运行
+            int add=0;
+            float second=0;
             while(run_key){
                 try {
 //                    System.out.println(simpleDateFormat_1.format(calendar.getTime()));
                     Thread.sleep(1000);
-                    calendar.add(Calendar.SECOND,realSecond_to_thisSecond);
+                    second+=realSecond_to_thisSecond;
+                    add=(int)second;
+                    second-=add;
+                    calendar.add(Calendar.SECOND,add);
                     if(stop_status){
                         synchronized (stop){
                             stop.wait();
@@ -163,7 +168,7 @@ public class System_time extends System_models{
             boolean stop_key=stop_status;
             if(!stop_key) stopStartTime.run();
             Scanner scan=new Scanner(System.in);
-            realSecond_to_thisSecond=scan.nextInt()*3600;
+            realSecond_to_thisSecond=scan.nextFloat()*3600;
             if(!stop_key) stopStartTime.run();
         }
     }
