@@ -1,8 +1,9 @@
 package JHY;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RegularTable {
+public class RegularTable implements Serializable {
 
     private Course[][] table;
 
@@ -27,7 +28,7 @@ public class RegularTable {
     }
 
     //删除课
-    boolean deleteLesson(int day,int seq){
+    public boolean deleteLesson(int day,int seq){
         //
         if(table[day-1][seq-1]==null)
             return false;
@@ -53,7 +54,7 @@ public class RegularTable {
     }
 
     //调用合并表并打印
-    static void printTable(RegularTable table1,RegularTable table2){
+    public static void printTable(RegularTable table1,RegularTable table2){
         Course[][] table=combineTable(table1.getTable(),table2.getTable());
 
         ///暂定的打印格式

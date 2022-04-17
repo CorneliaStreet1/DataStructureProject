@@ -68,10 +68,7 @@ public class Utils {
      *  if FILE was deleted, and false otherwise.  Refuses to delete FILE
      *  and throws IllegalArgumentException unless the directory designated by
      *  FILE also contains a directory named .gitlet. */
-    static boolean restrictedDelete(File file) {
-        if (!(new File(file.getParentFile(), ".gitlet")).isDirectory()) {
-            throw new IllegalArgumentException("not .gitlet working directory");
-        }
+    public static boolean restrictedDelete(File file) {
         if (!file.isDirectory()) {
             return file.delete();
         } else {
@@ -83,7 +80,7 @@ public class Utils {
      *  Returns true if FILE was deleted, and false otherwise.  Refuses
      *  to delete FILE and throws IllegalArgumentException unless the
      *  directory designated by FILE also contains a directory named .gitlet. */
-    static boolean restrictedDelete(String file) {
+    public static boolean restrictedDelete(String file) {
         return restrictedDelete(new File(file));
     }
 
