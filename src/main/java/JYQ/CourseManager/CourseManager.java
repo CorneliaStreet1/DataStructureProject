@@ -223,13 +223,17 @@ public class CourseManager implements Boolean_model {
         System.out.println("请依次输入两个阿拉伯数字，代表周几和第几节课(输入exit结束)");
         while (scanner.hasNext()) {
             String day = scanner.next();
+            if (day.equals("exit")) {
+                break;
+            }
             String seq = scanner.next();
-            if (day.equals("exit") || seq.equals("exit")) {
+            if (seq.equals("exit")) {
                 break;
             }
             regularTable.deleteLesson(Integer.parseInt(day), Integer.parseInt(seq));
         }
         Utils.writeObject(ClassRegularTable, regularTable);
+        System.out.println("删除课程成功");
     }
     @Override
     public boolean run() {
@@ -246,7 +250,7 @@ public class CourseManager implements Boolean_model {
                 new TimePair(1,0,14, 35)),//6-7
         new Course("计算机网络", "N516",
                 new TimePair(8,0,9,35),//1-2
-                new TimePair(1,0,14,35)),//6-7
+                new TimePair(13,0,14,35)),//6-7
         new Course("毛泽东思想和中国特色社会主义理论体系概论","E431",
                 new TimePair(9,50,11,25),//3-4
                 new TimePair(14,45,16,25)),//8-9
@@ -277,5 +281,6 @@ public class CourseManager implements Boolean_model {
         }*/
        // deleteCourse(courses[1]);
         CourseManager.Interface();
+        return;
     }
 }
