@@ -6,7 +6,6 @@ import JYQ.Directories;
 import JYQ.UserLogin.Student;
 import JYQ.UserLogin.UserInformation;
 import JYQ.Utils;
-
 import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -95,7 +94,7 @@ public class CourseManager implements Boolean_model {
                     File UserDir = Utils.join(ClassDir, student.getUserName());
                     File tableFile = Utils.join(UserDir, "StudentRegularTable");
                     RegularTable regularTable = Utils.readObject(tableFile, RegularTable.class);
-                    RegularTable.printTable(RegularTable, regularTable);
+                    JHY.RegularTable.printTable(RegularTable, regularTable);
                     System.out.println("课程的时间段信息可以从课表中查到。您要查哪一门课的具体信息?");
                     System.out.println("请输入课程的完整名称：");
                     String cn = scanner.next();
@@ -167,22 +166,42 @@ public class CourseManager implements Boolean_model {
         System.out.println("请输入您想为" + ClassNum +"班添加的课程(输入exit结束): ");
         System.out.println("请按照课程名称 周几(一个阿拉伯数字即可) 第几节(一个阿拉伯数字即可)的格式来输入。");
         while (scanner.hasNext()) {
-            String name;
+            String name,Day,Seq;
             int day;
             int seq;
             try {
                 name = scanner.next();
-                day = scanner.nextInt();
-                seq = scanner.nextInt();
+                if (name.equals("exit")) {
+                    break;
+                }
+                Day = scanner.next();
+                if (Day.equals("exit")) {
+                    break;
+                }
+                Seq = scanner.next();
+                if (Seq.equals("exit")) {
+                    break;
+                }
+                day = Integer.parseInt(Day);
+                seq = Integer.parseInt(Seq);
+
             }
             catch (InputMismatchException e) {
                 System.out.println("您输入的格式有误，请重新输入:");
                 name = scanner.next();
-                day = scanner.nextInt();
-                seq = scanner.nextInt();
-            }
-            if (name.equals("exit")) {
-                break;
+                if (name.equals("exit")) {
+                    break;
+                }
+                Day = scanner.next();
+                if (Day.equals("exit")) {
+                    break;
+                }
+                Seq = scanner.next();
+                if (Seq.equals("exit")) {
+                    break;
+                }
+                day = Integer.parseInt(Day);
+                seq = Integer.parseInt(Seq);
             }
             File courseFile = Utils.join(Directories.CourseRepo, name);
             if (!courseFile.exists()) {
@@ -194,6 +213,7 @@ public class CourseManager implements Boolean_model {
             }
         }
         Utils.writeObject(ClassRegularTable,regularTable);
+        System.out.println("添加课程成功");
     }
     public static void deleteClassForClass(int ClassNum) {
         Scanner scanner = new Scanner(System.in);
@@ -221,16 +241,41 @@ public class CourseManager implements Boolean_model {
         return;
     }
     public static void main(String[] args) {
-        Course[] courses= {new Course("计算机组成原理","S208"),
-        new Course("计算机网络", "N516"),
-        new Course("毛泽东思想和中国特色社会主义理论体系概论","E431"),
-        new Course("体育基础（男篮周四）","运动场"),
-        new Course("形式语言与自动机", "S510"),
-        new Course("面向对象程序设计","N201"),
+       Course[] courses= {new Course("计算机组成原理","S208",
+                new TimePair(9, 50, 12, 15),//3-5
+                new TimePair(1,0,14, 35)),//6-7
+        new Course("计算机网络", "N516",
+                new TimePair(8,0,9,35),//1-2
+                new TimePair(1,0,14,35)),//6-7
+        new Course("毛泽东思想和中国特色社会主义理论体系概论","E431",
+                new TimePair(9,50,11,25),//3-4
+                new TimePair(14,45,16,25)),//8-9
+        new Course("体育基础（男篮）","运动场",
+                new TimePair(10,40,11,25),//4-5
+                new TimePair(13,0,14,25)),//6-7
+        new Course("形式语言与自动机", "S510",
+                new TimePair(9,50,11,25),//3-4
+                new TimePair(14,45,16,25)),//8-9
+        new Course("面向对象程序设计Java","N201",
+                new TimePair(9,50,12,15),//3-5
+                new TimePair(13,0,15,30)),//6-8
+        new Course("数据结构课程设计","N207",
+                new TimePair(8,0,9,35),//1-2
+                new TimePair(13,0,14,35)),//6-7
+        new Course("面向对象程序设计C++","S301",
+                new TimePair(8,0,9,35),//1-2
+                new TimePair(13,0,14,35)),//6-7
+        new Course("离散数学","S201",
+                new TimePair(8,0,10,35),//1-3
+                new TimePair(13,0,15,30)),//6-8
+        new Course("数学建模","N201",
+                new TimePair(9,50,12,15),//3-5
+                new TimePair(13,0,15,30)),//6-8
         };
-        for (int i = 0 ; i< courses.length ; i ++) {
+        /*for (int i = 0 ; i< courses.length ; i ++) {
             CourseManager.addNewCourse(courses[i]);
-        }
+        }*/
        // deleteCourse(courses[1]);
+        CourseManager.Interface();
     }
 }

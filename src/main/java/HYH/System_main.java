@@ -6,7 +6,7 @@ import HYH.System_time.*;
 import JYQ.UserLogin.UserInformation;
 
 public class System_main extends Total_models{
-    public static String CurrentUserName = null;
+    public static String CurrentUserName = "jyq";
     public System_main(String s){
         super(s);
         add_model("1",new CourseManager("课程查询管理"));

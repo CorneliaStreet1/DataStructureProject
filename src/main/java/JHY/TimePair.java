@@ -1,5 +1,8 @@
 package JHY;
-public class TimePair {
+
+import java.io.Serializable;
+
+public class TimePair implements Serializable {
     private int startTimeHour;
     private int startTimeMin;
     private int endTimeHour;

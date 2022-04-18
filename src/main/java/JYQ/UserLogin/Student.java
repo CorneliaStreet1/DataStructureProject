@@ -6,8 +6,9 @@ import JYQ.Directories;
 import JYQ.Utils;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class Student extends UserInformation{
+public class Student extends UserInformation implements Serializable {
     private int ClassNumber;
     public Student(String UserName, String PassWord, Boolean isStudent,int ClassNumber) {
         super(UserName, PassWord, isStudent);
