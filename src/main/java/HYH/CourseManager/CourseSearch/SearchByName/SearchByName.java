@@ -3,7 +3,7 @@ package HYH.CourseManager.CourseSearch.SearchByName;
 import HYH.Model.*;
 public class SearchByName extends System_model{
 //    Search_model search_model;
-    Boolean_model boolean_model=new test_run();
+    Boolean_model boolean_model=new search();
     public SearchByName(String s) {
         super(s);
     }
