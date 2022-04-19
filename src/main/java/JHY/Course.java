@@ -67,4 +67,44 @@ public class Course extends Information implements Serializable {
     public void setGroupInformation(String groupInformation) {
         GroupInformation = groupInformation;
     }
+
+    public String getWeekMorning(RegularTable table){
+        String week;
+        for(int i=0;i<7;i++){
+            for(int j=0;j<4;j++){
+                if(table.getTable()[i][j].name==this.name)
+                    switch(i){
+                        case 0 :return "星期一";
+                        case 1 :return "星期二";
+                        case 2 :return "星期三";
+                        case 3 :return "星期四";
+                        case 4 :return "星期五";
+                        case 5 :return "星期六";
+                        case 6 :return "星期天";
+                        default:return null;
+                    }
+            }
+        }
+        return null;
+    }
+
+    public String getWeekAfternoon(RegularTable table){
+        String week;
+        for(int i=0;i<7;i++){
+            for(int j=5;j<9;j++){
+                if(table.getTable()[i][j].name==this.name)
+                    switch(i){
+                        case 0 :return "星期一";
+                        case 1 :return "星期二";
+                        case 2 :return "星期三";
+                        case 3 :return "星期四";
+                        case 4 :return "星期五";
+                        case 5 :return "星期六";
+                        case 6 :return "星期天";
+                        default:return null;
+                    }
+            }
+        }
+        return null;
+    }
 }
