@@ -1,7 +1,11 @@
 package JHY;
 
 import HYH.Information.Information;
+import JYQ.Directories;
+import JYQ.UserLogin.Student;
+import JYQ.Utils;
 
+import java.io.File;
 import java.io.Serializable;
 
 //课程名称 上课地点 开始时间 结束时间 课程群做一些getter方
@@ -12,6 +16,7 @@ import java.io.Serializable;
         - 课程群
         - 考试时间和考试地点等信息*/
 public class Course extends Information implements Serializable {
+    private static final long serialVersionUID=222L;
 
     String name;
     String address;
@@ -68,7 +73,11 @@ public class Course extends Information implements Serializable {
         GroupInformation = groupInformation;
     }
 
-    public String getWeekMorning(RegularTable table){
+    public String getWeekMorning(){
+
+        File CurrentTable= new File(Directories.UserFiles,"Class8\\RegularTable");
+        RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
+
         String week;
         for(int i=0;i<7;i++){
             for(int j=0;j<4;j++){
@@ -88,7 +97,10 @@ public class Course extends Information implements Serializable {
         return null;
     }
 
-    public String getWeekAfternoon(RegularTable table){
+    public String getWeekAfternoon(){
+        File CurrentTable= new File(Directories.UserFiles,"Class8\\RegularTable");
+        RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
+
         String week;
         for(int i=0;i<7;i++){
             for(int j=5;j<9;j++){
