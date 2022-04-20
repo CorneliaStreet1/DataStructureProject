@@ -23,6 +23,7 @@ public class System_time extends System_models{
     private boolean stop_status;
     private Object stop;
     private float realSecond_to_thisSecond;
+    private Calendar[] alarm_clock;
 
     //初始化
     public System_time(String s)  {
@@ -203,4 +204,6 @@ public class System_time extends System_models{
             }
         }
     }
+
+
 }
