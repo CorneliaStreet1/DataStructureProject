@@ -1,12 +1,17 @@
 package JHY;
 
 import HYH.Information.Information;
+import HYH.System_main;
+import JYQ.CourseManager.Exam;
 import JYQ.Directories;
 import JYQ.UserLogin.Student;
 import JYQ.Utils;
 
 import java.io.File;
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Objects;
 
 //课程名称 上课地点 开始时间 结束时间 课程群做一些getter方
 /*- 上课时间、上课地点
@@ -16,13 +21,12 @@ import java.io.Serializable;
         - 课程群
         - 考试时间和考试地点等信息*/
 public class Course extends Information implements Serializable {
-    private static final long serialVersionUID=222L;
-
     String name;
     String address;
     String GroupInformation;
     TimePair Morning;
     TimePair Afternoon;
+    ArrayList<Exam> exams;
     //课程进度?
     //资料作业?
 //    String examTime;
@@ -41,6 +45,7 @@ public class Course extends Information implements Serializable {
         this.address = address;
         this.Morning = morning;
         this.Afternoon = afternoon;
+        this.exams = new ArrayList<>();
     }
     public String getName() {
         return name;
@@ -73,15 +78,20 @@ public class Course extends Information implements Serializable {
         GroupInformation = groupInformation;
     }
 
-    public String getWeekMorning(){
+    public ArrayList<Exam> getExams() {
+        return exams;
+    }
 
-        File CurrentTable= new File(Directories.UserFiles,"Class8\\RegularTable");
+    public String getWeekMorning(){
+        File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        Student student = Utils.readObject(CurrentUser, Student.class);
+        File CurrentTable= Utils.join(Directories.UserFiles,student.getClassNumber() + "RegularTable");
         RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
 
         String week;
         for(int i=0;i<7;i++){
             for(int j=0;j<4;j++){
-                if(table.getTable()[i][j].name==this.name)
+                if(Objects.equals(table.getTable()[i][j].name, this.name))
                     switch(i){
                         case 0 :return "星期一";
                         case 1 :return "星期二";
@@ -104,7 +114,7 @@ public class Course extends Information implements Serializable {
         String week;
         for(int i=0;i<7;i++){
             for(int j=5;j<9;j++){
-                if(table.getTable()[i][j].name==this.name)
+                if(Objects.equals(table.getTable()[i][j].name, this.name))
                     switch(i){
                         case 0 :return "星期一";
                         case 1 :return "星期二";
