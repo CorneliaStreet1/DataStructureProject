@@ -244,6 +244,7 @@ public class CourseManager implements Boolean_model {
     public void dailyRecord() {
         return;
     }
+    public void
     public static void main(String[] args) {
        Course[] courses= {new Course("计算机组成原理","S208",
                 new TimePair(9, 50, 12, 15),//3-5
@@ -276,9 +277,9 @@ public class CourseManager implements Boolean_model {
                 new TimePair(9,50,12,15),//3-5
                 new TimePair(13,0,15,30)),//6-8
         };
-        /*for (int i = 0 ; i< courses.length ; i ++) {
+        for (int i = 0 ; i< courses.length ; i ++) {
             CourseManager.addNewCourse(courses[i]);
-        }*/
+        }
        // deleteCourse(courses[1]);
         CourseManager.Interface();
         return;
