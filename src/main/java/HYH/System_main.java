@@ -3,10 +3,15 @@ import HYH.Model.*;
 import HYH.CourseManager.*;
 import HYH.System_log.*;
 import HYH.System_time.*;
-import JYQ.UserLogin.UserInformation;
+import JYQ.UserLogin.*;
+import JYQ.Utils;
+
+import java.io.File;
 
 public class System_main extends Total_models{
     public static String CurrentUserName = "manager";
+    public static int CurrentUserClass=-1;
+
     public System_main(String s){
         super(s);
         add_model("1",new CourseManager("课程查询管理"));
@@ -20,6 +25,17 @@ public class System_main extends Total_models{
         try{
             while(true){
                 log.run();
+
+                if(!CurrentUserName.equals("manager")){
+                    String userPath="./UserFiles/UserRepo/"+CurrentUserName;
+                    File user=new File(userPath);
+                    Student student_user=Utils.readObject(user,Student.class);
+                    CurrentUserClass=student_user.getClassNumber();
+                    System.out.println("班级："+CurrentUserClass);
+                }
+                else CurrentUserClass=-1;
+
+
                 if(Total_models.system_time.isStop())
                     Total_models.system_time.stopStartTime.run();
                 total.run();
