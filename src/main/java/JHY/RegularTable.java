@@ -58,12 +58,38 @@ public class RegularTable implements Serializable {
         Course[][] table=combineTable(table1.getTable(),table2.getTable());
 
         ///暂定的打印格式
+        System.out.print("         第一节        第二节        第三节    ");
+        System.out.print("    第四节        第五节        第六节    ");
+        System.out.println("    第七节        第八节        第九节    ");
         for(int i=0;i<7;i++){
+            switch (i){
+                case 0:
+                    System.out.print("周一:");
+                    break;
+                case 1:
+                    System.out.print("周二:");
+                    break;
+                case 2:
+                    System.out.print("周三:");
+                    break;
+                case 3:
+                    System.out.print("周四:");
+                    break;
+                case 4:
+                    System.out.print("周五:");
+                    break;
+                case 5:
+                    System.out.print("周六:");
+                    break;
+                case 6:
+                    System.out.print("周日:");
+                    break;
+            }
             for(int j=0;j<9;j++){
                 if(table[i][j]!=null)
-                System.out.print(table[i][j].getName()+" ");
+                    System.out.print("  "+table[i][j].getName()+"  ");
                 else
-                    System.out.print(" x  ");
+                    System.out.print("      暂无      ");
             }
             System.out.println();
         }

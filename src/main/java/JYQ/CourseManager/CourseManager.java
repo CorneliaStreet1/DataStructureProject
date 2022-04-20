@@ -148,11 +148,11 @@ public class CourseManager implements Boolean_model {
         System.out.println("查询到的课程信息如下:");
         System.out.println("课程名称: " + course.getName());
         System.out.println("上课地点: "+course.getAddress());
-        System.out.println("上午的上课时间："
+        System.out.println("上午的上课时间："+course.getWeekMorning()+
                 + course.getMorning().getStartTimeHour() + ":" + course.getMorning().getStartTimeMin()
                 +"到" + course.getMorning().getEndTimeHour() + ":" + course.getMorning().getEndTimeMin()
         );
-        System.out.println("下午的上课时间: "
+        System.out.println("下午的上课时间: "+course.getWeekAfternoon()+
                 + course.getAfternoon().getStartTimeHour() + ":" + course.getAfternoon().getStartTimeMin()
                 +"到" + course.getAfternoon().getEndTimeHour() + ":" + course.getAfternoon().getEndTimeMin()
         );
