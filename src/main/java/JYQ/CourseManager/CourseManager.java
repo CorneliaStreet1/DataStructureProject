@@ -1,5 +1,9 @@
 package JYQ.CourseManager;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import HYH.Model.Boolean_model;
 import HYH.System_main;
 import JYQ.Directories;
@@ -67,6 +71,7 @@ public class CourseManager implements Boolean_model {
             }
             catch (InputMismatchException e) {
                 System.out.println("您输入的不是整数，请重新输入:");
+                scanner.nextLine();
                 option = scanner.nextInt();
             }
             if (option == 1) {
@@ -80,6 +85,7 @@ public class CourseManager implements Boolean_model {
                 }
                 catch (InputMismatchException e) {
                     System.out.println("您输入的不是整数序号，请重新输入整数序号:");
+                    scanner.nextLine();
                     MethodOption = scanner.nextInt();
                 }
                 if (MethodOption == 1) {
@@ -107,6 +113,8 @@ public class CourseManager implements Boolean_model {
             System.out.println("您可以做的事情有：");
             System.out.println("1.为某个班级添加课程");
             System.out.println("2.为某个班级删除课程");
+            System.out.println("3.为某个课程添加考试相关信息");
+            System.out.println("4.为某个课程添加课程群信息");
             System.out.println("请输入您想使用的功能的序号:");
             int option;
             try {
@@ -114,6 +122,7 @@ public class CourseManager implements Boolean_model {
             }
             catch (InputMismatchException e) {
                 System.out.println("不要输入奇怪的东西啊喂，输个数字好不好，拜托，你真是太逊了。");
+                scanner.nextLine();
                 option = scanner.nextInt();
             }
             if (option == 1) {
@@ -124,11 +133,12 @@ public class CourseManager implements Boolean_model {
                 }
                 catch (InputMismatchException e) {
                     System.out.println("都说了不要奇怪的东西，你真的太逊了，重新输入吧。");
+                    scanner.nextLine();
                     num = scanner.nextInt();
                 }
                 CourseManager.addCourseForClass(num);
             }
-            else {
+            else if (option == 2){
                 System.out.println("请输入您想删除课程的班级的序号(阿拉伯数字，不要奇怪的东西)");
                 int num;
                 try {
@@ -136,9 +146,16 @@ public class CourseManager implements Boolean_model {
                 }
                 catch (InputMismatchException e) {
                     System.out.println("都说了不要奇怪的东西，你真的太逊了，重新输入吧。");
+                    scanner.nextLine();
                     num = scanner.nextInt();
                 }
                 CourseManager.deleteClassForClass(num);
+            }
+            else if (option == 3) {
+                CourseManager.addExamForCourse();
+            }
+            else if (option == 4) {
+                CourseManager.addGroupInformation();
             }
         }
     }
@@ -244,6 +261,65 @@ public class CourseManager implements Boolean_model {
     public void dailyRecord() {
         return;
     }
+    public static void addExamForCourse() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入您想添加考试的课程的完整名称");
+        String CourseName = scanner.next();
+        File courseFile = Utils.join(Directories.CourseRepo,CourseName);
+        Course course = Utils.readObject(courseFile, Course.class);
+        if (!CourseManager.hasCourse(course)) {
+            System.out.println("您输入的课程不存在，已退出。");
+            return;
+        }
+        System.out.println("接下来请输入考试的信息，如果有多场考试，输入完毕后输入exit退出");
+        System.out.println("请输入考试的名称(如期中考试):");
+        while (scanner.hasNext()) {
+            String ExamName = scanner.next();
+            if (ExamName.equals("exit")) {
+                break;
+            }
+            System.out.println("请输入考试的地点:");
+            String ExamAddress = scanner.next();
+            if (ExamAddress.equals("exit")) {
+                break;
+            }
+            System.out.println("请用阿拉伯数字依次输入年(yyyy)  月(MM)   日(dd) 小时(HH) 分钟(mm)：");
+            String year, month, day, hour, min;
+            LocalDateTime localDateTime;
+                year = scanner.next();
+                month = scanner.next();
+                day = scanner.next();
+                hour = scanner.next();
+                min = scanner.next();
+                localDateTime = LocalDateTime.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(min));
+            System.out.println("请用阿拉伯数字输入考试的时长(单位:分钟):");
+            String time = scanner.next();
+            if (time.equals("exit")) {
+                break;
+            }
+            int t = Integer.parseInt(time);
+            course.getExams().add(new Exam(ExamAddress, localDateTime,ExamName, t));
+            System.out.println("请输入考试的名称(如期中考试):");
+        }
+        Utils.writeObject(courseFile, course);
+        System.out.println("添加考试成功");
+    }
+    public static void addGroupInformation() {
+        System.out.println("请输入您添加课程群信息的课程的完整名称。");
+        Scanner scanner = new Scanner(System.in);
+        String CourseName = scanner.next();
+        File courseFile = Utils.join(Directories.CourseRepo,CourseName);
+        Course course = Utils.readObject(courseFile, Course.class);
+        if (!CourseManager.hasCourse(course)) {
+            System.out.println("您输入的课程不存在，已退出。");
+            return;
+        }
+        System.out.println("请输入课程群信息");
+        String info = scanner.next();
+        course.setGroupInformation(info);
+        Utils.writeObject(courseFile, course);
+        System.out.println("添加课程信息成功。");
+    }
     public static void main(String[] args) {
        Course[] courses= {new Course("计算机组成原理","S208",
                 new TimePair(9, 50, 12, 15),//3-5
@@ -276,11 +352,14 @@ public class CourseManager implements Boolean_model {
                 new TimePair(9,50,12,15),//3-5
                 new TimePair(13,0,15,30)),//6-8
         };
-        /*for (int i = 0 ; i< courses.length ; i ++) {
+       /* for (int i = 0 ; i< courses.length ; i ++) {
             CourseManager.addNewCourse(courses[i]);
         }*/
        // deleteCourse(courses[1]);
-        CourseManager.Interface();
-        return;
+       // CourseManager.Interface();
+        File jsjwl = Utils.join(Directories.CourseRepo, "计算机网络");
+        Course course = Utils.readObject(jsjwl, Course.class);
+        System.out.println(course.getExams());
+        System.exit(0);
     }
 }
