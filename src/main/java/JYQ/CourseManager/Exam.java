@@ -1,10 +1,11 @@
 package JYQ.CourseManager;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Exam {
+public class Exam implements Serializable {
     private String Address;
     //要求用户按照yyyy/MM/dd E HH:mm的格式输入
     private LocalDateTime Date;
@@ -39,7 +40,7 @@ public class Exam {
         stringBuilder.append(this.Address);
         stringBuilder.append("  考试日期:");
         stringBuilder.append(this.Date.toString());
-        stringBuilder.append("  考试时长:");
+        stringBuilder.append("  考试时长(单位:分钟):");
         stringBuilder.append(this.TimeLength);
         return stringBuilder.toString();
     }

@@ -1,6 +1,7 @@
 package JYQ.CourseManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import HYH.Model.Boolean_model;
@@ -283,14 +284,21 @@ public class CourseManager implements Boolean_model {
                 break;
             }
             System.out.println("请用阿拉伯数字依次输入年(yyyy)  月(MM)   日(dd) 小时(HH) 分钟(mm)：");
-            
-            System.out.println("请用阿拉伯数字输入考试的时长:");
+            String year, month, day, hour, min;
+            LocalDateTime localDateTime;
+                year = scanner.next();
+                month = scanner.next();
+                day = scanner.next();
+                hour = scanner.next();
+                min = scanner.next();
+                localDateTime = LocalDateTime.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(min));
+            System.out.println("请用阿拉伯数字输入考试的时长(单位:分钟):");
             String time = scanner.next();
             if (time.equals("exit")) {
                 break;
             }
             int t = Integer.parseInt(time);
-            course.getExams().add(new Exam(ExamAddress, ,ExamName, t));
+            course.getExams().add(new Exam(ExamAddress, localDateTime,ExamName, t));
             System.out.println("请输入考试的名称(如期中考试):");
         }
         Utils.writeObject(courseFile, course);
@@ -344,11 +352,14 @@ public class CourseManager implements Boolean_model {
                 new TimePair(9,50,12,15),//3-5
                 new TimePair(13,0,15,30)),//6-8
         };
-        for (int i = 0 ; i< courses.length ; i ++) {
+       /* for (int i = 0 ; i< courses.length ; i ++) {
             CourseManager.addNewCourse(courses[i]);
-        }
+        }*/
        // deleteCourse(courses[1]);
-        CourseManager.Interface();
-        return;
+       // CourseManager.Interface();
+        File jsjwl = Utils.join(Directories.CourseRepo, "计算机网络");
+        Course course = Utils.readObject(jsjwl, Course.class);
+        System.out.println(course.getExams());
+        System.exit(0);
     }
 }

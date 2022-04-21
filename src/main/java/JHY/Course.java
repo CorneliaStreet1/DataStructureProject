@@ -85,7 +85,8 @@ public class Course extends Information implements Serializable {
     public String getWeekMorning(){
         File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
         Student student = Utils.readObject(CurrentUser, Student.class);
-        File CurrentTable= Utils.join(Directories.UserFiles,student.getClassNumber() + "RegularTable");
+        File currentClass = Utils.join(Directories.UserFiles, "class" + student.getClassNumber() );
+        File CurrentTable= Utils.join(currentClass, "RegularTable");
         RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
 
         String week;
@@ -108,9 +109,11 @@ public class Course extends Information implements Serializable {
     }
 
     public String getWeekAfternoon(){
-        File CurrentTable= new File(Directories.UserFiles,"Class8\\RegularTable");
+        File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        Student student = Utils.readObject(CurrentUser, Student.class);
+        File currentClass = Utils.join(Directories.UserFiles, "class" + student.getClassNumber() );
+        File CurrentTable= Utils.join(currentClass, "RegularTable");
         RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
-
         String week;
         for(int i=0;i<7;i++){
             for(int j=5;j<9;j++){
