@@ -20,12 +20,15 @@ public class System_main extends Total_models{
 
     public static void main(String[] arg){
         System_main total=new System_main("主页面");
-        System_log log=new System_log("登录");//只写了个框架
+        System_log log=new System_log("登录");
         System_model.recordClean();
+        Thread time_thread=new Thread(Total_models.system_time.timeRun,"时间线程");
+        time_thread.start();
         try{
             while(true){
                 log.run();
 
+                //获取当前用户班级
                 if(!CurrentUserName.equals("manager")){
                     String userPath="./UserFiles/UserRepo/"+CurrentUserName;
                     File user=new File(userPath);
@@ -35,16 +38,25 @@ public class System_main extends Total_models{
                 }
                 else CurrentUserClass=-1;
 
+                //时间系统的闹钟初始化
+                Total_models.system_time.Init();
 
+
+
+                //时间继续，选择模块，时间暂停
                 if(Total_models.system_time.isStop())
                     Total_models.system_time.stopStartTime.run();
                 total.run();
                 if(!Total_models.system_time.isStop())
                     Total_models.system_time.stopStartTime.run();
+
+                //时间系统的闹钟持久化
+                Total_models.system_time.Store();
             }
         }catch (Close a){
             Total_models.system_time.timeRun.end();
             Total_models.system_time.stopStartTime.run();//暂停了标志就没用了
+            Total_models.system_time.ClearStopLayer();
         }
     }
 }
