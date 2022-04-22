@@ -12,7 +12,7 @@ public class search implements Boolean_model{
         System.out.println("请输入要查询的课程的完整名称:");
         Scanner scanner=new Scanner(System.in);
         String CourseName = scanner.next();
-        CourseManager.SearchCourse(CourseName);
+        //CourseManager.SearchCourse(CourseName);
         return false;
     }
 
