@@ -1,8 +1,13 @@
 package HYH;
+
 import HYH.Model.*;
 import HYH.CourseManager.*;
 import HYH.System_log.*;
 import HYH.System_time.*;
+import HYH.ActivityManager.*;
+import HYH.Manager.*;
+import HYH.Navigation.*;
+
 import JYQ.UserLogin.*;
 import JYQ.Utils;
 
@@ -12,14 +17,23 @@ public class System_main extends Total_models{
     public static String CurrentUserName = "jyq";
     public static int CurrentUserClass=-1;
 
+    CourseManager courseManager;
+    ActivityManager activityManager;
+    Navigation navigation;
+
     public System_main(String s){
         super(s);
-        add_model("1",new CourseManager("课程查询管理"));
-        //如上把各模块加到主模块上
+        courseManager=new CourseManager("课程查询管理");
+        activityManager=new ActivityManager("活动查询管理");
+        navigation=new Navigation("导航");
+        add_model("1",courseManager);
+        add_model("2",activityManager);
+        add_model("3",navigation);
     }
 
     public static void main(String[] arg){
         System_main total=new System_main("主页面");
+        System_manager system_manager=new System_manager("管理员");
         System_log log=new System_log("登录");
         System_model.recordClean();
         Thread time_thread=new Thread(Total_models.system_time.timeRun,"时间线程");
@@ -43,10 +57,13 @@ public class System_main extends Total_models{
 
 
 
-                //时间继续，选择模块，时间暂停
+                //时间继续
                 if(Total_models.system_time.isStop())
                     Total_models.system_time.stopStartTime.run();
-                total.run();
+                //选择模块
+                if(CurrentUserClass!=-1) total.run();
+                else system_manager.run();
+                //时间暂停
                 if(!Total_models.system_time.isStop())
                     Total_models.system_time.stopStartTime.run();
 
