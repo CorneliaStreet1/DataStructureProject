@@ -1,10 +1,11 @@
 package HYH.Model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Scanner;
 import HYH.System_time.*;
 
-public class System_models extends System_model{//选择模块
+public class System_models extends System_model implements Serializable {//选择模块
     private HashMap<String,System_model> models;//该模块下的子模块映射
     private static final System_close close=new System_close("关闭");//搭载了关闭模块
 
@@ -17,6 +18,11 @@ public class System_models extends System_model{//选择模块
     public void add_model(String i,System_model m){//增加子模块
         models.put(i,m);
     }
+
+    public void replace_model(String i,System_model m){
+        models.replace(i,m);
+    }
+
     public void introduce_model(){//介绍子模块和输入的映射关系
         System_model j;
         System.out.println("当前模块："+super.info());

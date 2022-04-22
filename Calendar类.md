@@ -38,7 +38,9 @@ SimpleDateFormat Format_other=new SimpleDateFormat("yyyy HH dd:mm");
 
 String s=Format_other.format(calendar.getTime());//.format函数接收一个Date,所以要用calendar.getTime();
 
-
+//当然还有别的设置时间的方法
+calendar.set(Calendar.YEAR,2002);
+calendar.set(2022,2,28);
 ```
 
 [Java 日期时间 | 菜鸟教程 (runoob.com)](https://www.runoob.com/java/java-date-time.html)
