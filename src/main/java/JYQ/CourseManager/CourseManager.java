@@ -2,6 +2,7 @@ package JYQ.CourseManager;
 import java.time.LocalDateTime;
 import java.util.*;
 import HYH.System_main;
+import HYH.System_time.System_time;
 import JYQ.Directories;
 import JYQ.UserLogin.Student;
 import JYQ.UserLogin.UserInformation;
@@ -182,6 +183,7 @@ public class CourseManager {
                     Exam exam = Utils.readObject(examFile, Exam.class);
                     System.out.println(exam);
                 }
+                System.out.println("当前系统时间是:" + (new System_time("s").returnTime()));
                 System.out.println("请注意辨别哪些考试是已经过期的");
             }
         }
