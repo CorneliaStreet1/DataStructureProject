@@ -1,4 +1,7 @@
 package JYQ.CourseManager;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
 import HYH.System_main;
@@ -8,8 +11,10 @@ import JYQ.UserLogin.Student;
 import JYQ.UserLogin.UserInformation;
 import JYQ.Utils;
 import java.io.File;
-
+import net.lingala.zip4j.*;
 import JHY.*;
+import net.lingala.zip4j.exception.ZipException;
+
 public class CourseManager {
     public static void addNewCourse(Course course) {
         Scanner scanner = new Scanner(System.in);
@@ -57,9 +62,11 @@ public class CourseManager {
             System.out.println("欢迎进入课程管理模块。您现在处于学生端");
             System.out.println("您在本模块中可以做的事有:");
             System.out.println("1.查询课程信息");
-            System.out.println("2.上传作业和资料");
-            System.out.println("3.查询作业和资料");
+            System.out.println("2.上传作业");
+            System.out.println("3.查询已交作业或待交作业以及作业的详细信息");
             System.out.println("4.查询考试相关信息");
+            System.out.println("5.上传课程资料");
+            System.out.println("6.查看课程资料");
             System.out.println("请输入您想要的功能的序号:");
             try {
                 option = scanner.nextInt();
@@ -104,10 +111,23 @@ public class CourseManager {
                     CourseManager.SearchCourse(cn, courseTable);
                 }
             }
+            else if (option == 2) {
+                CourseManager.uploadHomework();
+            }
+            else if (option == 3) {
+                CourseManager.SearchHomework();
+            }
             else if (option == 4) {
                 CourseManager.SearchExam();
             }
+            else if (option == 5) {
+                CourseManager.UploadMaterialAsStudent();
+            }
+            else if (option == 6) {
+                CourseManager.CheckoutMaterialAsStudent();
+            }
         }
+        //管理员端
         else {
             System.out.println("欢迎进入课程管理模块。您现在处于管理员端");
             System.out.println("您可以做的事情有：");
@@ -115,6 +135,8 @@ public class CourseManager {
             System.out.println("2.为某个班级删除课程");
             System.out.println("3.为某个课程添加考试相关信息");
             System.out.println("4.为某个课程添加课程群信息");
+            System.out.println("5.为某个课程添加新的作业");
+            System.out.println("6.为某个课程添加资料");
             System.out.println("请输入您想使用的功能的序号:");
             int option;
             try {
@@ -157,7 +179,331 @@ public class CourseManager {
             else if (option == 4) {
                 CourseManager.addGroupInformation();
             }
+            else if (option == 5) {
+                CourseManager.addHomeworkForCourse();
+            }
+            else if (option == 6) {
+                CourseManager.UploadMaterialAsManager();
+            }
         }
+    }
+    public static void CheckoutMaterialAsStudent() {
+        Scanner scanner = new Scanner(System.in);
+        File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        Student student = Utils.readObject(CurrentUser, Student.class);
+        File ClassDir = Utils.join(Directories.UserFiles, "Class" + student.getClassNumber());
+        File ClassMaterialRepo = Utils.join(ClassDir, "ClassMaterialRepo");
+        System.out.println("请注意：你只能查看由管理员以及你的同班同学上传的课程资料");
+        System.out.println("请输入你想要查看资料的课程名称:");
+        String CourseName = scanner.next();
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
+            System.out.println("您指定的课程在系统中不存在");
+        }
+        else {
+            File ManagerMaterial = Utils.join(Directories.MaterialRepo, CourseName);
+            File ClassMaterial = Utils.join(ClassMaterialRepo, CourseName);
+            if (!ManagerMaterial.exists() && ClassMaterial.exists()) {
+                System.out.println("管理员并没有为" + CourseName + "添加课程资料");
+                List<String> ClassFile = Utils.plainFilenamesIn(ClassMaterial);
+                System.out.println("由你所属班级的同学"+ CourseName + "上传的课程资料有:" + ClassFile);
+            }
+            else if (!ClassMaterial.exists() && ManagerMaterial.exists()) {
+                System.out.println("你所属的班级目前没有同学为" + CourseName + "上传课程资料");
+                List<String> ManagerFile = Utils.plainFilenamesIn(ManagerMaterial);
+                System.out.println("由管理员"+ CourseName + "添加的课程资料有:" + ManagerFile);
+            }
+            else if (!ManagerMaterial.exists() && !ClassMaterial.exists()) {
+                System.out.println("目前系统中没有" + CourseName + "的课程资料");
+            }
+            else if (ManagerMaterial.exists() && ClassMaterial.exists()) {
+                List<String> ManagerFile = Utils.plainFilenamesIn(ManagerMaterial);
+                List<String> ClassFile = Utils.plainFilenamesIn(ClassMaterial);
+                System.out.println("由管理员"+ CourseName + "添加的课程资料有:" + ManagerFile);
+                System.out.println("由你所属班级的同学"+ CourseName + "上传的课程资料有:" + ClassFile);
+            }
+        }
+    }
+    public static void UploadMaterialAsStudent() {
+        Scanner scanner = new Scanner(System.in);
+        File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        Student student = Utils.readObject(CurrentUser, Student.class);
+        File ClassDir = Utils.join(Directories.UserFiles, "Class" + student.getClassNumber());
+        File c = Utils.join(ClassDir, "ClassMaterialRepo");
+        System.out.println("请输入你想要添加资料的课程名称:");
+        String CourseName = scanner.next();
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
+            System.out.println("您指定的课程在系统中不存在");
+        }
+        else {
+            if (!c.exists()) {
+                c.mkdir();
+            }
+            File CourseMaterialRepo = Utils.join(c, CourseName);
+            if (!CourseMaterialRepo.exists()) {
+                CourseMaterialRepo.mkdir();
+            }
+            System.out.println("请输入资料文件的绝对路径:");
+            System.out.println("给定一个绝对路径的例子，请参照例子进行输入:D:\\DataStructureProject\\UserFiles\\CourseRepo\\计算机网络.txt");
+            scanner.nextLine();
+            String Path = scanner.nextLine();
+            File CommitFile = new File(Path);
+            if (!CommitFile.isFile()) {
+                System.out.println("您输入的是一个目录，不是一个文件，请重新输入:");
+                Path = scanner.nextLine();
+                CommitFile = new File(Path);
+            }
+            try {
+                Files.copy(CommitFile.toPath(), CourseMaterialRepo.toPath().resolve(CommitFile.getName()));
+            }
+            catch (IOException e) {
+                System.out.println("上传课程资料失败，请检查是否存在如下情况后重试:");
+                System.out.println("1.此资料文件此前已经上传过一次");
+                System.out.println("2.此资料文件不存在");
+                System.exit(1);
+            }
+            try {
+                new ZipFile(CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
+            } catch (ZipException e) {
+                System.out.println("压缩文件失败");
+                e.printStackTrace();
+            }
+            System.out.println("添加资料成功");
+        }
+    }
+    public static void UploadMaterialAsManager() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入你想要添加资料的课程名称:");
+        String CourseName = scanner.next();
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
+            System.out.println("您指定的课程在系统中不存在");
+        }
+        else {
+            if (!Directories.MaterialRepo.exists()) {
+                Directories.MaterialRepo.mkdir();
+            }
+            // ./计算机网络
+            File CourseMaterialDir = Utils.join(Directories.MaterialRepo, CourseName);
+            if (!CourseMaterialDir.exists()) {
+                CourseMaterialDir.mkdir();
+            }
+            System.out.println("请输入资料文件的绝对路径:");
+            System.out.println("给定一个绝对路径的例子，请参照例子进行输入:D:\\DataStructureProject\\UserFiles\\CourseRepo\\计算机网络.txt");
+            scanner.nextLine();
+            String Path = scanner.nextLine();
+            File CommitFile = new File(Path);
+            if (!CommitFile.isFile()) {
+                System.out.println("您输入的是一个目录，不是一个文件，请重新输入:");
+                Path = scanner.nextLine();
+                CommitFile = new File(Path);
+            }
+            try {
+                Files.copy(CommitFile.toPath(), CourseMaterialDir.toPath().resolve(CommitFile.getName()));
+            }
+            catch (IOException e) {
+                System.out.println("上传资料失败，请检查是否存在如下情况后重试:");
+                System.out.println("1.此资料文件此前已经上传过一次");
+                System.out.println("2.此资料文件不存在");
+                System.exit(1);
+            }
+            try {
+                new ZipFile(CourseMaterialDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                System.out.println("上传的资料已被压缩保存至" + CourseMaterialDir.toPath().resolve(CommitFile.getName()) + ".zip");
+            } catch (ZipException e) {
+                System.out.println("压缩文件失败");
+                e.printStackTrace();
+            }
+            System.out.println("添加资料成功");
+        }
+    }
+    @SuppressWarnings("unchecked")
+    public static void SearchHomework() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入你想要查询作业提交情况的课程名称:");
+        String CourseName = scanner.next();
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
+            System.out.println("您指定的课程在系统中不存在");
+        }
+        else {
+            File HomeworkDir = Utils.join(Directories.HomeworkRepo, CourseName);
+            if (!HomeworkDir.exists()) {
+                System.out.println("您所查询的课程目前还没有布置作业");
+            }
+            else {
+                //作业总仓中指定课程的所有作业
+                List<String> Homeworks = Utils.plainFilenamesIn(HomeworkDir);
+                System.out.println("本门课程中布置的所有作业有：");
+                System.out.println(Homeworks);
+                File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+                Student student = Utils.readObject(CurrentUser, Student.class);
+                //Class8
+                File ClassDir = Utils.join(Directories.UserFiles, "Class" + student.getClassNumber());
+                //Class8//jyq
+                File UserDir = Utils.join(ClassDir, student.getUserName());
+                // jyq//CommitRepo
+                File CommitRepo = Utils.join(UserDir, "CommitRepo");
+                File UserHomeworkDir = Utils.join(CommitRepo, CourseName);
+                File file = Utils.join(UserHomeworkDir, "HandedHomeworkList");
+                if (!CommitRepo.exists() || !UserHomeworkDir.exists() || !file.exists()) {
+                    System.out.println("您目前还没有提交过作业");
+                }
+                else {
+                    System.out.println("请注意：相同作业名重复出现的次数代表这个作业的提交次数");
+                    System.out.println("目前你已经提交的作业有:");
+                    ArrayList<String> UploadedWork = Utils.readObject(file, ArrayList.class);
+                    System.out.println(UploadedWork);
+                }
+                System.out.println("是否需要查看某次作业的详细信息?(y/n)");
+                String y = scanner.next();
+                if (y.compareToIgnoreCase("y") == 0) {
+                    System.out.println("请输入你想查询的作业名称(exit退出):");
+                    while (scanner.hasNext()) {
+                        String name = scanner.next();
+                        if (name.equals("exit")) {
+                            break;
+                        }
+                        // 计算机网络//第一次作业
+                        File WorkFile = Utils.join(HomeworkDir, name);
+                        Homework homework = Utils.readObject(WorkFile, Homework.class);
+                        System.out.println(homework);
+                        System.out.println("请输入你想查询的作业名称(exit退出):");
+                    }
+                }
+            }
+        }
+    }
+    @SuppressWarnings("unchecked")
+    public static void uploadHomework() {
+        Scanner scanner = new Scanner(System.in);
+        File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        Student student = Utils.readObject(CurrentUser, Student.class);
+        File ClassDir = Utils.join(Directories.UserFiles, "Class" + student.getClassNumber());
+        File UserDir = Utils.join(ClassDir, student.getUserName());
+        File HomeWorkRepo = Utils.join(UserDir, "CommitRepo");
+        if (!HomeWorkRepo.exists()) {
+            HomeWorkRepo.mkdir();
+        }
+        System.out.println("请输入你想提交作业的课程的完整名称(exit退出):");
+        String CourseName = scanner.next();
+        if (CourseName.equals("exit")) {
+            return;
+        }
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
+            System.out.println("您输入的课程在系统中不存在");
+        }
+        else {
+            File HomeworkDir = Utils.join(Directories.HomeworkRepo, CourseName);
+            List<String> HomeworkList = Utils.plainFilenamesIn(HomeworkDir);
+            // CommitRepo//计算机网络
+            File CourseDir = Utils.join(HomeWorkRepo,CourseName);
+            if (!CourseDir.exists()) {
+                CourseDir.mkdir();
+            }
+            File HandedHomeworkListFile = Utils.join(CourseDir, "HandedHomeworkList");
+            ArrayList<String> HandedHomeworkList;
+            if (!HandedHomeworkListFile.exists()) {
+                Utils.writeObject(HandedHomeworkListFile, new ArrayList<String>());
+            }
+            HandedHomeworkList = Utils.readObject(HandedHomeworkListFile, ArrayList.class);
+            System.out.println(CourseName + "目前所布置的所有作业有:");
+            System.out.println(HomeworkList);
+            System.out.println("您要提交的是哪一个作业?(请输入作业名)");
+            System.out.println("请注意，如果提交相同名字的作业文件，则默认保存最新提交的。");
+            String WorkName = scanner.next();
+            assert HomeworkList != null;
+            if (!HomeworkList.contains(WorkName)) {
+                System.out.println("输入的作业不存在，请重新输入：");
+                WorkName = scanner.next();
+            }
+            System.out.println("请输入作业文件的绝对路径:");
+            System.out.println("给定一个绝对路径的例子，请参照例子进行输入:D:\\DataStructureProject\\UserFiles\\CourseRepo\\计算机网络.txt");
+            scanner.nextLine();
+            String Path = scanner.nextLine();
+            File CommitFile = new File(Path);
+            if (!CommitFile.isFile()) {
+                System.out.println("您输入的是一个目录，不是一个文件，请重新输入:");
+                Path = scanner.nextLine();
+                CommitFile = new File(Path);
+            }
+            try {
+                Files.copy(CommitFile.toPath(), CourseDir.toPath().resolve(CommitFile.getName()));
+            }
+            catch (IOException e) {
+                System.out.println("上传作业失败，请检查是否存在如下情况后重试:");
+                System.out.println("1.此作业文件此前已经上传过一次");
+                System.out.println("2.此作业文件不存在");
+                System.exit(1);
+            }
+            try {
+                new ZipFile(CourseDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
+            } catch (ZipException e) {
+                System.out.println("压缩文件失败");
+                e.printStackTrace();
+            }
+            HandedHomeworkList.add(WorkName);
+            Utils.writeObject(HandedHomeworkListFile, HandedHomeworkList);
+            System.out.println("提交作业成功");
+        }
+    }
+    public static void addHomeworkForCourse() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入你想要添加作业的课程名称:");
+        String CourseName = scanner.next();
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
+            System.out.println("您指定的课程在系统中不存在");
+        }
+        else {
+            if (!Directories.HomeworkRepo.exists()) {
+                Directories.HomeworkRepo.mkdir();
+            }
+            File HomeworkDir = Utils.join(Directories.HomeworkRepo, CourseName);
+            if (!HomeworkDir.exists()) {
+                HomeworkDir.mkdir();
+            }
+            System.out.println("请输入您要添加的作业的名称(exit退出):");
+            while (scanner.hasNext()) {
+                String WorkName = scanner.next();
+                File WorkFile = Utils.join(HomeworkDir,WorkName);
+                if (WorkFile.exists()) {
+                    System.out.println("同名作业已经存在，将直接覆盖，是否重新命名?(y,n)");
+                    String y = scanner.next();
+                    if (y.compareToIgnoreCase("y") == 0) {
+                        System.out.println("请输入新的名字:");
+                        WorkName = scanner.next();
+                    }
+                }
+                if (WorkName.equals("exit")) {
+                    break;
+                }
+                scanner.nextLine();
+                System.out.println("请输入本次作业的内容(exit退出):");
+                String WorkContent = scanner.nextLine();
+                if (WorkContent.equals("exit")) {
+                    break;
+                }
+                System.out.println("请输入作业的开始日期和时间:");
+                LocalDateTime StartTime = CourseManager.getDateTime();
+                System.out.println("请输入作业的截止日期和时间:");
+                LocalDateTime endTime = CourseManager.getDateTime();
+                Homework homework = new Homework(WorkName, CourseName, StartTime, endTime, WorkContent);
+                Utils.writeObject(WorkFile, homework);
+                System.out.println("作业" + WorkName + "添加成功");
+                System.out.println("请输入下一个您要添加的作业的名称(exit退出):");
+            }
+            System.out.println("添加作业成功");
+        }
+    }
+    private static LocalDateTime getDateTime() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请用阿拉伯数字依次输入年(yyyy)  月(MM)   日(dd) 小时(HH) 分钟(mm)");
+        String year, month, day, hour, min;
+        year = scanner.next();
+        month = scanner.next();
+        day = scanner.next();
+        hour = scanner.next();
+        min = scanner.next();
+        return LocalDateTime.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(min));
     }
     public static void SearchExam() {
         Scanner scanner = new Scanner(System.in);
