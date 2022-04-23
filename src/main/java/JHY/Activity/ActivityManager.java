@@ -10,6 +10,7 @@ import JYQ.Utils;
 
 import java.io.EOFException;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -145,7 +146,20 @@ public class ActivityManager implements Boolean_model {
 
                 IrregularTable superTable=new IrregularTable();
                 //得到所有IrregularTable
-                File[] student=Class.listFiles();
+                File[] student=Class.listFiles(new FileFilter() {
+                    @Override
+                    public boolean accept(File pathname) {
+                        if(pathname.isDirectory()){
+                            String[] list=pathname.list();
+                            for(int i=0;i<list.length;i++){
+                                if(list[i].equals("StudentIrregularTable"))
+                                    return true;
+                            }
+                        }
+                        return false;
+                    }
+                });
+
                 for(int i=0,j=0;i<student.length;i++){
                     if(student[i].isDirectory()) {
                         combineSuperTable(new File(student[i], "StudentIrregularTable"),superTable);
