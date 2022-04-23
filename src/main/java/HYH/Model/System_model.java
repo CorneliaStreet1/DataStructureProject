@@ -17,7 +17,7 @@ public class System_model implements Serializable {//所有模块的父类或者
         return info_of_model;
     }
 
-    public void run() throws Close{//运行该模块
+    public void run() throws Close {//运行该模块
         dailyRecord();
     }
     public void dailyRecord(){

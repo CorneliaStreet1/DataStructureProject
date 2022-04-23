@@ -25,7 +25,7 @@ public class System_main extends Total_models{
         super(s);
         courseManager=new CourseManager("课程查询管理");
         activityManager=new ActivityManager("活动查询管理");
-        navigation=new Navigation("导航");
+        navigation=new Navigation("导航系统");
         add_model("1",courseManager);
         add_model("2",activityManager);
         add_model("3",navigation);

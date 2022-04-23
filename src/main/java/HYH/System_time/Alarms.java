@@ -133,7 +133,7 @@ public class Alarms extends System_models implements Serializable {
             super.run();
             System.out.println("闹钟增加：");
             AddAlarm(type);
-            System.out.println("已增加闹钟\n\n");
+
         }
     }
 
@@ -222,6 +222,7 @@ public class Alarms extends System_models implements Serializable {
         words=scanner.nextLine();
         alarm_clock[alarm_num]=new Alarm(calendar,type,words);
         alarm_num++;
+        System.out.println("已增加闹钟\n\n");
     }
 
     public void DelAlarm(){

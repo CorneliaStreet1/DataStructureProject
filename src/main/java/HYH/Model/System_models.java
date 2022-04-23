@@ -24,24 +24,26 @@ public class System_models extends System_model implements Serializable {//选�
     }
 
     public void introduce_model(){//介绍子模块和输入的映射关系
-        System_model j;
         System.out.println("当前模块："+super.info());
         introduce_status();
+        print_model();
+    }
+    public void print_model(){
+        System_model j;
         for(String i : models.keySet()){
             j=models.get(i);
             System.out.println("输入"+"\""+i+"\":"+j.info());
         }
-
     }
     public void introduce_status(){
 
     }
-    public void select_model(String s) throws Close {//选择子模块
+    public boolean select_model(String s) throws Close {//选择子模块
         System.out.println('\n');
         String words =s;
         System_model model = models.get(words);
-        if(model!=null) model.run();
-        else System.out.println("输入指令不对");
+        if(model!=null){model.run(); return true;}
+        else {System.out.println("输入指令不对"); return false;}
     }
     public String scan() throws Close {//这里还没加输入时暂停的模块
         Scanner scan = new Scanner(System.in);
@@ -56,7 +58,7 @@ public class System_models extends System_model implements Serializable {//选�
                 introduce_model();
                 select_model(scan());
             }
-        }catch (Close a){//选择子模块中扣x就启动System_close模块关闭当前模块，回到上一模块
+        }catch (Close a){//选择子模块中输入x就启动System_close模块关闭当前模块，回到上一模块
 
         }
     }
