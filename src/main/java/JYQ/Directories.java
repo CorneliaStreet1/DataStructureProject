@@ -7,4 +7,8 @@ public class Directories {
     public static final File UserFiles = Utils.join(CWD, "UserFiles");
     public static final File UserRepo = Utils.join(UserFiles, "UserRepo");
     public static final File CourseRepo = Utils.join(UserFiles, "CourseRepo");
+    public static final File ExamRepo = Utils.join(UserFiles, "ExamRepo");
+    public static final File HomeworkRepo = Utils.join(UserFiles, "HomeworkRepo");
+   // public static final File CompressedRepo = Utils.join(UserFiles,"CompressedRepo");
+    public static final File MaterialRepo = Utils.join(UserFiles, "MaterialRepo");
 }

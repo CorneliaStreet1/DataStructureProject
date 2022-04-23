@@ -1,13 +1,10 @@
 package HYH.Model;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class System_model {//所有模块的父类或者没有子模块的功能模块继承
+public class System_model implements Serializable {//所有模块的父类或者没有子模块的功能模块继承
     private String info_of_model;//这个模块是功能信息，用于提示用户选择
     private static String record_path="./src/main/java/HYH/DailyRecord";
     private static File record=new File(record_path+"/DailyRecord.txt");
@@ -20,7 +17,7 @@ public class System_model {//所有模块的父类或者没有子模块的功能
         return info_of_model;
     }
 
-    public void run() throws Close{//运行该模块
+    public void run() throws Close {//运行该模块
         dailyRecord();
     }
     public void dailyRecord(){

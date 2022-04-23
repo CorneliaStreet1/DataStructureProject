@@ -22,7 +22,7 @@ public class ShaHeMap extends BuptGraph implements Serializable {
      * @param BuildingName 沙河校区中某个建筑的名称
      * @return 给定建筑在图中的编号
      */
-    public int getBuildingIndex(String BuildingName) {
+    public Integer getBuildingIndex(String BuildingName) {
         return this.BuildingToIndex.get(BuildingName);
     }
 

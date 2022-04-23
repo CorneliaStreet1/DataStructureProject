@@ -22,7 +22,9 @@ public class RegularTable implements Serializable {
     public RegularTable() {
         table=new Course[7][9];
     }
-
+    public Course get(int day, int seq) {
+        return this.table[day][seq];
+    }
     //添加课
     public boolean addLesson(int day, int seq, Course lesson){
         //异常?

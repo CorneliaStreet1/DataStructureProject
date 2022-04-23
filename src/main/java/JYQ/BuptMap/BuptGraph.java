@@ -46,4 +46,8 @@ public class BuptGraph implements Serializable{
             buptGraph.addEdge((int) V1, (int) V2);
         }
     }
+
+    public Integer getBuildingIndex(String BuildingName) {
+        return null;
+    }
 }
