@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 public class RegularTable implements Serializable {
 
+    private static final long serialVersionUID=111L;
+
+    public static String[] dayTime={"早上8:00到8:50","早上9:00到9:50","早上10:00到10:50","早上11:00到11:50","下午13:00到13:50"
+            ,"下午14:00到14:50","下午15:00到15:50","下午16:00到16:50","下午17:00到17:50"};
+    public static String[] weekTime={"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
+
+
     private Course[][] table;
 
     public Course[][] getTable() {

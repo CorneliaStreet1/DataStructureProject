@@ -21,16 +21,20 @@ import java.util.Objects;
         - 课程群
         - 考试时间和考试地点等信息*/
 public class Course extends Information implements Serializable {
+
+    private static final long serialVersionUID=222L;
+
     String name;
     String address;
     String GroupInformation;
+
+    ArrayList<Exam> exams;
+
+
     TimePair Morning;
     TimePair Afternoon;
-    ArrayList<Exam> exams;
     //课程进度?
     //资料作业?
-//    String examTime;
-//    String examAddress;
 
 
     public Course() {
@@ -111,6 +115,35 @@ public class Course extends Information implements Serializable {
     public String getWeekAfternoon(){
         File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
         Student student = Utils.readObject(CurrentUser, Student.class);
+        File currentClass = Utils.join(Directories.UserFiles, "class" + student.getClassNumber() );
+        File CurrentTable= Utils.join(currentClass, "RegularTable");
+        RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
+        String week;
+        for(int i=0;i<7;i++){
+            for(int j=5;j<9;j++){
+                if(Objects.equals(table.getTable()[i][j].name, this.name))
+                    switch(i){
+                        case 0 :return "星期一";
+                        case 1 :return "星期二";
+                        case 2 :return "星期三";
+                        case 3 :return "星期四";
+                        case 4 :return "星期五";
+                        case 5 :return "星期六";
+                        case 6 :return "星期天";
+                        default:return null;
+                    }
+            }
+        }
+        return null;
+    }
+
+    public String getTime(){
+        File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        Student student = Utils.readObject(CurrentUser, Student.class);
+        //空?
+        File classTable=new File(Directories.UserFiles+"Class"+student.getClassNumber()+"RegularTable");
+        File personalTable=new File(Directories.UserFiles+"Class"+student.getClassNumber()+"StudeRegularTable");
+
         File currentClass = Utils.join(Directories.UserFiles, "class" + student.getClassNumber() );
         File CurrentTable= Utils.join(currentClass, "RegularTable");
         RegularTable table=Utils.readObject( CurrentTable ,RegularTable.class );
