@@ -1,5 +1,6 @@
 package HYH.Model;
 
+import HYH.DailyRecord.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import HYH.System_time.*;
 public class System_models extends System_model implements Serializable {//选择模块
     private HashMap<String,System_model> models;//该模块下的子模块映射
     private static final System_close close=new System_close("关闭");//搭载了关闭模块
-
+    private static Scanner scan = new Scanner(System.in);
 
     public System_models(String s) {
         super(s);
@@ -41,12 +42,19 @@ public class System_models extends System_model implements Serializable {//选�
     public boolean select_model(String s) throws Close {//选择子模块
         System.out.println('\n');
         String words =s;
+        RecordOperate.WriteRecord("用户输入："+words+"\n");
         System_model model = models.get(words);
-        if(model!=null){model.run(); return true;}
-        else {System.out.println("输入指令不对"); return false;}
+        if(model!=null){
+            model.run();
+            return true;
+        }
+        else {
+            RecordOperate.WriteRecord("用户输入格式错误\n");
+            System.out.println("输入指令不对");
+            return false;
+        }
     }
-    public String scan() throws Close {//这里还没加输入时暂停的模块
-        Scanner scan = new Scanner(System.in);
+    public String scan() throws Close {
         return scan.next();
     }
 
@@ -54,7 +62,8 @@ public class System_models extends System_model implements Serializable {//选�
     public void run() throws Close {
         try{
             while(true){
-                dailyRecord();
+//                dailyRecord();
+                super.run();
                 introduce_model();
                 select_model(scan());
             }

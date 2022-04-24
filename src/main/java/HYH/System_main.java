@@ -1,6 +1,7 @@
 package HYH;
 
 import HYH.Model.*;
+import HYH.DailyRecord.*;
 import HYH.CourseManager.*;
 import HYH.System_log.*;
 import HYH.System_time.*;
@@ -35,7 +36,8 @@ public class System_main extends Total_models{
         System_main total=new System_main("主页面");
         System_manager system_manager=new System_manager("管理员");
         System_log log=new System_log("登录");
-        System_model.recordClean();
+//        System_model.recordClean();
+        RecordOperate.recordClean();
         Thread time_thread=new Thread(Total_models.system_time.timeRun,"时间线程");
         time_thread.start();
         try{
@@ -51,6 +53,9 @@ public class System_main extends Total_models{
                     System.out.println("班级："+CurrentUserClass);
                 }
                 else CurrentUserClass=-1;
+                //写用户信息进日志
+                RecordOperate.WriteRecord("用户登录\n用户名："+CurrentUserName+"\n");
+                if(CurrentUserClass!=-1) RecordOperate.WriteRecord("用户班级："+CurrentUserClass+"\n");
 
                 //时间系统的闹钟初始化
                 Total_models.system_time.Init();
@@ -69,6 +74,7 @@ public class System_main extends Total_models{
 
                 //时间系统的闹钟持久化
                 Total_models.system_time.Store();
+                RecordOperate.WriteRecord("用户："+CurrentUserName+" 退出程序\n");
             }
         }catch (Close a){
             Total_models.system_time.timeRun.end();

@@ -1,6 +1,9 @@
 package HYH.System_log;
+
 import HYH.Model.*;
+import HYH.DailyRecord.*;
 import JYQ.UserLogin.*;
+
 public class System_log extends System_models{
     private boolean run_key;
 
@@ -33,7 +36,8 @@ public class System_log extends System_models{
         }
     }
     public void run() throws Close {
-        dailyRecord();
+//        dailyRecord();
+        RecordOperate.WriteRecord("系统：进入“"+"登录"+"”模块\n");
         run_key=true;
         while(run_key){
             super.introduce_model();
