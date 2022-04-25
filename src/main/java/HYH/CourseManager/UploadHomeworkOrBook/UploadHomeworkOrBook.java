@@ -8,8 +8,9 @@ public class UploadHomeworkOrBook extends Total_models {
     public UploadHomeworkOrBook(String s) {
         super(s);
     }
-    public void run(){
-        dailyRecord();
+    public void run() throws Close{
+//        dailyRecord();
+        super.run();
         boolean_model.run();
     }
 }
