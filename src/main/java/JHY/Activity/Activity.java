@@ -1,8 +1,10 @@
 package JHY.Activity;
 
 import HYH.Information.Information;
+import JHY.Course;
 import JHY.IrregularTable;
 import JHY.IrregularTable;
+import JHY.RegularTable;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -83,9 +85,106 @@ public class Activity implements Serializable {
         return true;
     }
     //活动和所有课程检测
-    //public boolean detectTime(RegularTable)
-    //添加课程,和全部活动检测
-    //public static boolean detectTime()
+    public boolean detectTime(RegularTable table){
+        int dayOfWeek=(timeBegin.get(Calendar.DAY_OF_WEEK)+5)%7;
+        for(int i=0;i<11;i++){
+            if(table.getTable()[dayOfWeek][i]!=null){
+                if(!detectTime(i))
+                    return false;
+            }
+        }
+        return true;
+    }///needtest
+
+    public boolean detectTime(int seq){
+        Calendar tb=Calendar.getInstance();
+        Calendar te=Calendar.getInstance();
+        switch(seq){
+            case 0: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 8, 00, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 8, 45, 0);
+            }
+            break;
+            case 1: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 8, 50, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 9, 35, 0);
+            }
+            break;
+            case 2: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 9, 50, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 10, 35, 0);
+            }
+            break;
+            case 3: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 10, 40, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 11, 25, 0);
+            }
+            break;
+            case 4: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 11, 30, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 12, 15, 0);
+            }
+            break;
+            case 5: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 13, 00, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 13, 45, 0);
+            }
+            break;
+            case 6: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 13, 50, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 14, 35, 0);
+            }
+            break;
+            case 7: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 14, 45, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 15, 30, 0);
+            }
+            break;
+            case 8: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 15, 40, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 16, 25, 0);
+            }
+            break;
+            case 9: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 16, 35, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 17, 20, 0);
+            }
+            break;
+            case 10: {
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 17, 25, 0);
+                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                        timeBegin.get(Calendar.DATE), 18, 10, 0);
+            }
+            break;
+        }
+        if(timeEnd.equals(tb)||timeEnd.before(tb))
+            return true;
+        else if(timeBegin.equals(te)||this.timeBegin.after(te))
+            return true;
+        else
+            return false;
+    }////needtest
 
     public void output(){//具体格式要改
         System.out.println();

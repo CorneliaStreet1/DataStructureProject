@@ -3,37 +3,26 @@ package JHY;
 
 import JHY.Activity.Activity;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Demo {
-    public static void main(String[] args) {
-      /*  Date date=new Date();
-        Date date1=new Date(1145141919L);
-        Activity ac=new Activity("打个郊县");
-        ac.setTimeBegin(date);ac.setTimeEnd(date1);*/
-        int option;
-        Scanner sc=new Scanner(System.in);
-        while(true){
-            try {
-                if (sc.hasNextInt()) {
-                    option = sc.nextInt();
-                    if (option < 4 && option > 0)
-                        break;
-                    else
-                        throw new InputMismatchException();
+    public static void main(String[] args){
+        Calendar ca=Calendar.getInstance();
+        System.out.print(ca.get(Calendar.YEAR)+"年"+(ca.get(Calendar.MONTH)+1)+
+                "月"+ca.get(Calendar.DAY_OF_MONTH)+"日"+","+ca.get(Calendar.HOUR)+
+                ":"+ca.get(Calendar.MINUTE)+":"+ca.get(Calendar.SECOND));
+        ca.set(ca.get(Calendar.YEAR),ca.get(Calendar.MONTH),ca.get(Calendar.DAY_OF_MONTH),0,0,0);
+
+        ca.add(Calendar.DAY_OF_WEEK,5);
+
+        System.out.println();
+        System.out.print(ca.get(Calendar.YEAR)+"年"+(ca.get(Calendar.MONTH)+1)+
+                "月"+ca.get(Calendar.DAY_OF_WEEK)+"日"+","+ca.get(Calendar.HOUR)+
+                ":"+ca.get(Calendar.MINUTE)+":"+ca.get(Calendar.SECOND));
 
 
-                } else{
-                    String s=sc.next();
-                    throw new InputMismatchException();
-                }
-
-            }catch(InputMismatchException e){
-                System.out.println("您当前的输入有误,请重新输入");
-            }
-
-        }
     }
 }
