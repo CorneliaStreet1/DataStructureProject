@@ -2,7 +2,9 @@ package JHY.Activity;
 
 import HYH.Model.Boolean_model;
 import HYH.System_main;
+import JHY.Course;
 import JHY.IrregularTable;
+import JHY.RegularTable;
 import JYQ.Directories;
 import JYQ.UserLogin.Student;
 import JYQ.UserLogin.UserInformation;
@@ -69,17 +71,17 @@ public class ActivityManager implements Boolean_model {
                         String name = sc.next();
                         System.out.println("请输出活动的具体地点");
                         String address = sc.next();
-                        while (!getTimeBetween(tb, te)) ;
+                        while (!getTimeBetween(tb, te,1)) ;
                         addActivity(table, tableName, tb, te, name, address);
                     }
                     break;
                     case 2: {
-                        while (!getTimeBetween(tb, te)) ;
+                        while (!getTimeBetween(tb, te,0)) ;
                         removeActivityByTime(table, tableName, tb, te);
                     }
                     break;
                     case 3: {
-                        while (!getTimeBetween(tb, te)) ;
+                        while (!getTimeBetween(tb, te,0)) ;
                         System.out.println("您班级在该时间段的活动如下:");
                         searchActivityByTime(tableClass, tb, te);
                         System.out.println("您个人在该时间段的活动如下:");
@@ -143,44 +145,22 @@ public class ActivityManager implements Boolean_model {
                     else System.out.println("当前班级不存在,请重新输入");
                 }
                 if(optionClass==-1)break;
+//活动总表
+                IrregularTable superTable=getSuperTable(Class);
 
-                IrregularTable superTable=new IrregularTable();
-                //得到所有IrregularTable
-                File[] student=Class.listFiles(new FileFilter() {
-                    @Override
-                    public boolean accept(File pathname) {
-                        if(pathname.isDirectory()){
-                            String[] list=pathname.list();
-                            for(int i=0;i<list.length;i++){
-                                if(list[i].equals("StudentIrregularTable"))
-                                    return true;
-                            }
-                        }
-                        return false;
-                    }
-                });
-
-                for(int i=0,j=0;i<student.length;i++){
-                    if(student[i].isDirectory()) {
-                        combineSuperTable(new File(student[i], "StudentIrregularTable"),superTable);
-                    }
-                }
                 superTable=superTable.sortByTime();
-                //superTable.printTable();/////
-                //System.out.println("啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
                 dedepSuperTable(superTable);
-                //superTable.printTable();////
+
+                /////////getSuperTableCourse(Class).printTable();
 
                 Class=new File(Class,"IrregularTable");
                 IrregularTable table=new IrregularTable();
                 try {
                     table = Utils.readObject(new File(Directories.UserFiles + "\\Class" + optionClass
                             ,"IrregularTable"), IrregularTable.class);
-                }catch (IllegalArgumentException e){/////只能抓这个异常
+                }catch (IllegalArgumentException e){
                 }
                 IrregularTable tableName=table.sortByName();
-
-
 
                 System.out.println("您已经进入Class" + optionClass);
                 while (option!= -1) {
@@ -208,7 +188,7 @@ public class ActivityManager implements Boolean_model {
                                 String name = sc.next();
                                 System.out.println("请输出活动的具体地点");
                                 String address = sc.next();
-                                while (!getTimeBetween(tb, te)) ;
+                                while (!getTimeBetween(tb, te,1)) ;
                                 if(!new Activity(name,tb, te,  address).detectTime(superTable)){
                                     System.out.println("和学生的活动安排又冲突,添加失败");
                                     System.out.println("可以先使用功能7,看看学生们的活动都安排在哪些时间段!");
@@ -219,12 +199,12 @@ public class ActivityManager implements Boolean_model {
                             }
                             break;
                             case 2: {
-                                while (!getTimeBetween(tb, te)) ;
+                                while (!getTimeBetween(tb, te,0)) ;
                                 removeActivityByTime(table, tableName, tb, te);
                             }
                             break;
                             case 3: {
-                                while (!getTimeBetween(tb, te)) ;
+                                while (!getTimeBetween(tb, te,0)) ;
                                 System.out.println("Class"+optionClass+" 在该时间段的活动如下:");
                                 searchActivityByTime(table, tb, te);
                             }
@@ -270,7 +250,25 @@ public class ActivityManager implements Boolean_model {
         System.out.println("已退出课外信息管理系统,感谢您的使用!");
         return;
     }
-    public boolean getTimeBetween(Calendar tb,Calendar te){
+//给班级文件夹,找下面的学生文件夹
+    private static File[] getFiles(File file){
+        File[] files=file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                if(pathname.isDirectory()){
+                    String[] list=pathname.list();
+                    for(int i=0;i<list.length;i++){
+                        if(list[i].equals("StudentIrregularTable"))
+                            return true;
+                    }
+                }
+                return false;
+            }
+        });
+        return files;
+    }
+
+    public boolean getTimeBetween(Calendar tb,Calendar te,int isAdd){
         Scanner sc=new Scanner(System.in);
         Boolean input=false;
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日,HH:mm:ss");
@@ -303,9 +301,21 @@ public class ActivityManager implements Boolean_model {
         }
 
         if(!tb.before(te)){
-            System.out.println("输入的信息矛盾,开始时间要在结束时间之前,即将重新开始添加活动功能");
+            System.out.println("输入的信息矛盾,开始时间要在结束时间之前");
+            System.out.println("已重新开始添加活动功能");
             System.out.println();
             return false;
+        }
+
+        if(isAdd==1){
+            if(tb.get(Calendar.DATE)==te.get(Calendar.DATE)&&
+                    tb.get(Calendar.MONTH)==te.get(Calendar.MONTH)&&
+                    tb.get(Calendar.YEAR)==te.get(Calendar.YEAR)){
+                System.out.println("输入信息不符合规范,活动的开始时间和结束时间要在同一天");
+                System.out.println("已重新开始添加活动功能");
+                System.out.println();
+                return false;
+            }
         }
         return true;
     }
@@ -425,13 +435,21 @@ public class ActivityManager implements Boolean_model {
         return option;
     }
 
-    public void combineSuperTable(File file,IrregularTable superTable){
+    public static IrregularTable getSuperTable(File file){
+        File[] student=ActivityManager.getFiles(file);
+        IrregularTable superTable=new IrregularTable();
+        for(int i=0,j=0;i<student.length;i++){
+            combineSuperTable(new File(student[i], "StudentIrregularTable"),superTable);
+        }
+        return superTable;
+    }
+
+    private static void combineSuperTable(File file,IrregularTable superTable){
         IrregularTable table=new IrregularTable();
         try {
             table = Utils.readObject(file, IrregularTable.class);
         }catch (IllegalArgumentException e){/////只能抓这个异常
         }
-
         for(int i=0;i<table.getList().size();i++){
             superTable.getList().add(table.getList().get(i));
         }
@@ -451,6 +469,31 @@ public class ActivityManager implements Boolean_model {
             }
         }
     }
+//传进来班级文件夹
+    public static RegularTable getSuperTableCourse(File file){
+        File[] student=ActivityManager.getFiles(file);
+        RegularTable superTableCourse=new RegularTable();
+        for(int i=0,j=0;i<student.length;i++){
+            combineSuperTableCourse(new File(student[i], "StudentRegularTable"),superTableCourse);
+        }
+        return superTableCourse;
+    }//needtest
+
+    private static void combineSuperTableCourse(File file,RegularTable superTableCourse){
+        RegularTable table=new RegularTable();
+        try {
+            table = Utils.readObject(file, RegularTable.class);
+        }catch (IllegalArgumentException e){
+        }
+        for(int i=0;i<7;i++){
+            for(int j=0;j<11;j++){//////////////////////课的数量要改
+                if(superTableCourse.getTable()[i][j]==null&&table.getTable()[i][j]!=null){
+                    superTableCourse.getTable()[i][j]=new Course("a");
+                }
+            }
+        }
+    }//needtest
+
 ///
     @Override
     public boolean run() {
@@ -462,6 +505,5 @@ public class ActivityManager implements Boolean_model {
     public void dailyRecord() {
 ;;
     }
-
 
 }
