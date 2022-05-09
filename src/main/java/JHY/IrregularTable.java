@@ -19,30 +19,8 @@ public class IrregularTable implements Serializable {
     public ArrayList<Activity> getList() {
         return list;
     }
-
-    public boolean addActivity(Activity ac,int timeOrName){
-        int index;
-        if(timeOrName==0){
-            index=getSeq(ac.getTimeBegin());
-        }else{
-            index=getSeq(ac.getName());
-            list.add(index,ac);
-            return true;
-        }
-
-        /*还要和课程冲突检测*///////////////////
-        if(list.size()==index){
-            list.add(ac);
-            return true;
-        }
-
-        if(ac.detectTime(list.get(index))){//没冲突就肯定在索引处添加
-            list.add(index,ac);
-            return true;
-        }else{
-            System.out.println("和活动表发生时间冲突,添加活动失败,建议您先看看活动表来避免时间冲突");
-        }
-        return false;
+    public void setList(ArrayList<Activity>list){
+        this.list=list;
     }
 
     public int getSeq(Calendar ca){
@@ -50,7 +28,7 @@ public class IrregularTable implements Serializable {
         int low=0,high=list.size()-1,mid;
         while(low<=high){
             mid=(low+high)/2;
-            if(ca .before (list.get(mid).getTimeEnd()) ){
+            if(ca .before (list.get(mid).getTimeBegin()) ){
                 high=mid-1;
             }else {
                 low = mid + 1;
@@ -74,110 +52,131 @@ public class IrregularTable implements Serializable {
     }
 
     public IrregularTable sortByName(){
-        int[] arr=new int[list.size()];
-        HashMap<Integer,Activity> hs=new HashMap<>();
-        for(int i=0;i<list.size();i++){
-            arr[i]=list.get(i).getName().hashCode();
-            hs.put(list.get(i).getName().hashCode(),list.get(i));
-        }
-        mergerSort(arr,0,arr.length-1,new int[arr.length]);
-
         IrregularTable it=new IrregularTable();
+        ArrayList<Activity>temp=new ArrayList<>();
         for(int i=0;i<list.size();i++){
-            it.getList().add(hs.get(arr[i]));
+            it.getList().add(list.get(i));
         }
+        divideN(0,list.size()-1);
+        temp=it.getList();
+        it.setList(this.getList());
+        this.setList(temp);
         return it;
-    }
+
+    }//changed
 
     public IrregularTable sortByTime(){
-        HashMap<Calendar,Activity> hs=new HashMap<>();
-        for(int i=0;i< list.size();i++){
-            hs.put(list.get(i).getTimeBegin(),list.get(i));
-        }
-        Calendar[] arr=hs.keySet().toArray(new Calendar[0]);
-
-        mergerSort(arr,0,arr.length-1,new Calendar[arr.length]);
-
         IrregularTable it=new IrregularTable();
+        ArrayList<Activity>temp=new ArrayList<>();
         for(int i=0;i<list.size();i++){
-            it.getList().add(hs.get(arr[i]));
+            it.getList().add(list.get(i));
         }
+        divideC(0,list.size()-1);
+        temp=it.getList();
+        it.setList(this.getList());
+        this.setList(temp);
         return it;
-    }
+    }////
 
-    public void mergerSort(int[] arr, int left, int right, int[] temp) {
-        if (left < right) {
-            int mid = (left + right) / 2;
-            mergerSort(arr, left, mid, temp);
-            mergerSort(arr, mid + 1, right, temp);
-            mergerUtils(arr, left, mid, right, temp);
-        }
-    }
+    public void divideN(int startIndex,int endIndex){
 
-    public void mergerSort(Calendar[] arr, int left, int right, Calendar[] temp) {
-        if (left < right) {
-            int mid = (left + right) / 2;
-            mergerSort(arr, left, mid, temp);
-            mergerSort(arr, mid + 1, right, temp);
-            mergerUtils(arr, left, mid, right, temp);
+        //Divide till you breakdown your list to single element
+        if(startIndex<endIndex && (endIndex-startIndex)>=1){
+            int mid = (endIndex + startIndex)/2;
+            divideN(startIndex, mid);
+            divideN(mid+1, endIndex);
+
+            //merging Sorted array produce above into one sorted array
+            mergerN(startIndex,mid,endIndex);
         }
     }
 
-    public void mergerUtils(int[] arr, int left, int mid, int right, int[] temp) {
-        int i = left;
-        int j = mid + 1;
-        int t = 0;
-        //比较左右两边的数组大小，并依次进行合并的过程
-        while (i <= mid && j <= right) {
-            temp[t++] = arr[i] <= arr[j]?arr[i++]:arr[j++];
-        }
-        //那边的数据还有剩余，我们就将剩下的元素拷贝过去
-        while (i <= mid) {
-            temp[t] = arr[i];
-            t += 1;
-            i += 1;
-        }
-        while (j <= right) {
-            temp[t] = arr[j];
-            t += 1;
-            j += 1;
-        }
-        //将临时数组中与已经排列好的数据复制到原数组中
-        t = 0;
-        int tempLeft = left;
-        while (tempLeft <= right) {
-            arr[tempLeft] = temp[t];
-            t += 1;
-            tempLeft += 1;
+    public void divideC(int startIndex,int endIndex){
+
+        //Divide till you breakdown your list to single element
+        if(startIndex<endIndex && (endIndex-startIndex)>=1){
+            int mid = (endIndex + startIndex)/2;
+            divideC(startIndex, mid);
+            divideC(mid+1, endIndex);
+
+            //merging Sorted array produce above into one sorted array
+            mergerC(startIndex,mid,endIndex);
         }
     }
 
-    public void mergerUtils(Calendar[] arr, int left, int mid, int right, Calendar[] temp) {
-        int i = left;
-        int j = mid + 1;
-        int t = 0;
-        //比较左右两边的数组大小，并依次进行合并的过程
-        while (i <= mid && j <= right) {
-            temp[t++] =( arr[i].before(arr[j]) || arr[i].equals(arr[j]) ) ?arr[i++]:arr[j++];
+    public void mergerN(int startIndex,int midIndex,int endIndex){
+
+        //Below is the mergedarray that will be sorted array Array[i-midIndex] , Array[(midIndex+1)-endIndex]
+        ArrayList<Activity> mergedSortedArray = new ArrayList<>();
+
+        int leftIndex = startIndex;
+        int rightIndex = midIndex+1;
+
+        while(leftIndex<=midIndex && rightIndex<=endIndex){
+            if(list.get(leftIndex).getName().hashCode()<=list.get(rightIndex).getName().hashCode()){
+                mergedSortedArray.add(list.get(leftIndex));
+                leftIndex++;
+            }else{
+                mergedSortedArray.add(list.get(rightIndex));
+                rightIndex++;
+            }
         }
-        //那边的数据还有剩余，我们就将剩下的元素拷贝过去
-        while (i <= mid) {
-            temp[t] = arr[i];/////////////
-            t += 1;
-            i += 1;
+
+        //Either of below while loop will execute
+        while(leftIndex<=midIndex){
+            mergedSortedArray.add(list.get(leftIndex));
+            leftIndex++;
         }
-        while (j <= right) {
-            temp[t] = arr[j];
-            t += 1;
-            j += 1;
+
+        while(rightIndex<=endIndex){
+            mergedSortedArray.add(list.get(rightIndex));
+            rightIndex++;
         }
-        //将临时数组中与已经排列好的数据复制到原数组中
-        t = 0;
-        int tempLeft = left;
-        while (tempLeft <= right) {
-            arr[tempLeft] = temp[t];
-            t += 1;
-            tempLeft += 1;
+
+        int i = 0;
+        int j = startIndex;
+        //Setting sorted array to original one
+        while(i<mergedSortedArray.size()){
+            list.set(j, mergedSortedArray.get(i++));
+            j++;
+        }
+    }
+
+    public void mergerC(int startIndex,int midIndex,int endIndex){
+
+        //Below is the mergedarray that will be sorted array Array[i-midIndex] , Array[(midIndex+1)-endIndex]
+        ArrayList<Activity> mergedSortedArray = new ArrayList<>();
+
+        int leftIndex = startIndex;
+        int rightIndex = midIndex+1;
+
+        while(leftIndex<=midIndex && rightIndex<=endIndex){
+            if(!list.get(leftIndex).getTimeBegin().after(list.get(rightIndex).getTimeBegin())){
+                mergedSortedArray.add(list.get(leftIndex));
+                leftIndex++;
+            }else{
+                mergedSortedArray.add(list.get(rightIndex));
+                rightIndex++;
+            }
+        }
+
+        //Either of below while loop will execute
+        while(leftIndex<=midIndex){
+            mergedSortedArray.add(list.get(leftIndex));
+            leftIndex++;
+        }
+
+        while(rightIndex<=endIndex){
+            mergedSortedArray.add(list.get(rightIndex));
+            rightIndex++;
+        }
+
+        int i = 0;
+        int j = startIndex;
+        //Setting sorted array to original one
+        while(i<mergedSortedArray.size()){
+            list.set(j, mergedSortedArray.get(i++));
+            j++;
         }
     }
 

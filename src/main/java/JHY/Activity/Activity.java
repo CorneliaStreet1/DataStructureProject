@@ -8,6 +8,8 @@ import JHY.RegularTable;
 
 import java.io.Serializable;
 import java.util.Calendar;
+
+
 //extens
 public class Activity implements Serializable {
 
@@ -78,12 +80,25 @@ public class Activity implements Serializable {
     public boolean detectTime(IrregularTable c){
         if (c.getList().size()==0)
             return true;
-        for(int i=0;i<c.getList().size();i++){
+        int seq=c.getSeq(this.timeBegin);
+        if(seq!=0&&c.getList().get(seq-1).timeBegin.equals(this.timeBegin))
+            return false;
+        int date=this.timeBegin.get(Calendar.DATE);
+        int month=this.timeBegin.get(Calendar.MONTH);
+        int year=this.timeBegin.get(Calendar.YEAR);
+        for(int i=seq;i<c.getList().size()&&c.getList().get(seq).getTimeBegin().get(Calendar.DATE)==date
+            &&c.getList().get(seq).getTimeBegin().get(Calendar.MONTH)==month
+            &&c.getList().get(seq).getTimeBegin().get(Calendar.YEAR)==year;i++){
             if(!c.getList().get(i).detectTime(this))
                 return false;
         }
-        return true;
-    }
+        for(int i=seq-1;i>-1&&c.getList().get(seq).getTimeBegin().get(Calendar.DATE)==date
+                &&c.getList().get(seq).getTimeBegin().get(Calendar.MONTH)==month
+                &&c.getList().get(seq).getTimeBegin().get(Calendar.YEAR)==year;i--){
+            if(!c.getList().get(i).detectTime(this))
+                return false;
+        }        return true;
+    }///changed
     //活动和所有课程检测
     public boolean detectTime(RegularTable table){
         int dayOfWeek=(timeBegin.get(Calendar.DAY_OF_WEEK)+5)%7;
