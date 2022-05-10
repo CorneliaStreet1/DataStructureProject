@@ -1,8 +1,6 @@
 package JHY;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 public class RegularTable implements Serializable {
 
@@ -40,14 +38,6 @@ public class RegularTable implements Serializable {
         }
     }
 
-    public boolean detectTime(int day,int seq){////////////////
-        if(table[day-1][seq-1]==null){
-            table[day-1][seq-1]=new Course();
-            return true;
-        }else{
-            return false;
-        }
-    }/////needtest
     //合并表
     private static Course[][] combineTable(Course[][] table1,Course[][]table2){
         //假定不起冲突,万一有冲突第一个表优先
@@ -66,9 +56,9 @@ public class RegularTable implements Serializable {
     public static void printTable(RegularTable table1,RegularTable table2){
         Course[][] table=combineTable(table1.getTable(),table2.getTable());
         ///暂定的打印格式
-        System.out.print("         第一节        第二节        第三节    ");
-        System.out.print("    第四节        第五节        第六节    ");
-        System.out.println("    第七节        第八节        第九节    ");
+        System.out.print("         第一节        第二节        第三节        第四节    ");
+        System.out.print("    第五节        第六节        第七节        第八节    ");
+        System.out.println("    第九节        第十节        第十一节    ");
         for(int i=0;i<7;i++){
             switch (i){
                 case 0:
