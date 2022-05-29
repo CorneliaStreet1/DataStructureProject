@@ -11,13 +11,24 @@ import java.io.Serializable;
         - 考试时间和考试地点等信息*/
 public class Course extends Information implements Serializable {
     String name;
-    String address;
+    String ClassRoomName;
     String GroupInformation;
+
+    public String getBuildingName() {
+        return BuildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        BuildingName = buildingName;
+    }
+
+    String BuildingName;
     public Course() {
     }
-    public Course(String name, String address) {
+    public Course(String name, String ClassRoomName, String buildingName) {
         this.name = name;
-        this.address = address;
+        this.ClassRoomName = ClassRoomName;
+        this.BuildingName = buildingName;
     }
     public Course(String name) {
         this.name = name;
@@ -30,12 +41,12 @@ public class Course extends Information implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getClassRoomName() {
+        return ClassRoomName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setClassRoomName(String classRoomName) {
+        this.ClassRoomName = classRoomName;
     }
     public String getGroupInformation() {
         return GroupInformation;

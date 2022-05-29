@@ -1,22 +1,44 @@
 package JYQ.BuptMap;
 
 public class WeigtedEgde {
-    private int VertexNumber;
+    private int AdjcentVertexNumber;
     private int weight;
-    public WeigtedEgde(int V, int W) {
-        VertexNumber = V;
+    public WeigtedEgde(int V1, int W) {
+        AdjcentVertexNumber = V1;
         weight = W;
     }
-    public int getVertexNumber() {
-        return VertexNumber;
+
+    public int getAdjcentVertexNumber() {
+        return AdjcentVertexNumber;
     }
+
+    public void setAdjcentVertexNumber(int adjcentVertexNumber) {
+        AdjcentVertexNumber = adjcentVertexNumber;
+    }
+
     public int getWeight() {
         return weight;
     }
-    public void setVertexNumber(int V) {
-        this.VertexNumber = V;
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
-    public void setWeight(int W) {
-        this.weight = W;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof WeigtedEgde) {
+            WeigtedEgde weigtedEgde = (WeigtedEgde) obj;
+            if (weigtedEgde.AdjcentVertexNumber == this.AdjcentVertexNumber && weigtedEgde.weight == this.weight) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

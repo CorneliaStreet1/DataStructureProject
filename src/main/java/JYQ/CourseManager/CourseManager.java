@@ -1,6 +1,5 @@
 package JYQ.CourseManager;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -539,7 +538,7 @@ public class CourseManager {
         Course course = Utils.readObject(CourseFile, Course.class);
         System.out.println("查询到的课程信息如下:");
         System.out.println("课程名称: " + course.getName());
-        System.out.println("上课地点: "+course.getAddress());
+        System.out.println("上课地点: "+ course.getBuildingName() + course.getClassRoomName());
         LinkedList<TableInformation> coursesList = new LinkedList<>();
         for ( LinkedList<TableInformation> l:courseTable.getCourseTable()) {
             for ( TableInformation t: l) {
@@ -712,16 +711,16 @@ public class CourseManager {
         System.out.println("添加课程信息成功。");
     }
     public static void main(String[] args) {
-       Course[] courses= {new Course("计算机组成原理","S208"),
-        new Course("计算机网络", "N516"),
-        new Course("毛泽东思想和中国特色社会主义理论体系概论","E431"),
-        new Course("体育基础（男篮）","运动场"),
-        new Course("形式语言与自动机", "S510"),
-        new Course("面向对象程序设计Java","N201"),
-        new Course("数据结构课程设计","N207"),
-        new Course("面向对象程序设计C++","S301"),
-        new Course("离散数学","S201"),
-        new Course("数学建模","N201")
+       Course[] courses= {new Course("计算机组成原理","S208","综合实验教学楼"),
+        new Course("计算机网络", "N516","综合实验教学楼"),
+        new Course("毛泽东思想和中国特色社会主义理论体系概论","E431", "综合实验教学楼"),
+        new Course("体育基础（男篮）","运动场", "综合实验教学楼"),
+        new Course("形式语言与自动机", "S510", "综合实验教学楼"),
+        new Course("面向对象程序设计Java","N201", "综合实验教学楼"),
+        new Course("数据结构课程设计","N207", "综合实验教学楼"),
+        new Course("面向对象程序设计C++","S301", "综合实验教学楼"),
+        new Course("离散数学","S201","综合实验教学楼"),
+        new Course("数学建模","N201","综合实验教学楼")
         };
      /*  for (int i = 0 ; i< courses.length ; i ++) {
             CourseManager.addNewCourse(courses[i]);
