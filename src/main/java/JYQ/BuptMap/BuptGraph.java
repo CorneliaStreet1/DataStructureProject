@@ -37,11 +37,15 @@ public class BuptGraph implements Serializable{
         }
         else {
             Buildings.get(V1).add(new WeigtedEgde(V2, W));
+            Buildings.get(V2).add(new WeigtedEgde(V1,W));
             Edges += 1;
         }
     }
     public LinkedList<WeigtedEgde> Adjcents(int V) {
         return this.Buildings.get(V);
+    }
+    public int getWeight(int V1, int V2) {
+        return Buildings.get(V1).get(V2).getWeight();
     }
     public static void main(String[] args) {
         BuptGraph buptGraph = new BuptGraph(10);

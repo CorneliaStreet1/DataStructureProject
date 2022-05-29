@@ -1,5 +1,7 @@
 package JYQ.DistanceGraph;
 
+import JYQ.BuptMap.BuptGraph;
+import JYQ.BuptMap.XiTuChengMap;
 import JYQ.Directories;
 import JYQ.Utils;
 
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 public class XiTuChengDistanceGraph {
     private ArrayList<ArrayList<Character>> AdjMatrix;
     public static File MatrixFile = Utils.join(Directories.MapRepo, "30.txt");
-
+    private XiTuChengMap xiTuChengMap;
     public ArrayList<ArrayList<Character>> getAdjMatrix() {
         return AdjMatrix;
     }
@@ -22,6 +24,7 @@ public class XiTuChengDistanceGraph {
         for (int i = 0 ; i < 30; i++) {
             AdjMatrix.add(new ArrayList<>(30));
         }
+        xiTuChengMap = new XiTuChengMap(30);
     }
     public void initMatrix() {
         try {
@@ -33,16 +36,33 @@ public class XiTuChengDistanceGraph {
                 if (end == -1) {
                     break;
                 }
+                char c = (char) end;
                 if (((char)end) == '\n') {
                     LineNum += 1;
+                    continue;
                 }
-                AdjMatrix.get(LineNum).add((char)end);
+                if (((char)end) != '\r') {
+                    AdjMatrix.get(LineNum).add((char) end);
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void BuildDistanceMap() {
+        for (int i = 0 ; i < 30 ; i ++) {
+            for (int j = 0; j < AdjMatrix.get(i).size(); j++) {
+                if (AdjMatrix.get(i).get(j) == '1') {
+                    double d = Math.random() * 1000 + 101;
+                    this.xiTuChengMap.addEdge(i,j,(int) d);
+                }
+            }
+        }
+    }
+    public int getBuildingDistance(int V1, int V2) {
+        return this.xiTuChengMap.getWeight(V1, V2);
     }
 }
 class Test {
