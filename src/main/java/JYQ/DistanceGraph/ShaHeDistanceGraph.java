@@ -1,16 +1,11 @@
 package JYQ.DistanceGraph;
 
 import JYQ.BuptMap.ShaHeMap;
-import JYQ.BuptMap.XiTuChengMap;
 import JYQ.Directories;
 import JYQ.Utils;
-
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * 西土城校区，30个点，30.txt
- */
 public class ShaHeDistanceGraph {
     private ArrayList<ArrayList<Character>> AdjMatrix;
     public static File MatrixFile = Utils.join(Directories.MapRepo, "27.txt");
@@ -19,11 +14,11 @@ public class ShaHeDistanceGraph {
         return AdjMatrix;
     }
     public ShaHeDistanceGraph() {
-        AdjMatrix = new ArrayList<>(30);
-        for (int i = 0 ; i < 30; i++) {
-            AdjMatrix.add(new ArrayList<>(30));
+        AdjMatrix = new ArrayList<>(27);
+        for (int i = 0 ; i < 27; i++) {
+            AdjMatrix.add(new ArrayList<>(27));
         }
-        ShaHeMap = new ShaHeMap(30);
+        ShaHeMap = new ShaHeMap(27);
     }
     public void initMatrix() {
         try {

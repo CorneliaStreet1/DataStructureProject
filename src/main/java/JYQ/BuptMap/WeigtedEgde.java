@@ -8,11 +8,11 @@ public class WeigtedEgde {
         weight = W;
     }
 
-    public int getAdjcentVertexNumber() {
+    public int getAdjacentVertexNumber() {
         return AdjcentVertexNumber;
     }
 
-    public void setAdjcentVertexNumber(int adjcentVertexNumber) {
+    public void setAdjacentVertexNumber(int adjcentVertexNumber) {
         AdjcentVertexNumber = adjcentVertexNumber;
     }
 
