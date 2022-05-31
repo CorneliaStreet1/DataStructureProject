@@ -36,8 +36,8 @@ public class BuptGraph implements Serializable{
             return;
         }
         else {
-            Buildings.get(V1).add(new WeigtedEgde(V2, W));
-            Buildings.get(V2).add(new WeigtedEgde(V1,W));
+            Buildings.get(V1).add(V2,new WeigtedEgde(V2, W));
+            Buildings.get(V2).add(V1,new WeigtedEgde(V1,W));
             Edges += 1;
         }
     }
@@ -45,6 +45,9 @@ public class BuptGraph implements Serializable{
         return this.Buildings.get(V);
     }
     public int getWeight(int V1, int V2) {
+        if (Buildings.get(V1).get(V2) == null) {
+            throw new RuntimeException("There is no edge between V1 and V2");
+        }
         return Buildings.get(V1).get(V2).getWeight();
     }
     public static void main(String[] args) {
