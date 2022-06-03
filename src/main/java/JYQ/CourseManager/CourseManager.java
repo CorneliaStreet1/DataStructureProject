@@ -720,13 +720,14 @@ public class CourseManager {
         new Course("数据结构课程设计","N207", "综合实验教学楼"),
         new Course("面向对象程序设计C++","S301", "综合实验教学楼"),
         new Course("离散数学","S201","综合实验教学楼"),
-        new Course("数学建模","N201","综合实验教学楼")
-        };
-     /*  for (int i = 0 ; i< courses.length ; i ++) {
+        new Course("数学建模","N201","综合实验教学楼"),
+        new Course("数据库原理","N309","教一楼")
+       };
+    /* for (int i = 0 ; i< courses.length ; i ++) {
             CourseManager.addNewCourse(courses[i]);
         }*/
        // deleteCourse(courses[1]);
-       CourseManager.Interface();
+      CourseManager.Interface();
        /* File jsjwl = Utils.join(Directories.CourseRepo, "计算机网络");
         Course course = Utils.readObject(jsjwl, Course.class);
         System.out.println(course.getExams());

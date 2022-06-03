@@ -12,12 +12,20 @@ public class XiTuChengMap extends BuptGraph implements Serializable {
     private Map<Integer, String> IndexToBuilding;
     private Map<String, Integer> BuildingToIndex;
     public XiTuChengMap() {
-
+        this(0);
     }
     public XiTuChengMap(int BuildingNum) {
         super(BuildingNum);
         IndexToBuilding = new HashMap<>();
         BuildingToIndex = new HashMap<>();
+        this.init();
+    }
+
+    private void init() {
+        for (int i = 0;i < buildings.length;i ++) {
+            IndexToBuilding.put(i + 30, buildings[i]);
+            BuildingToIndex.put(buildings[i], i + 30);
+        }
     }
 
     /**

@@ -12,13 +12,22 @@ public class ShaHeMap extends BuptGraph implements Serializable {
     private Map<Integer, String> IndexToBuilding;
     private Map<String , Integer> BuildingToIndex;
     public ShaHeMap() {
-
+        this(0);
     }
     public ShaHeMap(int BuildingNum) {
         super(BuildingNum);
         IndexToBuilding = new HashMap<>();
         BuildingToIndex = new HashMap<>();
+        this.init();
     }
+
+    private void init() {
+        for (int i = 0;i < buildings.length;i ++) {
+            IndexToBuilding.put(i, buildings[i]);
+            BuildingToIndex.put(buildings[i], i);
+        }
+    }
+
     /**
      * 给定沙河校区的某一个建筑，返回这个建筑在图中的编号
      * @param BuildingName 沙河校区中某个建筑的名称
@@ -48,5 +57,4 @@ public class ShaHeMap extends BuptGraph implements Serializable {
             System.out.println(shaHeMap.getBuildingIndex(shaHeMap.getBuildingName(i)) + " " + i);
         }
     }*/
-
 }

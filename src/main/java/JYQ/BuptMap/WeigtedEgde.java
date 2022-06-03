@@ -1,6 +1,8 @@
 package JYQ.BuptMap;
 
-public class WeigtedEgde {
+import java.io.Serializable;
+
+public class WeigtedEgde implements Serializable {
     private int AdjcentVertexNumber;
     private int weight;
     public WeigtedEgde(int V1, int W) {

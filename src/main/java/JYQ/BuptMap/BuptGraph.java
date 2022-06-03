@@ -2,18 +2,18 @@ package JYQ.BuptMap;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 public class BuptGraph implements Serializable{
-    private ArrayList<LinkedList<WeigtedEgde>> Buildings;
+    private ArrayList<WeigtedEgde[]> Buildings;
     private int Vertices;
     private int Edges;
     public BuptGraph() {
 
     }
     public BuptGraph(int VertexNumber) {
-        Buildings = new ArrayList<LinkedList<WeigtedEgde>>(VertexNumber);
+        Buildings = new ArrayList<WeigtedEgde[]>(VertexNumber);
         for (int i = 0 ; i < VertexNumber; i ++) {
-            Buildings.add(i, new LinkedList<WeigtedEgde>());
+            Buildings.add(i, new WeigtedEgde[VertexNumber]);
         }
         Vertices = VertexNumber;
         Edges = 0;
@@ -32,23 +32,23 @@ public class BuptGraph implements Serializable{
      * @param W
      */
     public void addEdge(int V1, int V2, int W) {
-        if ((Buildings.get(V1).contains(new WeigtedEgde(V2,W))|| Buildings.get(V2).contains(new WeigtedEgde(V1, W))) || V1 == V2) {
+        if (((new WeigtedEgde(V2,W)).equals(Buildings.get(V1)[V2]) && (new WeigtedEgde(V1, W)).equals(Buildings.get(V2)[V1])) || V1 == V2) {
             return;
         }
         else {
-            Buildings.get(V1).add(V2,new WeigtedEgde(V2, W));
-            Buildings.get(V2).add(V1,new WeigtedEgde(V1,W));
+            Buildings.get(V1)[V2] = new WeigtedEgde(V2, W);
+            Buildings.get(V2)[V1] = new WeigtedEgde(V1,W);
             Edges += 1;
         }
     }
-    public LinkedList<WeigtedEgde> Adjcents(int V) {
+    public WeigtedEgde[] Adjcents(int V) {
         return this.Buildings.get(V);
     }
     public int getWeight(int V1, int V2) {
-        if (Buildings.get(V1).get(V2) == null) {
+        if (Buildings.get(V1)[V2] == null) {
             throw new RuntimeException("There is no edge between V1 and V2");
         }
-        return Buildings.get(V1).get(V2).getWeight();
+        return Buildings.get(V1)[V2].getWeight();
     }
     public static void main(String[] args) {
         BuptGraph buptGraph = new BuptGraph(10);

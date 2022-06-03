@@ -1,6 +1,6 @@
 package JYQ.DistanceGraph;
 
-import JYQ.BuptMap.BuptGraph;
+import JYQ.BuptMap.WeigtedEgde;
 import JYQ.BuptMap.XiTuChengMap;
 import JYQ.Directories;
 import JYQ.Utils;
@@ -11,7 +11,8 @@ import java.util.ArrayList;
 /**
  * 西土城校区，30个点，30.txt
  */
-public class XiTuChengDistanceGraph {
+public class XiTuChengDistanceGraph implements DistanceGraph, Serializable{
+    static final long SerialVersionUID = 1919180114514L;
     private ArrayList<ArrayList<Character>> AdjMatrix;
     public static File MatrixFile = Utils.join(Directories.MapRepo, "30.txt");
     private XiTuChengMap xiTuChengMap;
@@ -25,7 +26,10 @@ public class XiTuChengDistanceGraph {
             AdjMatrix.add(new ArrayList<>(30));
         }
         xiTuChengMap = new XiTuChengMap(30);
+        this.initMatrix();
+        this.BuildDistanceMap();
     }
+
     public void initMatrix() {
         try {
             int LineNum = 0;
@@ -52,24 +56,38 @@ public class XiTuChengDistanceGraph {
         }
     }
     public void BuildDistanceMap() {
-        for (int i = 0 ; i < 30 ; i ++) {
-            for (int j = 0; j < AdjMatrix.get(i).size(); j++) {
-                if (AdjMatrix.get(i).get(j) == '1') {
-                    double d = Math.random() * 1000 + 101;
-                    this.xiTuChengMap.addEdge(i,j,(int) d);
+        File XiTuChengDistanceGraph = Utils.join(Directories.DistanceMap, "XiTuChengDistanceGraph");
+        if (!XiTuChengDistanceGraph.exists()) {
+            for (int i = 0; i < 30; i++) {
+                for (int j = 0; j < AdjMatrix.get(i).size(); j++) {
+                    if (AdjMatrix.get(i).get(j) == '1') {
+                        double d = Math.random() * 1000 + 101;
+                        this.xiTuChengMap.addEdge(i, j, (int) d);
+                    }
                 }
             }
+            Utils.writeObject(XiTuChengDistanceGraph, this);
         }
+    }
+    public static XiTuChengDistanceGraph ReadInGraph() {
+        File XiTuChengDistanceGraph = Utils.join(Directories.DistanceMap, "XiTuChengDistanceGraph");
+        return Utils.readObject(XiTuChengDistanceGraph, JYQ.DistanceGraph.XiTuChengDistanceGraph.class);
     }
     public int getBuildingDistance(int V1, int V2) {
         return this.xiTuChengMap.getWeight(V1, V2);
     }
-}
-class Test {
+    @Override
+    public int getVertices() {
+        return 30;
+    }
+
+    @Override
+    public WeigtedEgde[] Adjcents(int bestNode) {
+        return xiTuChengMap.Adjcents(bestNode);
+    }
+
     public static void main(String[] args) {
-        XiTuChengDistanceGraph xiTuChengDistanceGraph = new XiTuChengDistanceGraph();
-        xiTuChengDistanceGraph.initMatrix();
-        System.out.println(xiTuChengDistanceGraph.getAdjMatrix());
+        new XiTuChengDistanceGraph();
     }
 }
 

@@ -15,7 +15,7 @@ import JYQ.Utils;
 import java.io.File;
 
 public class System_main extends Total_models{
-    public static String CurrentUserName = "manager";
+    public static String CurrentUserName = "jyq";
     public static int CurrentUserClass=-1;
 
     CourseManager courseManager;

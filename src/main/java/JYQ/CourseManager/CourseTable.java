@@ -38,11 +38,11 @@ public class CourseTable {
         for (int i = 0 ; i < 7 ; i ++) {
             for (int j = 0 ; j < 9 ; j ++) {
                 Course course;
-                if (r1.get(i,j) != null){
-                    course = r1.get(i, j);
+                if (r1.get(i+1,j+1) != null){
+                    course = r1.get(i + 1, j + 1);
                 }
                 else {
-                    course = r2.get(i,j);
+                    course = r2.get(i+1,j+1);
                 }
                 this.CourseTable[i].get(j).setCourse(course);
             }
