@@ -2,6 +2,7 @@ package JYQ.DistanceGraph;
 
 import JYQ.BuptMap.WeigtedEgde;
 import JYQ.BuptMap.XiTuChengMap;
+import JYQ.DijkstraUtils.DijkstraGraph;
 import JYQ.Directories;
 import JYQ.Utils;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * 西土城校区，30个点，30.txt
  */
-public class XiTuChengDistanceGraph implements DistanceGraph, Serializable{
+public class XiTuChengDistanceGraph implements DistanceGraph, Serializable, DijkstraGraph {
     static final long SerialVersionUID = 1919180114514L;
     private ArrayList<ArrayList<Character>> AdjMatrix;
     public static File MatrixFile = Utils.join(Directories.MapRepo, "30.txt");

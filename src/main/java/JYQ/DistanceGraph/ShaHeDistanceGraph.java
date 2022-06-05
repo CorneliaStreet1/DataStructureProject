@@ -2,13 +2,14 @@ package JYQ.DistanceGraph;
 
 import JYQ.BuptMap.ShaHeMap;
 import JYQ.BuptMap.WeigtedEgde;
+import JYQ.DijkstraUtils.DijkstraGraph;
 import JYQ.Directories;
 import JYQ.Utils;
 import java.io.*;
 import java.util.ArrayList;
 
-public class ShaHeDistanceGraph implements DistanceGraph ,Serializable{
-    static final long SerialVersionUID = 1145141919180L;
+public class ShaHeDistanceGraph implements DistanceGraph ,Serializable, DijkstraGraph {
+    private static final long SerialVersionUID = 1145141919180L;
     private ArrayList<ArrayList<Character>> AdjMatrix;
     public static File MatrixFile = Utils.join(Directories.MapRepo, "27.txt");
     private ShaHeMap ShaHeMap;
