@@ -9,7 +9,7 @@ public class Hoffman {
         private byteCode leftTree,rightTree;
         private int times;
         private byte b;
-        private String hoffCode;
+        private String hoffCode;//可以用字节数组代替，不过这样需要把压缩和解压都改了，暑假再说吧
 
         public byteCode(){
             clear();
@@ -76,8 +76,13 @@ public class Hoffman {
     private long total_byte, compress_byte;
     //字节总数
     private final int codeNum = 256;
+
     //节点数组，霍夫曼树就在这的基础上建立
     private byteCode[] byteCodes = new byteCode[codeNum];
+    //弄512个就能不用new直接数组就行，
+    //这样也能提高速度，不过需要把建哈夫曼树和节点的结构改了
+
+
     //压缩文件后缀名
     private final String suffix_h = ".hoff";
     //解压后的名字，带扩展名
