@@ -44,7 +44,7 @@ public class BuptGraph implements Serializable{
     public WeigtedEgde[] Adjcents(int V) {
         return this.Buildings.get(V);
     }
-    public int getWeight(int V1, int V2) {
+    public double getWeight(int V1, int V2) {
         if (Buildings.get(V1)[V2] == null) {
             throw new RuntimeException("There is no edge between V1 and V2");
         }

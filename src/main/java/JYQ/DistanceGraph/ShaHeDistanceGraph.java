@@ -66,7 +66,7 @@ public class ShaHeDistanceGraph implements DistanceGraph ,Serializable, Dijkstra
         File ShaHeDistanceGraph = Utils.join(Directories.DistanceMap, "ShaHeDistanceGraph");
         return Utils.readObject(ShaHeDistanceGraph, JYQ.DistanceGraph.ShaHeDistanceGraph.class);
     }
-    public int getBuildingDistance(int V1, int V2) {
+    public double getBuildingDistance(int V1, int V2) {
         return this.ShaHeMap.getWeight(V1, V2);
     }
 

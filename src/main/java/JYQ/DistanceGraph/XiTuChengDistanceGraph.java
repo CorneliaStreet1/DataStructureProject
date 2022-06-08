@@ -74,7 +74,7 @@ public class XiTuChengDistanceGraph implements DistanceGraph, Serializable, Dijk
         File XiTuChengDistanceGraph = Utils.join(Directories.DistanceMap, "XiTuChengDistanceGraph");
         return Utils.readObject(XiTuChengDistanceGraph, JYQ.DistanceGraph.XiTuChengDistanceGraph.class);
     }
-    public int getBuildingDistance(int V1, int V2) {
+    public double getBuildingDistance(int V1, int V2) {
         return this.xiTuChengMap.getWeight(V1, V2);
     }
     @Override

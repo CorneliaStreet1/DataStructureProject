@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class WeigtedEgde implements Serializable {
     private int AdjcentVertexNumber;
-    private int weight;
-    public WeigtedEgde(int V1, int W) {
+    private double weight;
+    public WeigtedEgde(int V1, double W) {
         AdjcentVertexNumber = V1;
         weight = W;
     }
@@ -18,7 +18,7 @@ public class WeigtedEgde implements Serializable {
         AdjcentVertexNumber = adjcentVertexNumber;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 

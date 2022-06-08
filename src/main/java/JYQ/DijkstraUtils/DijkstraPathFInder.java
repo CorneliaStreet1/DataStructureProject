@@ -10,12 +10,12 @@ import java.util.Deque;
 public class DijkstraPathFInder {
 
     private DijkstraGraph Graph;
-    private int[] DistanceTo;
+    private double[] DistanceTo;
     private int[] EdgeTo;
     private boolean[] Removed;
     public DijkstraPathFInder(DijkstraGraph graph) {
         Graph = graph;
-        DistanceTo = new int[graph.getVertices()];
+        DistanceTo = new double[graph.getVertices()];
         EdgeTo = new int[graph.getVertices()];
         Removed = new boolean[graph.getVertices()];
     }
@@ -39,7 +39,7 @@ public class DijkstraPathFInder {
             for (int i = 0 ; i < Adjacent.length;i ++) {
                 WeigtedEgde weigtedEgde = Adjacent[i];
                 if (weigtedEgde != null) {
-                    int NewDistance = weigtedEgde.getWeight() + DistanceTo[bestNode];
+                    double NewDistance = weigtedEgde.getWeight() + DistanceTo[bestNode];
                     int CurrentAdjacent = weigtedEgde.getAdjacentVertexNumber();
                     if (DistanceTo[CurrentAdjacent] == -1 || DistanceTo[CurrentAdjacent] > NewDistance) {
                         DistanceTo[CurrentAdjacent] = NewDistance;
