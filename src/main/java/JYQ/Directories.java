@@ -12,4 +12,5 @@ public class Directories {
    // public static final File CompressedRepo = Utils.join(UserFiles,"CompressedRepo");
     public static final File MaterialRepo = Utils.join(UserFiles, "MaterialRepo");
     public static final File MapRepo = Utils.join(UserFiles,"MapRepo");
+    public static final File DistanceMap = Utils.join(MapRepo, "DistanceMap");
 }
