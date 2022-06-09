@@ -10,7 +10,7 @@ import java.util.Deque;
 public class Navigation {
     public static void Navigator(int Source, int Dest) {
         //如果起点的编号小于27，则说明起点在沙河，反之在西土城
-        System.out.println("按最短距离策略寻找到的路径如下:");
+        System.out.println("按最短时间策略寻找到的路径如下:");
         boolean SourceIsInShaHe = (Source < 27);
         boolean DestIsInShaHe = (Dest < 27);
         //起点和终点都在沙河
