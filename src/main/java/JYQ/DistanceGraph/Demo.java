@@ -9,11 +9,11 @@ public class Demo {
     public static void main(String[] args) {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader(Directories.MapRepo.getAbsolutePath() + "\\30.txt"));
+            reader = new BufferedReader(new FileReader("dict.dic"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
- /*       String s;
+      String s;
         try {
             while ((s = reader.readLine()) != null) {
                 System.out.println(s);
@@ -21,9 +21,7 @@ public class Demo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println();
-        System.out.println();*/
-        char c;
+      /*  char c;
         int end = 1;
         try {
             while (end != -1) {
@@ -35,6 +33,6 @@ public class Demo {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

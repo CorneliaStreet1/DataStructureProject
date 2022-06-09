@@ -54,7 +54,7 @@ public class ShortestPathFinder {
                for (int i = 0 ; i < Adjacent.length;i ++) {
                    WeigtedEgde weigtedEgde = Adjacent[i];
                    if (weigtedEgde != null) {
-                       double NewDistance = weigtedEgde.getWeight() + DistanceTo[bestNode];
+                       double NewDistance = weigtedEgde.getWeight()  + DistanceTo[bestNode];
                        int CurrentAdjacent = weigtedEgde.getAdjacentVertexNumber();
                        if (DistanceTo[CurrentAdjacent] == -1 || DistanceTo[CurrentAdjacent] > NewDistance) {
                            DistanceTo[CurrentAdjacent] = NewDistance;

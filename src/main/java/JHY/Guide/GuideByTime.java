@@ -1,5 +1,7 @@
 package JHY.Guide;
 import HYH.Model.Total_models;
+import JYQ.BuptMap.WeigtedEgde;
+import JYQ.DijkstraUtils.DijkstraGraph;
 
 import java.io.*;
 import java.util.Calendar;
@@ -9,11 +11,11 @@ public class GuideByTime {
     public static int[][]shahe;
     public static int[][]xitucheng;
 
-    public int getTimeShaHe(int a, int b, int dis){
-        return shahe[a][b]*dis;
+    public int getTimeShaHe(int a, int b){
+        return shahe[a][b];
     }
-    public int getTimeXiTuCheng(int a,int b,int dis){
-        return xitucheng[a][b]*dis;
+    public int getTimeXiTuCheng(int a,int b){
+        return xitucheng[a][b];
     }
 
     public GuideByTime() {
