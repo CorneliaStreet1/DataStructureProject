@@ -47,14 +47,17 @@ public class System_main extends Total_models{
 
                 //获取当前用户班级
                 UserInformation userInformation = Utils.readObject(Utils.join(Directories.UserRepo, CurrentUserName),UserInformation.class);
+                String userPath="./UserFiles/UserRepo/"+CurrentUserName;
+                File user=new File(userPath);
                 if(userInformation.isStudent()){
-                    String userPath="./UserFiles/UserRepo/"+CurrentUserName;
-                    File user=new File(userPath);
                     Student student_user=Utils.readObject(user,Student.class);
                     CurrentUserClass=student_user.getClassNumber();
                     System.out.println("班级："+CurrentUserClass);
                 }
-                else CurrentUserClass=-1;
+                else{
+                    CurrentUserClass=-1;
+                    //Manager manager=Utils.readObject(user,Manager.class);
+                }
                 //写用户信息进日志
                 RecordOperate.WriteRecord("用户登录\n用户名："+CurrentUserName+"\n");
                 if(CurrentUserClass!=-1) RecordOperate.WriteRecord("用户班级："+CurrentUserClass+"\n");

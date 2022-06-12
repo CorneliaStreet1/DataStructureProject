@@ -15,8 +15,8 @@ public class SelectSchool extends SearchModel{
         String i=super.scanner.nextLine();
         SCHOOL temp;
         switch (i){
-            case "1":temp=SCHOOL.ShaHe; return true;
-            case "2":temp=SCHOOL.XiTuCheng; return true;
+            case "1":SearchModel.writeSchool(SCHOOL.ShaHe); return true;
+            case "2":SearchModel.writeSchool(SCHOOL.XiTuCheng); return true;
             default: return false;
         }
     }

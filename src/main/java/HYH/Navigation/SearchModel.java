@@ -41,8 +41,8 @@ public class SearchModel extends System_models {
             if(select_model(scanner.nextLine())) isRun=false;
         }
     }
-    public void WriteSchool(SCHOOL i){
+    public static void writeSchool(SCHOOL i){
         school=i;
     }
-    public SCHOOL readSchool(){return school;}
+    public static SCHOOL readSchool(){return school;}
 }

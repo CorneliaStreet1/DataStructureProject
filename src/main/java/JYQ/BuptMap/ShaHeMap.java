@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShaHeMap extends BuptGraph implements Serializable {
-    public static final String[] buildings = {"学校大门","综合实验教学楼", "教室楼S1", "实验楼S2","实验楼S3","报告厅","东配楼","学院楼",
+    public static final String[] buildings = {"沙河学校大门","综合实验教学楼", "教室楼S1", "实验楼S2","实验楼S3","报告厅","东配楼","学院楼",
              "雁北园","雁南园","信息楼","综合办公室","教工食堂","学生食堂","南区食堂","西餐厅","中国邮政快递","小麦铺","足球场","排球场","网球场",
             "学生活动中心", "图书馆", "地下超市", "校医院", "篮球场", "菜鸟驿站"};
     private Map<Integer, String> IndexToBuilding;
