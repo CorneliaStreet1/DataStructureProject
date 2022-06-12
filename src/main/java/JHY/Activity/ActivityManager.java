@@ -71,10 +71,11 @@ public class ActivityManager implements Boolean_model {
 
                 Calendar tb=Calendar.getInstance();
                 Calendar te=Calendar.getInstance();//引用类型,不新创建对象就共用了同一个
-                option = readANum(9);
+                option = readANum(8);
 
                 switch (option) {
                     case 1: {
+
                         System.out.println("请输入活动的具体名称");
                         String name = sc.next();
                         System.out.println("请输出活动的具体地点");
@@ -134,10 +135,6 @@ public class ActivityManager implements Boolean_model {
                     case 8: {
                         System.out.println("**您班级的活动如下**");
                         tableClass.printTable();
-                    }
-                    break;
-                    case 9: {
-                        ;//闹钟??//////////////////////////////////////////
                     }
                     break;
                 }
@@ -246,11 +243,7 @@ public class ActivityManager implements Boolean_model {
                             }
                             break;
                             case 8: {
-                                ;
-                            }
-                            break;
-                            case 9: {
-                                ;//闹钟??////////////////////
+                                ;//////////////
                             }
                             break;
                         }
@@ -262,6 +255,7 @@ public class ActivityManager implements Boolean_model {
         return;
     }
 //给班级文件夹,找下面的学生文件夹
+
     private static File[] getFiles(File file){
         File[] files=file.listFiles(new FileFilter() {
             @Override
