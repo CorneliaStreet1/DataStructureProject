@@ -9,6 +9,7 @@ import HYH.ActivityManager.*;
 import HYH.Manager.*;
 import HYH.Navigation.*;
 
+import JYQ.Directories;
 import JYQ.UserLogin.*;
 import JYQ.Utils;
 
@@ -45,7 +46,8 @@ public class System_main extends Total_models{
                 log.run();
 
                 //获取当前用户班级
-                if(!CurrentUserName.equals("manager")){
+                UserInformation userInformation = Utils.readObject(Utils.join(Directories.UserRepo, CurrentUserName),UserInformation.class);
+                if(userInformation.isStudent()){
                     String userPath="./UserFiles/UserRepo/"+CurrentUserName;
                     File user=new File(userPath);
                     Student student_user=Utils.readObject(user,Student.class);
