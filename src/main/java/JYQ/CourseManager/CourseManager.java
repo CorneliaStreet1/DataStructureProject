@@ -17,6 +17,16 @@ import JHY.*;
 import net.lingala.zip4j.exception.ZipException;
 
 public class CourseManager {
+    public static void addNewCourse() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入课程名称:");
+        String name = scanner.next();
+        System.out.println("请输入课程所在的教学楼:");
+        String Building = scanner.next();
+        System.out.println("请输入课程所在的教室:");
+        String room = scanner.next();
+        CourseManager.addNewCourse(new Course(name, room, Building));
+    }
     public static void addNewCourse(Course course) {
         Scanner scanner = new Scanner(System.in);
        if (CourseManager.hasCourse(course)) {
@@ -32,6 +42,12 @@ public class CourseManager {
         }
         File courseFile = Utils.join(CourseRepo, course.getName());
         Utils.writeObject(courseFile, course);
+    }
+    public static void deleteCourse() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入课程名称:");
+        String name = scanner.next();
+        CourseManager.deleteCourse(new Course(name));
     }
     public static void deleteCourse(Course course) {
         File CourseRepo = Directories.CourseRepo;
@@ -673,8 +689,8 @@ public class CourseManager {
         System.out.println("请输入您想添加考试的课程的完整名称");
         String CourseName = scanner.next();
         File courseFile = Utils.join(Directories.CourseRepo,CourseName);
-        Course course = Utils.readObject(courseFile, Course.class);
-        if (!CourseManager.hasCourse(course)) {
+
+        if (!CourseManager.hasCourse(new Course(CourseName))) {
             System.out.println("您输入的课程在系统中不存在，已退出。");
             return;
         }
@@ -682,6 +698,7 @@ public class CourseManager {
         if (!ExamDir.exists()) {
             ExamDir.mkdir();
         }
+        Course course = Utils.readObject(courseFile, Course.class);
         System.out.println("接下来请输入考试的信息，如果有多场考试，输入完毕后输入exit退出");
         System.out.println("请输入考试的名称(如期中考试，exit退出):");
         while (scanner.hasNext()) {
