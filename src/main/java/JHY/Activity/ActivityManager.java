@@ -331,6 +331,7 @@ public class ActivityManager implements Boolean_model {
         return true;
     }
 
+
     public void addActivity(IrregularTable table,IrregularTable tableName,Activity ac){
         int index=table.getSeq(ac.getTimeBegin());
         table.getList().add(index,ac);
