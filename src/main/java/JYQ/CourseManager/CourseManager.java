@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import HYH.Hoffman.Hoffman;
 import HYH.System_main;
 import HYH.System_time.System_time;
 import JYQ.Directories;
@@ -279,9 +281,10 @@ public class CourseManager {
                 System.exit(1);
             }
             try {
-                new ZipFile(CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                //new ZipFile(CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                (new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
                 System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
-            } catch (ZipException e) {
+            } catch (Exception e) {
                 System.out.println("压缩文件失败");
                 e.printStackTrace();
             }
@@ -462,9 +465,10 @@ public class CourseManager {
                 System.exit(1);
             }
             try {
-                new ZipFile(CourseDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                //new ZipFile(CourseDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
+                (new Hoffman()).compress(CommitFile, CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
                 System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
-            } catch (ZipException e) {
+            } catch (Exception e) {
                 System.out.println("压缩文件失败");
                 e.printStackTrace();
             }
