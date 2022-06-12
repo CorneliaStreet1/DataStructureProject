@@ -32,7 +32,7 @@ public class PathUtils {
         if ((new ShaHeMap()).getBuildingIndex(location) == null) {
             return (new XiTuChengMap()).getBuildingIndex(location);
         }
-        return (new XiTuChengMap()).getBuildingIndex(location);
+        return (new ShaHeMap()).getBuildingIndex(location);
     }
     public static int getBuildingIndexByTime() {
         Scanner scanner = new Scanner(System.in);
