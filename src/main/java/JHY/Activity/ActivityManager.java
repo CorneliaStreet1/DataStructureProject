@@ -33,15 +33,23 @@ public class ActivityManager implements Boolean_model {
         if (CurrentUser.isStudent()) {
             System.out.println("您当前的身份是学生");
             Student student = (Student) CurrentUser;
+            //table学生活动表 tableClass学生班级活动表 tableName学生活动表（名字排序） tableClassName学生班级活动表（名字排序）
+            //tableCourse学生课程表 tableClassCourse班级课程表
             File User=new File(Directories.UserFiles+"\\Class"+student.getClassNumber()
                     +"\\"+student.getUserName()+"\\StudentIrregularTable");
+            File UserCourse=new File(Directories.UserFiles+"\\Class"+student.getClassNumber()
+                    +"\\"+student.getUserName()+"\\StudentRegularTable");
             File Class=new File(Directories.UserFiles+"\\Class"+student.getClassNumber()+"\\IrregularTable");
-
+            File ClassCourse=new File(Directories.UserFiles+"\\Class"+student.getClassNumber()+"\\RegularTable");
             IrregularTable table=new IrregularTable();
             IrregularTable tableClass=new IrregularTable();//先创建对象避免为null
+            RegularTable tableCourse=new RegularTable();
+            RegularTable tableClassCourse=new RegularTable();
             try {
                 table = Utils.readObject(User, IrregularTable.class);
                 tableClass=Utils.readObject(Class,IrregularTable.class);
+                tableCourse = Utils.readObject(UserCourse, RegularTable.class);
+                tableClassCourse=Utils.readObject(ClassCourse,RegularTable.class);
             }catch (IllegalArgumentException e){/////只能抓这个异常
             }
             IrregularTable tableName=table.sortByName();
@@ -73,8 +81,9 @@ public class ActivityManager implements Boolean_model {
                         String address = sc.next();
                         while (!getTimeBetween(tb, te,1)) ;
                         Activity ac=new Activity(name ,tb,te,address);
-                        if(detect(ac,new RegularTable(),new RegularTable(),table,tableClass))//personFirst
+                        if(detect(ac,tableCourse,tableClassCourse,table,tableClass)){//personFirst/////////////
                             addActivity(table, tableName, ac);
+                        }
                     }
                     break;
                     case 2: {
@@ -128,7 +137,7 @@ public class ActivityManager implements Boolean_model {
                     }
                     break;
                     case 9: {
-                        ;//闹钟??
+                        ;//闹钟??//////////////////////////////////////////
                     }
                     break;
                 }
@@ -151,16 +160,20 @@ public class ActivityManager implements Boolean_model {
                 }
                 if(optionClass==-1)break;
 //活动总表
-
+                //superTable学生活动表 superTableCourse学生课程表 table班级活动表 tableCourse班级课程表 tableName班级活动表名字排序
                 IrregularTable superTable=getTableActivity(Class);
-                /////////getTableCourse(Class).printTable();
-
+                RegularTable superTableCourse=getTableCourse(Class);
                 Class=new File(Class,"IrregularTable");
+                File ClassCourse=new File(Class,"IrregularTable");
                 IrregularTable table=new IrregularTable();
+                RegularTable tableCourse=new RegularTable();
                 try {
                     table = Utils.readObject(new File(Directories.UserFiles + "\\Class" + optionClass
                             ,"IrregularTable"), IrregularTable.class);
+                    tableCourse = Utils.readObject(new File(Directories.UserFiles + "\\Class" + optionClass
+                            ,"RegularTable"), RegularTable.class);
                 }catch (IllegalArgumentException e){
+                    System.out.println("error");
                 }
                 IrregularTable tableName=table.sortByName();
 
@@ -192,7 +205,7 @@ public class ActivityManager implements Boolean_model {
                                 String address = sc.next();
                                 while (!getTimeBetween(tb, te,1)) ;
                                 Activity ac=new Activity(name,tb,te,address);
-                                if(detect(ac,new RegularTable(),new RegularTable(),superTable,table));
+                                if(detect(ac,superTableCourse,tableCourse,superTable,table));
                                     addActivity(table, tableName, ac);
                             }
                             break;
@@ -237,7 +250,7 @@ public class ActivityManager implements Boolean_model {
                             }
                             break;
                             case 9: {
-                                ;//闹钟??
+                                ;//闹钟??////////////////////
                             }
                             break;
                         }
@@ -521,7 +534,7 @@ public class ActivityManager implements Boolean_model {
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
             if((readANum(1))==-1)
                 return false;
-        }/*
+        }
         if(!ac.detectTime(PersonRe)){
             System.out.println("您添加的活动和个人的课程有时间冲突!!!");
             System.out.println("确定继续添加?");
@@ -535,7 +548,7 @@ public class ActivityManager implements Boolean_model {
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
             if((readANum(1))==-1)
                 return false;
-        }*/
+        }
         return true;
     }
     public static boolean detect(int day,int seq, RegularTable PersonRe,RegularTable ClassRe,IrregularTable PersonIr,IrregularTable ClassIr){
@@ -580,6 +593,10 @@ public class ActivityManager implements Boolean_model {
     @Override
     public void dailyRecord() {
 ;;
+    }
+
+    public static void main(String[] args) {
+        new ActivityManager().Main();
     }
 
 }
