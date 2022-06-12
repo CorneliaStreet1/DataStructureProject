@@ -282,7 +282,8 @@ public class CourseManager {
             }
             try {
                 //new ZipFile(CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
-                (new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
+                //(new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
+                (new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().toString());
                 System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
             } catch (Exception e) {
                 System.out.println("压缩文件失败");
