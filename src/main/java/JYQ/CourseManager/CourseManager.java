@@ -575,6 +575,23 @@ public class CourseManager {
             }
         }
     }
+    public static void SearchCourse() {
+        Scanner scanner = new Scanner(System.in);
+        File CurrentUserFile = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
+        UserInformation CurrentUser = Utils.readObject(CurrentUserFile, UserInformation.class);
+        Student student = (Student) CurrentUser;
+        CourseTable courseTable = new CourseTable();
+        File classDir = Utils.join(Directories.UserFiles, "Class" + student.getClassNumber());
+        File ClassTableFile = Utils.join(classDir, "RegularTable");
+        File studentDir = Utils.join(classDir,student.getUserName());
+        File studentTableFile = Utils.join(studentDir, "StudentRegularTable");
+        RegularTable StudentTable = Utils.readObject(studentTableFile, RegularTable.class);
+        RegularTable ClassTable = Utils.readObject(ClassTableFile, RegularTable.class);
+        courseTable.getCompleteTable(ClassTable, StudentTable);
+        System.out.println("请输入要查询的课程的完整名称:");
+        String CourseName = scanner.next();
+        CourseManager.SearchCourse(CourseName, courseTable);
+    }
     public static void SearchCourse(String CourseName, CourseTable courseTable) {
         File CourseFile = Utils.join(Directories.CourseRepo, CourseName);
         Course course = Utils.readObject(CourseFile, Course.class);
