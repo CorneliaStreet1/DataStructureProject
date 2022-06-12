@@ -13,6 +13,8 @@ public class CourseModify extends System_models{
     private AddHomeWork addHomeWork;
     private AddBook addBook;
     private AddExam addExam;
+    private AddClassCourse addClassCourse;
+    private DelClassCourse delClassCourse;
 
     public CourseModify(String s) {
         super(s);
@@ -21,29 +23,24 @@ public class CourseModify extends System_models{
         addHomeWork=new AddHomeWork("增加作业");
         addBook=new AddBook("增加资料");
         addExam=new AddExam("增加考试");
+        addClassCourse=new AddClassCourse("为班级增加课程");
+        delClassCourse=new DelClassCourse("为班级删除课程");
 
         add_model("1",addCourse);
         add_model("2",delCourse);
         add_model("3",addHomeWork);
         add_model("4",addBook);
         add_model("5",addExam);
+        add_model("6",addClassCourse);
+        add_model("7",delClassCourse);
     }
 
     public class AddCourse extends System_model{
         class addCourse implements Boolean_model{
             @Override
             public boolean run() {
-                Scanner scanner=new Scanner(System.in);
-                System.out.println("请输入您想添加课程的班级的序号(阿拉伯数字，不要奇怪的东西)");
-                int num;
-                try {
-                    num = scanner.nextInt();
-                }
-                catch (InputMismatchException e) {
-                    System.out.println("输入错误，退出");
-                    return false;
-                }
-                JYQ.CourseManager.CourseManager.addCourseForClass(num);
+                /**/
+                JYQ.CourseManager.CourseManager.addNewCourse();
                 return false;
             }
 
@@ -67,17 +64,8 @@ public class CourseModify extends System_models{
         class delCourse implements Boolean_model{
             @Override
             public boolean run() {
-                Scanner scanner=new Scanner(System.in);
-                System.out.println("请输入您想删除课程的班级的序号(阿拉伯数字，不要奇怪的东西)");
-                int num;
-                try {
-                    num = scanner.nextInt();
-                }
-                catch (InputMismatchException e) {
-                    System.out.println("输入错误，退出");
-                    return false;
-                }
-                JYQ.CourseManager.CourseManager.deleteClassForClass(num);
+                /**/
+                JYQ.CourseManager.CourseManager.deleteCourse();
                 return false;
             }
 
@@ -165,6 +153,77 @@ public class CourseModify extends System_models{
 
 
         public AddBook(String s) {
+            super(s);
+        }
+
+        @Override
+        public void run() throws Close {
+            super.run();
+            boolean_model.run();
+        }
+    }
+
+    public class AddClassCourse extends  System_model {
+        class addClassCourse implements Boolean_model{
+            @Override
+            public boolean run() {
+                Scanner scanner=new Scanner(System.in);
+                System.out.println("请输入您想添加课程的班级的序号(阿拉伯数字，不要奇怪的东西)");
+                int num;
+                try {
+                    num = scanner.nextInt();
+                }
+                catch (InputMismatchException e) {
+                    System.out.println("输入错误，退出");
+                    return false;
+                }
+                JYQ.CourseManager.CourseManager.addCourseForClass(num);
+                return false;
+            }
+
+            @Override
+            public void dailyRecord() {
+
+            }
+        }
+        Boolean_model boolean_model=new addClassCourse();
+
+        public AddClassCourse(String s) {
+            super(s);
+        }
+
+        @Override
+        public void run() throws Close {
+            super.run();
+            boolean_model.run();
+        }
+    }
+    public class DelClassCourse extends  System_model {
+        class delClassCourse implements Boolean_model{
+            @Override
+            public boolean run() {
+                Scanner scanner=new Scanner(System.in);
+                System.out.println("请输入您想删除课程的班级的序号(阿拉伯数字，不要奇怪的东西)");
+                int num;
+                try {
+                    num = scanner.nextInt();
+                }
+                catch (InputMismatchException e) {
+                    System.out.println("输入错误，退出");
+                    return false;
+                }
+                JYQ.CourseManager.CourseManager.deleteClassForClass(num);
+                return false;
+            }
+
+            @Override
+            public void dailyRecord() {
+
+            }
+        }
+        Boolean_model boolean_model=new delClassCourse();
+
+        public DelClassCourse(String s) {
             super(s);
         }
 
