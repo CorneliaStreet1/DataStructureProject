@@ -30,9 +30,9 @@ public class search implements Boolean_model{
         RegularTable regularTable = Utils.readObject(tableFile, RegularTable.class);
         RegularTable.printTable(RegularTable, regularTable);
         System.out.println("课程的时间段信息可以从课表中查到。您要查哪一门课的具体信息?");
-        System.out.println("请输入课程的完整名称：");
-        String cn = scanner.next();
-        //CourseManager.SearchCourse(cn);
+        /*System.out.println("请输入课程的完整名称：");
+        String cn = scanner.next();*/
+        CourseManager.SearchCourse();
         return false;
     }
 
