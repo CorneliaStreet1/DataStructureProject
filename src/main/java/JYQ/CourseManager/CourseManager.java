@@ -6,6 +6,8 @@ import java.util.*;
 import HYH.System_main;
 import HYH.System_time.System_time;
 import JYQ.Directories;
+import JYQ.SortUtils.HeapSort;
+import JYQ.SortUtils.StringLengthComparator;
 import JYQ.UserLogin.Student;
 import JYQ.UserLogin.UserInformation;
 import JYQ.Utils;
@@ -347,10 +349,20 @@ public class CourseManager {
                     System.out.println("您目前还没有提交过作业");
                 }
                 else {
-                    System.out.println("请注意：相同作业名重复出现的次数代表这个作业的提交次数");
-                    System.out.println("目前你已经提交的作业有:");
+                    System.out.println("你想按照哪种顺序查看？1.默认顺序2.名称顺序(输入序号)");
                     ArrayList<String> UploadedWork = Utils.readObject(file, ArrayList.class);
-                    System.out.println(UploadedWork);
+                    int op = scanner.nextInt();
+                    if (op == 1) {System.out.println("请注意：相同作业名重复出现的次数代表这个作业的提交次数");
+                        System.out.println("目前你已经提交的作业有:");
+                        System.out.println(UploadedWork);
+                    }
+                    else {
+                        System.out.println("请注意：相同作业名重复出现的次数代表这个作业的提交次数");
+                        HeapSort<String> sort = new HeapSort<>(new StringLengthComparator());
+                        List<String> list = sort.HeapSort(UploadedWork);
+                        System.out.println("目前你已经提交的作业有:");
+                        System.out.println(list);
+                    }
                 }
                 System.out.println("是否需要查看某次作业的详细信息?(y/n)");
                 String y = scanner.next();
@@ -520,13 +532,27 @@ public class CourseManager {
                 System.out.println("您查询的科目不存在考试");
             }
             else {
-                System.out.println("查询到的考试信息如下:");
+                System.out.println("你想按照什么顺序进行排序？1.名称长度2.添加的时间(请输入选项号,其他选项默认为2顺序)");
+                int op = scanner.nextInt();
                 List<String> examNames = Utils.plainFilenamesIn(ExamDir);
-                assert examNames != null;
-                for (String examName: examNames) {
-                    File examFile = Utils.join(ExamDir, examName);
-                    Exam exam = Utils.readObject(examFile, Exam.class);
-                    System.out.println(exam);
+                System.out.println("查询到的考试信息如下:");
+                if (op == 1) {
+                    HeapSort<String> sort = new HeapSort<>(new StringLengthComparator());
+                    List<String> list = sort.HeapSort(examNames);
+                    assert examNames != null;
+                    for (String examName: list) {
+                        File examFile = Utils.join(ExamDir, examName);
+                        Exam exam = Utils.readObject(examFile, Exam.class);
+                        System.out.println(exam);
+                    }
+                }
+                else {
+                    assert examNames != null;
+                    for (String examName : examNames) {
+                        File examFile = Utils.join(ExamDir, examName);
+                        Exam exam = Utils.readObject(examFile, Exam.class);
+                        System.out.println(exam);
+                    }
                 }
                 System.out.println("当前系统时间是:" + (new System_time("s").returnTime()));
                 System.out.println("请注意辨别哪些考试是已经过期的");
@@ -709,6 +735,9 @@ public class CourseManager {
         course.setGroupInformation(info);
         Utils.writeObject(courseFile, course);
         System.out.println("添加课程信息成功。");
+    }
+    public static void HomeWorkDuplicateChecking() {
+
     }
     public static void main(String[] args) {
        Course[] courses= {new Course("计算机组成原理","S208","综合实验教学楼"),
