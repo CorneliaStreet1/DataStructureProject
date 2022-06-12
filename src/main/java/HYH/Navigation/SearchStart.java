@@ -15,7 +15,8 @@ public class SearchStart extends SearchModel {
     public boolean Search() throws Close{
         System.out.println("当前模块：选择起点");
         selectSchool.run();
-        BuptGraph graph=super.readSchool()==SCHOOL.ShaHe?Guide.shaHeMap:Guide.xiTuChengMap;
+
+        BuptGraph graph=super.readSchool()==SCHOOL.ShaHe?new ShaHeMap():new XiTuChengMap();
         System.out.print("请输入起点名字：");
         String name=super.scanner.nextLine();
         Integer i=graph.getBuildingIndex(name);

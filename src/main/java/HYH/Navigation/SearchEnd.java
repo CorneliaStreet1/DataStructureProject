@@ -1,8 +1,10 @@
 package HYH.Navigation;
 
 import HYH.Model.*;
+import JYQ.PathUtil.*;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 //选终点
 public class SearchEnd extends SearchStart{
@@ -26,7 +28,7 @@ public class SearchEnd extends SearchStart{
     @Override
     public boolean Search() throws Close{
         System.out.println("当前模块：选择终点");
-        SearchStart.selectSchool.run();
+        //SearchStart.selectSchool.run();
         System.out.println("请选择搜索终点的方案");
         PrintModels();
         return SelectModel();
@@ -39,6 +41,10 @@ public class SearchEnd extends SearchStart{
 
         @Override
         public void run() throws Close {
+            System.out.println("请输入课程名称");
+            String coursename=scanner.nextLine();
+            Guide.endPoint=PathUtils.getBuildingIndexByCourse(coursename);
+            System.out.println(Guide.endPoint);
             System.out.println("课程名称搜索完成");
         }
     }
@@ -47,6 +53,8 @@ public class SearchEnd extends SearchStart{
             super(s);
         }
         public void run() throws Close {
+            Guide.endPoint=PathUtils.getBuildingIndexByTime();
+            System.out.println(Guide.endPoint);
             System.out.println("时间点搜索完成");
         }
     }
@@ -55,6 +63,10 @@ public class SearchEnd extends SearchStart{
             super(s);
         }
         public void run() throws Close {
+            System.out.println("请输入地点名称");
+            String place=scanner.nextLine();
+            Guide.endPoint=PathUtils.getBuildingIndexByLocation(place);
+            System.out.println(Guide.endPoint);
             System.out.println("地点名称搜索完成");
         }
     }

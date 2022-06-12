@@ -41,7 +41,7 @@ public class TotalMutlWay {
     }
 
 
-    void findWay(int v1,int v2){
+    public void findWay(int v1,int v2){
         int school1,school2;
         school1=(v1>29?2:1);
         school2=(v2>29?2:1);

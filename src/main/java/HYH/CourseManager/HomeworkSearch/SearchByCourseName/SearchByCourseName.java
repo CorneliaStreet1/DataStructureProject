@@ -2,7 +2,21 @@ package HYH.CourseManager.HomeworkSearch.SearchByCourseName;
 
 import HYH.Model.*;
 public class SearchByCourseName extends System_model{
-    Boolean_model boolean_model=new test_run();
+    class searchHomework implements Boolean_model{
+        @Override
+        public boolean run() {
+            JYQ.CourseManager.CourseManager.SearchHomework();
+            return false;
+        }
+
+        @Override
+        public void dailyRecord() {
+
+        }
+    }
+
+
+    Boolean_model boolean_model=new searchHomework();
 
     public SearchByCourseName(String s) {
         super(s);

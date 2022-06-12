@@ -31,5 +31,6 @@ public class CourseManager extends Total_models{
 
     public void run() throws Close {
         super.run();
+        //JYQ.CourseManager.CourseManager.Interface();
     }
 }

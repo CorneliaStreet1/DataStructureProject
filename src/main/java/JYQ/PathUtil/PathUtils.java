@@ -72,7 +72,8 @@ public class PathUtils {
         }
         if (index == -1) {
             System.out.println("在这个时间段内课表内没有课");
-            System.exit(0);
+            //System.exit(0);
+            return -1;
         }
         return index;
     }

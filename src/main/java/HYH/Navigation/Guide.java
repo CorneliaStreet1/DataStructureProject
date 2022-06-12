@@ -1,7 +1,10 @@
 package HYH.Navigation;
 
 import HYH.Model.*;
+import HYH.MultWayMap.*;
 import JYQ.BuptMap.*;
+import JYQ.ShortestDistancePathFinder.*;
+import JHY.Guide.*;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -37,6 +40,16 @@ public class Guide extends System_model{
                     //导航
             searchStart.run();
             searchEnd.run();
+            if(Guide.startPoint==-1||Guide.endPoint==-1) return;
+            System.out.println("请选择导航策略\n输入“1”：最短路径导航\n输入“2”：最短时间导航\n输入“3”：混合最短时间策略\n");
+            Scanner scanner=new Scanner(System.in);
+            String select=scanner.nextLine();
+            switch (select){
+                case "1": JYQ.ShortestDistancePathFinder.Navigation.Navigator(Guide.startPoint,Guide.endPoint); break;
+                case "2": JHY.Guide.Navigation.Navigator(Guide.startPoint,Guide.endPoint); break;
+                case "3": TotalMutlWay t=new TotalMutlWay(); t.findWay(Guide.startPoint,Guide.endPoint); break;
+                default:System.out.println("输入错误，退出"); return;
+            }
         }catch (Close c){
 
         }

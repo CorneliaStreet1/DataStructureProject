@@ -11,8 +11,8 @@ public class ExamSearch extends Total_models{
     public ExamSearch(String s) {
         super(s);
         searchByCourseName=new SearchByCourseName("按课程名称搜索");
-        searchByTime=new SearchByTime("按时间段搜索");
+        //searchByTime=new SearchByTime("按时间段搜索");
         add_model("1",searchByCourseName);
-        add_model("2",searchByTime);
+        //add_model("2",searchByTime);
     }
 }
