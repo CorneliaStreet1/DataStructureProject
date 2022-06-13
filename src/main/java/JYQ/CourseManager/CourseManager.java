@@ -681,10 +681,11 @@ public class CourseManager {
                 System.out.println("您输入的课程在课程库中不存在，请重新输入:");
             }
             else {
-                Course course = Utils.readObject(courseFile, Course.class);
-                CLassRegularTable.addLesson(day, seq, course);
+
                Boolean b = ActivityManager.detect(day, seq,ActivityManager.getTableCourse(ClassDir), CLassRegularTable, StudentIrregularTable, ClassIrregularTable);
                if (b) {
+                   Course course = Utils.readObject(courseFile, Course.class);
+                   CLassRegularTable.addLesson(day, seq, course);
                    System.out.println("添加成功，请继续添加(exit退出)");
                }
                else {
