@@ -32,7 +32,7 @@ public class ActivityManager implements Boolean_model {
         System.out.println();
 
         if (CurrentUser.isStudent()) {
-            System.out.println("您当前的身份是学生");
+            /*System.out.println("您当前的身份是学生");*/
             Student student = (Student) CurrentUser;
             //table学生活动表 tableClass学生班级活动表 tableName学生活动表（名字排序） tableClassName学生班级活动表（名字排序）
             //tableCourse学生课程表 tableClassCourse班级课程表
@@ -155,7 +155,7 @@ public class ActivityManager implements Boolean_model {
             }
             Utils.writeObject(User,table);
         }else{
-            System.out.println("您当前的身份是管理员");
+            /*System.out.println("您当前的身份是管理员");*/
             while(true) {
                 File Class;
                 System.out.println();
@@ -533,7 +533,7 @@ public class ActivityManager implements Boolean_model {
         }
         Course tempCourse=new Course(" "," "," ");
         for(int i=0;i<7;i++){
-            for(int j=0;j<11;j++){//////////////////////课的数量要改
+            for(int j=0;j<11;j++){
                 if(superTableCourse.getTable()[i][j]==null&&table.getTable()[i][j]!=null){
                     superTableCourse.getTable()[i][j]=tempCourse;
                 }
@@ -574,29 +574,29 @@ public class ActivityManager implements Boolean_model {
     }
     public static boolean detect(int day,int seq, RegularTable PersonRe,RegularTable ClassRe,IrregularTable PersonIr,IrregularTable ClassIr){
         if(PersonRe.getTable()[day-1][seq-1]!=null){
-            System.out.println("您添加的活动和个人的课程有时间冲突!!!");
-            System.out.println("确定继续添加?");
+            System.out.println("您添加的课程和个人的课程有时间冲突!!!");
+            System.out.println("确定强行添加?");
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
             if((readANum(1))==-1)
                 return false;
         }
         if(ClassRe.getTable()[day-1][seq-1]!=null){
-            System.out.println("您添加的活动和班级的课程有时间冲突!!!");
-            System.out.println("确定继续添加?");
+            System.out.println("您添加的课程和班级的课程有时间冲突!!!");
+            System.out.println("确定强行添加?");
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
             if((readANum(1))==-1)
                 return false;
         }
         if(!PersonIr.detectTime(day,seq)){
-            System.out.println("您添加的活动和个人的活动有时间冲突!!!");
-            System.out.println("确定继续添加?");
+            System.out.println("您添加的课程和个人的活动有时间冲突!!!");
+            System.out.println("确定强行添加?");
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
             if((readANum(1))==-1)
                 return false;
         }
         if(!ClassIr.detectTime(day,seq)){
-            System.out.println("您添加的活动和班级的活动有时间冲突!!!");
-            System.out.println("确定继续添加?");
+            System.out.println("您添加的课程和班级的活动有时间冲突!!!");
+            System.out.println("确定强行添加?");
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
             if((readANum(1))==-1)
                 return false;
