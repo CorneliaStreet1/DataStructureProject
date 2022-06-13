@@ -379,7 +379,6 @@ public class ActivityManager implements Boolean_model {
         if(i==0){
             System.out.println("暂无活动");
         }
-
     }
 
     public void removeActivityByTime(IrregularTable table,IrregularTable tableName,Calendar tb,Calendar te){
@@ -400,7 +399,6 @@ public class ActivityManager implements Boolean_model {
     }
 //同名的活动,新后添加的活动在前面
     public void searchActivityByName(IrregularTable table,String name){
-
         int seq=table.getSeq(name);
         if( ((--seq)==-1) || (!table.getList().get(seq).getName().equals(name)) ){
             System.out.println();
@@ -414,7 +412,6 @@ public class ActivityManager implements Boolean_model {
     }
 
     public void removeActivityByName(IrregularTable table,IrregularTable tableName,String name){
-
         int seqName=tableName.getSeq(name);
         if( ((--seqName)==-1)||(!tableName.getList().get(seqName).getName().equals(name)) ){
             System.out.println("未搜索到同名活动,请核对输入的活动名,重新启动搜索功能吧");
@@ -497,7 +494,7 @@ public class ActivityManager implements Boolean_model {
         IrregularTable table=new IrregularTable();
         try {
             table = Utils.readObject(file, IrregularTable.class);
-        }catch (IllegalArgumentException e){/////只能抓这个异常
+        }catch (IllegalArgumentException e){
         }
         for(int i=0;i<table.getList().size();i++){
             superTable.getList().add(table.getList().get(i));
@@ -526,7 +523,7 @@ public class ActivityManager implements Boolean_model {
             combineSuperTableCourse(new File(student[i], "StudentRegularTable"),superTableCourse);
         }
         return superTableCourse;
-    }//needtest
+    }
 
     private static void combineSuperTableCourse(File file,RegularTable superTableCourse){
         RegularTable table=new RegularTable();
@@ -542,10 +539,10 @@ public class ActivityManager implements Boolean_model {
                 }
             }
         }
-    }//needtest
+    }
 
     public static boolean detect(Activity ac,RegularTable PersonRe,RegularTable ClassRe,IrregularTable PersonIr,IrregularTable ClassIr){
-        if(!ac.detectTime(PersonIr)){///!
+        if(!ac.detectTime(PersonIr)){
             System.out.println("您添加的活动和个人的活动有时间冲突!!!");
             System.out.println("确定继续添加?");
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
@@ -576,7 +573,7 @@ public class ActivityManager implements Boolean_model {
         return true;
     }
     public static boolean detect(int day,int seq, RegularTable PersonRe,RegularTable ClassRe,IrregularTable PersonIr,IrregularTable ClassIr){
-        if(PersonRe.getTable()[day-1][seq-1]!=null){///!
+        if(PersonRe.getTable()[day-1][seq-1]!=null){
             System.out.println("您添加的活动和个人的课程有时间冲突!!!");
             System.out.println("确定继续添加?");
             System.out.println("输入数字 1 继续,输入数字 -1 取消添加");
