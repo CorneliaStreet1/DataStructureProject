@@ -632,10 +632,10 @@ public class CourseManager {
         File ClassRegularTable = Utils.join(ClassDir, "RegularTable");
         RegularTable CLassRegularTable = Utils.readObject(ClassRegularTable, RegularTable.class);
         File f = Utils.join(ClassDir, System_main.CurrentUserName);
-        File f1 = Utils.join(f, "StudentRegularTable");
-        RegularTable PersonalRegularTable = Utils.readObject(f1, RegularTable.class);
+//        File f1 = Utils.join(f, "StudentRegularTable");
+  //      RegularTable PersonalRegularTable = Utils.readObject(f1, RegularTable.class);
         IrregularTable ClassIrregularTable = Utils.readObject(new File(ClassDir, "IrregularTable"), IrregularTable.class);
-        IrregularTable StudentIrregulatTable = ActivityManager.getTableActivity(ClassDir);
+        IrregularTable StudentIrregularTable = ActivityManager.getTableActivity(ClassDir);
         System.out.println("请输入您想为" + ClassNum +"班添加的课程(输入exit结束): ");
         System.out.println("请按照课程名称 周几(一个阿拉伯数字即可) 第几节(一个阿拉伯数字即可)的格式来输入。");
         while (scanner.hasNext()) {
@@ -683,7 +683,13 @@ public class CourseManager {
             else {
                 Course course = Utils.readObject(courseFile, Course.class);
                 CLassRegularTable.addLesson(day, seq, course);
-                ActivityManager.detect(day, seq,PersonalRegularTable, CLassRegularTable, StudentIrregulatTable, ClassIrregularTable);
+               Boolean b = ActivityManager.detect(day, seq,ActivityManager.getTableCourse(ClassDir), CLassRegularTable, StudentIrregularTable, ClassIrregularTable);
+               if (b) {
+                   System.out.println("添加成功，请继续添加(exit退出)");
+               }
+               else {
+                   System.out.println("添加已被取消，请重新继续添加(exit退出)");
+               }
             }
         }
         Utils.writeObject(ClassRegularTable,CLassRegularTable);
