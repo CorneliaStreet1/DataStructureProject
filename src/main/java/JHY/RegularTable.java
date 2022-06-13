@@ -92,11 +92,11 @@ public class RegularTable implements Serializable {
             System.out.println();
         }
     }
-    /////////fortest////////////
+
     public void printTable(){
-        System.out.print("         第一节        第二节        第三节    ");
+        /*System.out.print("         第一节        第二节        第三节    ");
         System.out.print("    第四节        第五节        第六节    ");
-        System.out.println("    第七节        第八节        第九节    ");
+        System.out.println("    第七节        第八节        第九节    ");*/
         for(int i=0;i<7;i++){
             switch (i){
                 case 0:
@@ -123,9 +123,9 @@ public class RegularTable implements Serializable {
             }
             for(int j=0;j<11;j++){
                 if(table[i][j]!=null)
-                    System.out.print("  "+table[i][j].getName()+"  ");
+                    System.out.print("第"+(j+1)+"节 ");
                 else
-                    System.out.print("      暂无      ");
+                    /*System.out.print("   ")*/;
             }
             System.out.println();
         }

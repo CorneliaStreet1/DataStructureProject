@@ -1,6 +1,7 @@
 package JHY.Activity;
 
 import HYH.Information.Information;
+import HYH.Navigation.Guide;
 import JHY.Course;
 import JHY.IrregularTable;
 import JHY.IrregularTable;
@@ -77,27 +78,32 @@ public class Activity implements Serializable {
             return false;
     }
     //活动和所有活动检测
-    public boolean detectTime(IrregularTable c){
-        if (c.getList().size()==0)
+    public boolean detectTime(IrregularTable c) {
+        if (c.getList().size() == 0)
             return true;
-        int seq=c.getSeq(this.timeBegin);
-        if(seq!=0&&c.getList().get(seq-1).timeBegin.equals(this.timeBegin))
+        int seq = c.getSeq(this.timeBegin);
+        if (seq != 0 && c.getList().get(seq - 1).timeBegin.equals(this.timeBegin))
             return false;
-        int date=this.timeBegin.get(Calendar.DATE);
-        int month=this.timeBegin.get(Calendar.MONTH);
-        int year=this.timeBegin.get(Calendar.YEAR);
-        for(int i=seq;i<c.getList().size()&&c.getList().get(seq).getTimeBegin().get(Calendar.DATE)==date
-            &&c.getList().get(seq).getTimeBegin().get(Calendar.MONTH)==month
-            &&c.getList().get(seq).getTimeBegin().get(Calendar.YEAR)==year;i++){
-            if(!c.getList().get(i).detectTime(this))
-                return false;
-        }
-        for(int i=seq-1;i>-1&&c.getList().get(seq).getTimeBegin().get(Calendar.DATE)==date
-                &&c.getList().get(seq).getTimeBegin().get(Calendar.MONTH)==month
-                &&c.getList().get(seq).getTimeBegin().get(Calendar.YEAR)==year;i--){
-            if(!c.getList().get(i).detectTime(this))
-                return false;
-        }        return true;
+        int date = this.timeBegin.get(Calendar.DATE);
+        int month = this.timeBegin.get(Calendar.MONTH);
+        int year = this.timeBegin.get(Calendar.YEAR);
+
+            for (int i = seq; i < c.getList().size() && c.getList().get(i).getTimeBegin().get(Calendar.DATE) == date
+                    && c.getList().get(i).getTimeBegin().get(Calendar.MONTH) == month
+                    && c.getList().get(i).getTimeBegin().get(Calendar.YEAR) == year; i++) {
+                if (!c.getList().get(i).detectTime(this))
+                    return false;
+            }
+
+
+            for (int i = seq - 1; i > -1 && c.getList().get(i).getTimeBegin().get(Calendar.DATE) == date
+                    && c.getList().get(i).getTimeBegin().get(Calendar.MONTH) == month
+                    && c.getList().get(i).getTimeBegin().get(Calendar.YEAR) == year; i--) {
+                if (!c.getList().get(i).detectTime(this))
+                    return false;
+            }
+
+        return true;
     }///changed
     //活动和所有课程检测
     public boolean detectTime(RegularTable table){
@@ -118,77 +124,77 @@ public class Activity implements Serializable {
             case 0: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 8, 00, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 8, 45, 0);
             }
             break;
             case 1: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 8, 50, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 9, 35, 0);
             }
             break;
             case 2: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 9, 50, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 10, 35, 0);
             }
             break;
             case 3: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 10, 40, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 11, 25, 0);
             }
             break;
             case 4: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 11, 30, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 12, 15, 0);
             }
             break;
             case 5: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 13, 00, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 13, 45, 0);
             }
             break;
             case 6: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 13, 50, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 14, 35, 0);
             }
             break;
             case 7: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 14, 45, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 15, 30, 0);
             }
             break;
             case 8: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 15, 40, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 16, 25, 0);
             }
             break;
             case 9: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 16, 35, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 17, 20, 0);
             }
             break;
             case 10: {
                 tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 17, 25, 0);
-                tb.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
+                te.set(timeBegin.get(Calendar.YEAR), timeBegin.get(Calendar.MONTH),
                         timeBegin.get(Calendar.DATE), 18, 10, 0);
             }
             break;
@@ -221,4 +227,13 @@ public class Activity implements Serializable {
                 "月"+this.getTimeEnd().get(Calendar.DAY_OF_MONTH)+"日"+","+this.getTimeEnd().get(Calendar.HOUR_OF_DAY)+
                 ":"+this.getTimeEnd().get(Calendar.MINUTE)+":"+this.getTimeEnd().get(Calendar.SECOND));
     }
+
+
+    /*/////////
+    public static void sss(Calendar ca){
+        System.out.println();
+        System.out.print(ca.get(Calendar.YEAR)+"年"+(ca.get(Calendar.MONTH)+1)+
+                "月"+ca.get(Calendar.DAY_OF_MONTH)+"日"+","+ca.get(Calendar.HOUR_OF_DAY)+
+                ":"+ca.get(Calendar.MINUTE)+":"+ca.get(Calendar.SECOND));
+    }*/
 }
