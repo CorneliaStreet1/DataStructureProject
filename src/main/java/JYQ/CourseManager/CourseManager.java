@@ -7,6 +7,7 @@ import java.util.*;
 import HYH.Hoffman.Hoffman;
 import HYH.System_main;
 import HYH.System_time.System_time;
+import JHY.Activity.ActivityManager;
 import JYQ.Directories;
 import JYQ.SortUtils.HeapSort;
 import JYQ.SortUtils.StringLengthComparator;
@@ -284,7 +285,7 @@ public class CourseManager {
                 //new ZipFile(CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
                 //(new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
                 (new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().toString());
-                System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
+                System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().toString());
             } catch (Exception e) {
                 System.out.println("压缩文件失败");
                 e.printStackTrace();
@@ -456,19 +457,19 @@ public class CourseManager {
                 Path = scanner.nextLine();
                 CommitFile = new File(Path);
             }
-            try {
-                Files.copy(CommitFile.toPath(), CourseDir.toPath().resolve(CommitFile.getName()));
+            /*try {
+                //Files.copy(CommitFile.toPath(), CourseDir.toPath().resolve(CommitFile.getName()));
             }
             catch (IOException e) {
                 System.out.println("上传作业失败，请检查是否存在如下情况后重试:");
                 System.out.println("1.此作业文件此前已经上传过一次");
                 System.out.println("2.此作业文件不存在");
                 System.exit(1);
-            }
+            }*/
             try {
                 //new ZipFile(CourseDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
-                (new Hoffman()).compress(CommitFile, CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
-                System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
+                (new Hoffman()).compress(CommitFile, CourseDir.toPath().toString());
+                System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().toString());
             } catch (Exception e) {
                 System.out.println("压缩文件失败");
                 e.printStackTrace();
@@ -629,7 +630,12 @@ public class CourseManager {
         Scanner scanner = new Scanner(System.in);
         File ClassDir = Utils.join(Directories.UserFiles, "Class" + ClassNum);
         File ClassRegularTable = Utils.join(ClassDir, "RegularTable");
-        RegularTable regularTable = Utils.readObject(ClassRegularTable, RegularTable.class);
+        RegularTable CLassRegularTable = Utils.readObject(ClassRegularTable, RegularTable.class);
+        File f = Utils.join(ClassDir, System_main.CurrentUserName);
+//        File f1 = Utils.join(f, "StudentRegularTable");
+  //      RegularTable PersonalRegularTable = Utils.readObject(f1, RegularTable.class);
+        IrregularTable ClassIrregularTable = Utils.readObject(new File(ClassDir, "IrregularTable"), IrregularTable.class);
+        IrregularTable StudentIrregularTable = ActivityManager.getTableActivity(ClassDir);
         System.out.println("请输入您想为" + ClassNum +"班添加的课程(输入exit结束): ");
         System.out.println("请按照课程名称 周几(一个阿拉伯数字即可) 第几节(一个阿拉伯数字即可)的格式来输入。");
         while (scanner.hasNext()) {
@@ -676,10 +682,17 @@ public class CourseManager {
             }
             else {
                 Course course = Utils.readObject(courseFile, Course.class);
-                regularTable.addLesson(day, seq, course);
+                CLassRegularTable.addLesson(day, seq, course);
+               Boolean b = ActivityManager.detect(day, seq,ActivityManager.getTableCourse(ClassDir), CLassRegularTable, StudentIrregularTable, ClassIrregularTable);
+               if (b) {
+                   System.out.println("添加成功，请继续添加(exit退出)");
+               }
+               else {
+                   System.out.println("添加已被取消，请重新继续添加(exit退出)");
+               }
             }
         }
-        Utils.writeObject(ClassRegularTable,regularTable);
+        Utils.writeObject(ClassRegularTable,CLassRegularTable);
         System.out.println("添加课程成功");
     }
     public static void deleteClassForClass(int ClassNum) {

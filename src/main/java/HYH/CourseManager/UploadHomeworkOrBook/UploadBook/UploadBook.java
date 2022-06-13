@@ -2,7 +2,21 @@ package HYH.CourseManager.UploadHomeworkOrBook.UploadBook;
 
 import HYH.Model.*;
 public class UploadBook extends System_model{
-    Boolean_model boolean_model=new test_run();
+    class upload implements Boolean_model{
+
+        @Override
+        public boolean run() {
+            JYQ.CourseManager.CourseManager.UploadMaterialAsStudent();
+            return false;
+        }
+
+        @Override
+        public void dailyRecord() {
+
+        }
+    }
+
+    Boolean_model boolean_model=new upload();
 
     public UploadBook(String s) {
         super(s);
