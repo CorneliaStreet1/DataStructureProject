@@ -284,7 +284,7 @@ public class CourseManager {
                 //new ZipFile(CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
                 //(new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
                 (new Hoffman()).compress(CommitFile, CourseMaterialRepo.toPath().toString());
-                System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().resolve(CommitFile.getName()) + ".zip");
+                System.out.println("上传的课程资料已被压缩保存至" + CourseMaterialRepo.toPath().toString());
             } catch (Exception e) {
                 System.out.println("压缩文件失败");
                 e.printStackTrace();
@@ -456,19 +456,19 @@ public class CourseManager {
                 Path = scanner.nextLine();
                 CommitFile = new File(Path);
             }
-            try {
-                Files.copy(CommitFile.toPath(), CourseDir.toPath().resolve(CommitFile.getName()));
+            /*try {
+                //Files.copy(CommitFile.toPath(), CourseDir.toPath().resolve(CommitFile.getName()));
             }
             catch (IOException e) {
                 System.out.println("上传作业失败，请检查是否存在如下情况后重试:");
                 System.out.println("1.此作业文件此前已经上传过一次");
                 System.out.println("2.此作业文件不存在");
                 System.exit(1);
-            }
+            }*/
             try {
                 //new ZipFile(CourseDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
-                (new Hoffman()).compress(CommitFile, CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
-                System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().resolve(CommitFile.getName()) + ".zip");
+                (new Hoffman()).compress(CommitFile, CourseDir.toPath().toString());
+                System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().toString());
             } catch (Exception e) {
                 System.out.println("压缩文件失败");
                 e.printStackTrace();

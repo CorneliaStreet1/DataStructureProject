@@ -15,6 +15,7 @@ public class CourseModify extends System_models{
     private AddExam addExam;
     private AddClassCourse addClassCourse;
     private DelClassCourse delClassCourse;
+    private AddGroup addGroup;
 
     public CourseModify(String s) {
         super(s);
@@ -25,6 +26,7 @@ public class CourseModify extends System_models{
         addExam=new AddExam("增加考试");
         addClassCourse=new AddClassCourse("为班级增加课程");
         delClassCourse=new DelClassCourse("为班级删除课程");
+        addGroup=new AddGroup("添加课程群信息");
 
         add_model("1",addCourse);
         add_model("2",delCourse);
@@ -33,6 +35,7 @@ public class CourseModify extends System_models{
         add_model("5",addExam);
         add_model("6",addClassCourse);
         add_model("7",delClassCourse);
+        add_model("8",addGroup);
     }
 
     public class AddCourse extends System_model{
@@ -140,7 +143,7 @@ public class CourseModify extends System_models{
         class addBook implements Boolean_model{
             @Override
             public boolean run() {
-                System.out.println("加书等待接");
+                JYQ.CourseManager.CourseManager.UploadMaterialAsManager();
                 return false;
             }
 
@@ -233,6 +236,34 @@ public class CourseModify extends System_models{
             boolean_model.run();
         }
     }
+
+    public class AddGroup extends  System_model {
+        class addGroup implements Boolean_model{
+            @Override
+            public boolean run() {
+                JYQ.CourseManager.CourseManager.addGroupInformation();
+                return false;
+            }
+
+            @Override
+            public void dailyRecord() {
+
+            }
+        }
+        Boolean_model boolean_model=new addGroup();
+
+        public AddGroup(String s) {
+            super(s);
+        }
+
+        @Override
+        public void run() throws Close {
+            super.run();
+            boolean_model.run();
+        }
+    }
+
+
 
 
 }
