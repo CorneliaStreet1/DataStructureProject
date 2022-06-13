@@ -7,6 +7,7 @@ import java.util.*;
 import HYH.Hoffman.Hoffman;
 import HYH.System_main;
 import HYH.System_time.System_time;
+import JHY.Activity.ActivityManager;
 import JYQ.Directories;
 import JYQ.SortUtils.HeapSort;
 import JYQ.SortUtils.StringLengthComparator;
@@ -629,7 +630,12 @@ public class CourseManager {
         Scanner scanner = new Scanner(System.in);
         File ClassDir = Utils.join(Directories.UserFiles, "Class" + ClassNum);
         File ClassRegularTable = Utils.join(ClassDir, "RegularTable");
-        RegularTable regularTable = Utils.readObject(ClassRegularTable, RegularTable.class);
+        RegularTable CLassRegularTable = Utils.readObject(ClassRegularTable, RegularTable.class);
+        File f = Utils.join(ClassDir, System_main.CurrentUserName);
+        File f1 = Utils.join(f, "StudentRegularTable");
+        RegularTable PersonalRegularTable = Utils.readObject(f1, RegularTable.class);
+        IrregularTable ClassIrregularTable = Utils.readObject(new File(ClassDir, "IrregularTable"), IrregularTable.class);
+        IrregularTable StudentIrregulatTable = ActivityManager.getTableActivity(ClassDir);
         System.out.println("请输入您想为" + ClassNum +"班添加的课程(输入exit结束): ");
         System.out.println("请按照课程名称 周几(一个阿拉伯数字即可) 第几节(一个阿拉伯数字即可)的格式来输入。");
         while (scanner.hasNext()) {
@@ -676,10 +682,11 @@ public class CourseManager {
             }
             else {
                 Course course = Utils.readObject(courseFile, Course.class);
-                regularTable.addLesson(day, seq, course);
+                CLassRegularTable.addLesson(day, seq, course);
+                ActivityManager.detect(day, seq,PersonalRegularTable, CLassRegularTable, StudentIrregulatTable, ClassIrregularTable);
             }
         }
-        Utils.writeObject(ClassRegularTable,regularTable);
+        Utils.writeObject(ClassRegularTable,CLassRegularTable);
         System.out.println("添加课程成功");
     }
     public static void deleteClassForClass(int ClassNum) {
