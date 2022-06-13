@@ -208,11 +208,11 @@ public class IrregularTable implements Serializable {
 
     public boolean detectTime(int day,int seq){
         for(int i=0;i<list.size();i++) {
-            if((list.get(i).getTimeBegin().get(Calendar.DAY_OF_WEEK)+5)%7!=day-1){
+            if((list.get(i).getTimeBegin().get(Calendar.DAY_OF_WEEK)+5)%7==day-1){
                 if(!list.get(i).detectTime(seq))
                     return false;
             }
         }
         return true;
-    }/////////needtest
+    }
 }

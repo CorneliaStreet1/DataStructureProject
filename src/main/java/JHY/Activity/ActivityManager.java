@@ -29,7 +29,6 @@ public class ActivityManager implements Boolean_model {
         System.out.println("来到课外信息管理--系~统~!");
         System.out.println("太美丽辣课外管理系统");
         System.out.println("还是看看下面的选项吧家人们");
-        System.out.println();
 
         if (CurrentUser.isStudent()) {
             /*System.out.println("您当前的身份是学生");*/
