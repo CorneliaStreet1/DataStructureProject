@@ -75,7 +75,7 @@ public class ActivityManager implements Boolean_model {
 
                 switch (option) {
                     case 1: {
-                        writeDialog("添加活动");
+                        writeDialog(option,"添加活动");
                         System.out.println("请输入活动的具体名称");
                         String name = sc.next();
                         System.out.println("请输出活动的具体地点");
@@ -88,14 +88,14 @@ public class ActivityManager implements Boolean_model {
                     }
                     break;
                     case 2: {
-                        writeDialog("按时间段删除活动");
+                        writeDialog(option,"按时间段删除活动");
                         RecordOperate.WriteRecord("进入“删除活动”模块\n");
                         while (!getTimeBetween(tb, te,0)) ;
                         removeActivityByTime(table, tableName, tb, te);
                     }
                     break;
                     case 3: {
-                        writeDialog("按时间段查看活动");
+                        writeDialog(option,"按时间段查看活动");
                         while (!getTimeBetween(tb, te,0)) ;
                         System.out.println("您班级在该时间段的活动如下:");
                         searchActivityByTime(tableClass, tb, te);
@@ -105,7 +105,7 @@ public class ActivityManager implements Boolean_model {
                     }
                     break;
                     case 4: {
-                        writeDialog("按活动名删除活动");
+                        writeDialog(option,"按活动名删除活动");
                         System.out.println("请输入活动的名称");
                         System.out.println("请确保活动名无误");
                         String name = sc.next();
@@ -113,7 +113,7 @@ public class ActivityManager implements Boolean_model {
                     }
                     break;
                     case 5: {
-                        writeDialog("按活动名查看活动");
+                        writeDialog(option,"按活动名查看活动");
                         System.out.println("请输入活动的名称");
                         System.out.println("请确保活动名无误");
                         String name = sc.next();
@@ -125,7 +125,7 @@ public class ActivityManager implements Boolean_model {
                     }
                     break;
                     case 6: {
-                        writeDialog("打印总活动表");
+                        writeDialog(option,"打印总活动表");
                         System.out.println("**您班级的活动如下**");
                         tableClass.printTable();
                         System.out.println();
@@ -134,19 +134,20 @@ public class ActivityManager implements Boolean_model {
                     }
                     break;
                     case 7: {
-                        writeDialog("打印个人活动表");
+                        writeDialog(option,"打印个人活动表");
                         System.out.println("**您个人的活动如下**");
                         table.printTable();
                     }
                     break;
                     case 8: {
-                        writeDialog("打印班级活动表");
+                        writeDialog(option,"打印班级活动表");
                         System.out.println("**您班级的活动如下**");
                         tableClass.printTable();
                     }
                     break;
                 }
             }
+            writeDialog(-1,"退出课外信息管理系统");
             Utils.writeObject(User,table);
         }else{
             while(true) {
@@ -202,7 +203,7 @@ public class ActivityManager implements Boolean_model {
 
                         switch (option) {
                             case 1: {
-                                writeDialog("增加活动");
+                                writeDialog(option,"增加活动");
                                 System.out.println("请输入活动的具体名称");
                                 String name = sc.next();
                                 System.out.println("请输出活动的具体地点");
@@ -214,20 +215,20 @@ public class ActivityManager implements Boolean_model {
                             }
                             break;
                             case 2: {
-                                writeDialog("按时间段删除活动");
+                                writeDialog(option,"按时间段删除活动");
                                 while (!getTimeBetween(tb, te,0)) ;
                                 removeActivityByTime(table, tableName, tb, te);
                             }
                             break;
                             case 3: {
-                                writeDialog("按时间段搜索活动");
+                                writeDialog(option,"按时间段搜索活动");
                                 while (!getTimeBetween(tb, te,0)) ;
                                 System.out.println("Class"+optionClass+" 在该时间段的活动如下:");
                                 searchActivityByTime(table, tb, te);
                             }
                             break;
                             case 4: {
-                                writeDialog("按活动名段删除活动");
+                                writeDialog(option,"按活动名段删除活动");
                                 System.out.println("请输入活动的名称");
                                 System.out.println("请确保活动名无误");
                                 String name = sc.next();
@@ -235,7 +236,7 @@ public class ActivityManager implements Boolean_model {
                             }
                             break;
                             case 5: {
-                                writeDialog("按活动名段搜索活动");
+                                writeDialog(option,"按活动名段搜索活动");
                                 System.out.println("请输入活动的名称");
                                 System.out.println("请确保活动名无误");
                                 String name = sc.next();
@@ -244,19 +245,19 @@ public class ActivityManager implements Boolean_model {
                             }
                             break;
                             case 6: {
-                                writeDialog("打印班级活动表");
+                                writeDialog(option,"打印班级活动表");
                                 System.out.println("Class"+optionClass+" 的班级活动如下");
                                 table.printTable();
                             }
                             break;
                             case 7: {
-                                writeDialog("查看学生活动时间安排表");
+                                writeDialog(option,"查看学生活动时间安排表");
                                 System.out.println("学生有个人活动的时间段如下:");
                                 superTable.printTimeTable();
                             }
                             break;
                             case 8: {
-                                writeDialog("查看学生课程安排表");
+                                writeDialog(option,"查看学生课程安排表");
                                 System.out.println("班级的有安排的课程如下:");
                                 tableCourse.printTable();
                                 System.out.println("学生们有安排的所有个人课程如下:");
@@ -266,6 +267,7 @@ public class ActivityManager implements Boolean_model {
                             break;
                         }
                 }
+                writeDialog(-1,"退出课外信息管理系统");
                 Utils.writeObject(Class,table);
             }
         }
@@ -592,8 +594,9 @@ public class ActivityManager implements Boolean_model {
         return true;
     }
 
-    public void writeDialog(String s){
-        RecordOperate.WriteRecord("进入"+s+"模块\n");
+    public void writeDialog(int op,String s){
+        RecordOperate.WriteRecord("用户输入："+op+"\n");
+        RecordOperate.WriteRecord("系统：进入”"+s+"“模块\n");
     }
 
     @Override

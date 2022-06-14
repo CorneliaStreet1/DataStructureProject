@@ -54,9 +54,15 @@ public class RegularTable implements Serializable {
     //调用合并表并打印、、、、、、、
     public static void printTable(RegularTable table1,RegularTable table2){
         Course[][] table=combineTable(table1.getTable(),table2.getTable());
-        System.out.print("         第一节        第二节        第三节        第四节    ");
-        System.out.print("    第五节        第六节        第七节        第八节    ");
-        System.out.println("    第九节        第十节        第十一节    ");
+        int length=32;
+        int tempLen;
+        System.out.print("    ");
+        for(int i=0;i<11;i++){
+            String s="第"+(i+1)+"节";
+            tempLen=length-1;
+            System.out.format("%-"+tempLen+"s",s);
+        }
+        System.out.println();
         for(int i=0;i<7;i++){
             switch (i){
                 case 0:
@@ -82,10 +88,14 @@ public class RegularTable implements Serializable {
                     break;
             }
             for(int j=0;j<11;j++){
-                if(table[i][j]!=null)
-                    System.out.print("  "+table[i][j].getName()+"  ");
-                else
-                    System.out.print("      暂无      ");
+                if(table[i][j]!=null) {
+                    tempLen=Math.round((float) (length-table[i][j].getName().length()*0.6));
+                    System.out.format("%-"+tempLen+"s",table[i][j].getName());
+                }
+                else {
+                    tempLen=length-1;
+                    System.out.format("%-"+tempLen+"s","暂无");
+                }
             }
             System.out.println();
         }
