@@ -56,7 +56,7 @@ public class ActivityManager implements Boolean_model {
             IrregularTable tableName=table.sortByName();
             IrregularTable tableClassName=tableClass.sortByName();
 
-            while(option!=-1) {
+            while(true) {
                 System.out.println();
                 System.out.println("请选择下面的功能,并输入其前面的序号数字");
                 System.out.println("输入数字 -1 可以退出系统");
@@ -72,6 +72,7 @@ public class ActivityManager implements Boolean_model {
                 Calendar tb=Calendar.getInstance();
                 Calendar te=Calendar.getInstance();
                 option = readANum(8);
+                if(option==-1)break;
 
                 switch (option) {
                     case 1: {
@@ -183,7 +184,7 @@ public class ActivityManager implements Boolean_model {
                 IrregularTable tableName=table.sortByName();
 
                 System.out.println("您已经进入Class" + optionClass);
-                while (option!= -1) {
+                while (true) {
 
                         System.out.println();
                         System.out.println("请选择下面的功能,并输入其前面的序号数字");
@@ -200,7 +201,8 @@ public class ActivityManager implements Boolean_model {
                         Calendar tb=Calendar.getInstance();
                         Calendar te=Calendar.getInstance();
                         option=readANum(8);
-
+                        if(option==-1)
+                            break;
                         switch (option) {
                             case 1: {
                                 writeDialog(option,"增加活动");
@@ -210,7 +212,7 @@ public class ActivityManager implements Boolean_model {
                                 String address = sc.next();
                                 while (!getTimeBetween(tb, te,1)) ;
                                 Activity ac=new Activity(name,tb,te,address);
-                                if(detect(ac,superTableCourse,tableCourse,superTable,table));
+                                if(detect(ac,superTableCourse,tableCourse,superTable,table))
                                     addActivity(table, tableName, ac);
                             }
                             break;
