@@ -489,7 +489,13 @@ public class CourseManager {
                         }
                     }
                 }
-                Files.copy(CommitFile.toPath(), d.toPath().resolve(CommitFile.getName()));
+                String na = CommitFile.getName();
+                if (files.contains(CommitFile.getName())) {
+                    System.out.println("文件已存在,不进行重复添加");
+                }
+                else {
+                    Files.copy(CommitFile.toPath(), d.toPath().resolve(CommitFile.getName()));
+                }
                 System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().toString());
             } catch (Exception e) {
                 System.out.println("上传作业失败");
