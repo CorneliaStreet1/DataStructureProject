@@ -9,6 +9,7 @@ import HYH.System_main;
 import HYH.System_time.System_time;
 import JHY.Activity.ActivityManager;
 import JYQ.Directories;
+import JYQ.DuplicateRate.DuplicateUtils;
 import JYQ.SortUtils.HeapSort;
 import JYQ.SortUtils.StringLengthComparator;
 import JYQ.UserLogin.Student;
@@ -406,6 +407,7 @@ public class CourseManager {
     }
     @SuppressWarnings("unchecked")
     public static void uploadHomework() {
+        double max = 0;
         Scanner scanner = new Scanner(System.in);
         File CurrentUser = Utils.join(Directories.UserRepo, System_main.CurrentUserName);
         Student student = Utils.readObject(CurrentUser, Student.class);
@@ -469,14 +471,33 @@ public class CourseManager {
             try {
                 //new ZipFile(CourseDir.toPath().resolve(CommitFile.getName()) + ".zip").addFile(CommitFile);
                 (new Hoffman()).compress(CommitFile, CourseDir.toPath().toString());
+                if (!Directories.UploadedHomeworkRepo.exists()) {
+                    Directories.UploadedHomeworkRepo.mkdir();
+                }
+                File d = Utils.join(Directories.UploadedHomeworkRepo, CourseName);
+                if (!d.exists()) {
+                    d.mkdir();
+                }
+                List<String> files = Utils.plainFilenamesIn(d);
+                if (files != null && files.size() > 0) {
+                    for (String name: files) {
+                        System.out.println("本次查重的对照文件为:" + name);
+                        File file = Utils.join(d, name);
+                        double r = DuplicateUtils.getAnalysisResult(CommitFile.toString(), file.toString());
+                        if (r > max) {
+                            max = r;
+                        }
+                    }
+                }
+                Files.copy(CommitFile.toPath(), d.toPath().resolve(CommitFile.getName()));
                 System.out.println("上传的作业已被压缩保存至" + CourseDir.toPath().toString());
             } catch (Exception e) {
-                System.out.println("压缩文件失败");
+                System.out.println("上传作业失败");
                 e.printStackTrace();
             }
             HandedHomeworkList.add(WorkName);
             Utils.writeObject(HandedHomeworkListFile, HandedHomeworkList);
-            System.out.println("提交作业成功");
+            System.out.println("提交作业成功,查重的重复度最高值为:" + max);
         }
     }
     public static void addHomeworkForCourse() {
