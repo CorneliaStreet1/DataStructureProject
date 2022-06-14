@@ -1,11 +1,9 @@
 package JHY;
 
 import JHY.Activity.Activity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 public class IrregularTable implements Serializable {
     private static final long serialVersionUID=3333L;
@@ -14,11 +12,12 @@ public class IrregularTable implements Serializable {
 
     public IrregularTable() {
         list=new ArrayList<>();
-    }/////初始化要创建变量对象
+    }
 
     public ArrayList<Activity> getList() {
         return list;
     }
+
     public void setList(ArrayList<Activity>list){
         this.list=list;
     }
@@ -53,7 +52,7 @@ public class IrregularTable implements Serializable {
 
     public IrregularTable sortByName(){
         IrregularTable it=new IrregularTable();
-        ArrayList<Activity>temp=new ArrayList<>();
+        ArrayList<Activity>temp;
         for(int i=0;i<list.size();i++){
             it.getList().add(list.get(i));
         }
@@ -62,12 +61,11 @@ public class IrregularTable implements Serializable {
         it.setList(this.getList());
         this.setList(temp);
         return it;
-
-    }//changed
+    }
 
     public IrregularTable sortByTime(){
         IrregularTable it=new IrregularTable();
-        ArrayList<Activity>temp=new ArrayList<>();
+        ArrayList<Activity>temp;
         for(int i=0;i<list.size();i++){
             it.getList().add(list.get(i));
         }
@@ -76,37 +74,27 @@ public class IrregularTable implements Serializable {
         it.setList(this.getList());
         this.setList(temp);
         return it;
-    }////
+    }
 
     public void divideN(int startIndex,int endIndex){
-
-        //Divide till you breakdown your list to single element
         if(startIndex<endIndex && (endIndex-startIndex)>=1){
             int mid = (endIndex + startIndex)/2;
             divideN(startIndex, mid);
             divideN(mid+1, endIndex);
-
-            //merging Sorted array produce above into one sorted array
             mergerN(startIndex,mid,endIndex);
         }
     }
 
     public void divideC(int startIndex,int endIndex){
-
-        //Divide till you breakdown your list to single element
         if(startIndex<endIndex && (endIndex-startIndex)>=1){
             int mid = (endIndex + startIndex)/2;
             divideC(startIndex, mid);
             divideC(mid+1, endIndex);
-
-            //merging Sorted array produce above into one sorted array
             mergerC(startIndex,mid,endIndex);
         }
     }
 
     public void mergerN(int startIndex,int midIndex,int endIndex){
-
-        //Below is the mergedarray that will be sorted array Array[i-midIndex] , Array[(midIndex+1)-endIndex]
         ArrayList<Activity> mergedSortedArray = new ArrayList<>();
 
         int leftIndex = startIndex;
@@ -121,8 +109,6 @@ public class IrregularTable implements Serializable {
                 rightIndex++;
             }
         }
-
-        //Either of below while loop will execute
         while(leftIndex<=midIndex){
             mergedSortedArray.add(list.get(leftIndex));
             leftIndex++;
@@ -135,7 +121,6 @@ public class IrregularTable implements Serializable {
 
         int i = 0;
         int j = startIndex;
-        //Setting sorted array to original one
         while(i<mergedSortedArray.size()){
             list.set(j, mergedSortedArray.get(i++));
             j++;
@@ -143,8 +128,6 @@ public class IrregularTable implements Serializable {
     }
 
     public void mergerC(int startIndex,int midIndex,int endIndex){
-
-        //Below is the mergedarray that will be sorted array Array[i-midIndex] , Array[(midIndex+1)-endIndex]
         ArrayList<Activity> mergedSortedArray = new ArrayList<>();
 
         int leftIndex = startIndex;
@@ -160,7 +143,6 @@ public class IrregularTable implements Serializable {
             }
         }
 
-        //Either of below while loop will execute
         while(leftIndex<=midIndex){
             mergedSortedArray.add(list.get(leftIndex));
             leftIndex++;
@@ -173,7 +155,6 @@ public class IrregularTable implements Serializable {
 
         int i = 0;
         int j = startIndex;
-        //Setting sorted array to original one
         while(i<mergedSortedArray.size()){
             list.set(j, mergedSortedArray.get(i++));
             j++;

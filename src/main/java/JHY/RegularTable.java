@@ -10,12 +10,12 @@ public class RegularTable implements Serializable {
 
     public Course get(int day,int seq){
         return table[day-1][seq-1];
-    }///////////-1?
+    }
 
     public Course[][] getTable() {
         return table;
     }
-    //创建对象同时初始化
+
     public RegularTable() {
         table=new Course[7][11];
     }
@@ -37,7 +37,6 @@ public class RegularTable implements Serializable {
             return true;
         }
     }
-
     //合并表
     private static Course[][] combineTable(Course[][] table1,Course[][]table2){
         //假定不起冲突,万一有冲突第一个表优先
@@ -52,10 +51,9 @@ public class RegularTable implements Serializable {
         }
         return table3;
     }
-    //调用合并表并打印
+    //调用合并表并打印、、、、、、、
     public static void printTable(RegularTable table1,RegularTable table2){
         Course[][] table=combineTable(table1.getTable(),table2.getTable());
-        ///暂定的打印格式
         System.out.print("         第一节        第二节        第三节        第四节    ");
         System.out.print("    第五节        第六节        第七节        第八节    ");
         System.out.println("    第九节        第十节        第十一节    ");
@@ -94,9 +92,6 @@ public class RegularTable implements Serializable {
     }
 
     public void printTable(){
-        /*System.out.print("         第一节        第二节        第三节    ");
-        System.out.print("    第四节        第五节        第六节    ");
-        System.out.println("    第七节        第八节        第九节    ");*/
         for(int i=0;i<7;i++){
             switch (i){
                 case 0:
@@ -124,8 +119,7 @@ public class RegularTable implements Serializable {
             for(int j=0;j<11;j++){
                 if(table[i][j]!=null)
                     System.out.print("第"+(j+1)+"节 ");
-                else
-                    /*System.out.print("   ")*/;
+                else;
             }
             System.out.println();
         }

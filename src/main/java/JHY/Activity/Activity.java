@@ -1,17 +1,10 @@
 package JHY.Activity;
 
-import HYH.Information.Information;
-import HYH.Navigation.Guide;
-import JHY.Course;
-import JHY.IrregularTable;
 import JHY.IrregularTable;
 import JHY.RegularTable;
-
 import java.io.Serializable;
 import java.util.Calendar;
 
-
-//extens
 public class Activity implements Serializable {
 
     private static final long serialVersionUID=333L;
@@ -95,7 +88,6 @@ public class Activity implements Serializable {
                     return false;
             }
 
-
             for (int i = seq - 1; i > -1 && c.getList().get(i).getTimeBegin().get(Calendar.DATE) == date
                     && c.getList().get(i).getTimeBegin().get(Calendar.MONTH) == month
                     && c.getList().get(i).getTimeBegin().get(Calendar.YEAR) == year; i--) {
@@ -104,7 +96,7 @@ public class Activity implements Serializable {
             }
 
         return true;
-    }///changed
+    }
     //活动和所有课程检测
     public boolean detectTime(RegularTable table){
         int dayOfWeek=(timeBegin.get(Calendar.DAY_OF_WEEK)+5)%7;
@@ -115,7 +107,7 @@ public class Activity implements Serializable {
             }
         }
         return true;
-    }///needtest
+    }
 
     public boolean detectTime(int seq){
         Calendar tb=Calendar.getInstance();
@@ -205,9 +197,9 @@ public class Activity implements Serializable {
             return true;
         else
             return false;
-    }////needtest
+    }
 
-    public void output(){//具体格式要改
+    public void output(){
         System.out.println();
         System.out.println("活动名称:"+ this.getName());
         System.out.println("活动地点:"+this.getAddress());
@@ -227,13 +219,4 @@ public class Activity implements Serializable {
                 "月"+this.getTimeEnd().get(Calendar.DAY_OF_MONTH)+"日"+","+this.getTimeEnd().get(Calendar.HOUR_OF_DAY)+
                 ":"+this.getTimeEnd().get(Calendar.MINUTE)+":"+this.getTimeEnd().get(Calendar.SECOND));
     }
-
-
-    /*/////////
-    public static void sss(Calendar ca){
-        System.out.println();
-        System.out.print(ca.get(Calendar.YEAR)+"年"+(ca.get(Calendar.MONTH)+1)+
-                "月"+ca.get(Calendar.DAY_OF_MONTH)+"日"+","+ca.get(Calendar.HOUR_OF_DAY)+
-                ":"+ca.get(Calendar.MINUTE)+":"+ca.get(Calendar.SECOND));
-    }*/
 }

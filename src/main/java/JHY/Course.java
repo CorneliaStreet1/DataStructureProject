@@ -2,17 +2,12 @@ package JHY;
 
 import HYH.Information.Information;
 import java.io.Serializable;
-//课程名称 上课地点 开始时间 结束时间 课程群做一些getter方
-/*- 上课时间、上课地点
-        - 课程资料
-        - 当前进度
-        - 已交作业、待交作业
-        - 课程群
-        - 考试时间和考试地点等信息*/
+
 public class Course extends Information implements Serializable {
     String name;
     String ClassRoomName;
     String GroupInformation;
+    String BuildingName;
 
     public String getBuildingName() {
         return BuildingName;
@@ -22,17 +17,19 @@ public class Course extends Information implements Serializable {
         BuildingName = buildingName;
     }
 
-    String BuildingName;
     public Course() {
     }
+
     public Course(String name, String ClassRoomName, String buildingName) {
         this.name = name;
         this.ClassRoomName = ClassRoomName;
         this.BuildingName = buildingName;
     }
+
     public Course(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
@@ -48,6 +45,7 @@ public class Course extends Information implements Serializable {
     public void setClassRoomName(String classRoomName) {
         this.ClassRoomName = classRoomName;
     }
+
     public String getGroupInformation() {
         return GroupInformation;
     }

@@ -10,10 +10,8 @@ import JYQ.Directories;
 import JYQ.UserLogin.Student;
 import JYQ.UserLogin.UserInformation;
 import JYQ.Utils;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -26,12 +24,9 @@ public class ActivityManager implements Boolean_model {
         UserInformation CurrentUser = Utils.readObject(Utils.join(Directories.UserRepo, System_main.CurrentUserName), UserInformation.class);
         int option=0;
         int optionClass=0;
-        System.out.println("来到课外信息管理--系~统~!");
-        System.out.println("太美丽辣课外管理系统");
-        System.out.println("还是看看下面的选项吧家人们");
+        System.out.println("来到课外信息管理系统!");
 
         if (CurrentUser.isStudent()) {
-            /*System.out.println("您当前的身份是学生");*/
             Student student = (Student) CurrentUser;
             //table学生活动表 tableClass学生班级活动表 tableName学生活动表（名字排序） tableClassName学生班级活动表（名字排序）
             //tableCourse学生课程表 tableClassCourse班级课程表
@@ -42,21 +37,21 @@ public class ActivityManager implements Boolean_model {
             File Class=new File(Directories.UserFiles+"\\Class"+student.getClassNumber()+"\\IrregularTable");
             File ClassCourse=new File(Directories.UserFiles+"\\Class"+student.getClassNumber()+"\\RegularTable");
             IrregularTable table=new IrregularTable();
-            IrregularTable tableClass=new IrregularTable();//先创建对象避免为null
+            IrregularTable tableClass=new IrregularTable();
             RegularTable tableCourse=new RegularTable();
-            RegularTable tableClassCourse=new RegularTable();/////////////////
+            RegularTable tableClassCourse=new RegularTable();
             try {
                 table = Utils.readObject(User, IrregularTable.class);
-            }catch (IllegalArgumentException e){/////只能抓这个异常
+            }catch (IllegalArgumentException e){
             }
             try {
                 tableClass=Utils.readObject(Class,IrregularTable.class);
-            }catch (IllegalArgumentException e){/////只能抓这个异常
+            }catch (IllegalArgumentException e){
             }
             try {
                 tableCourse = Utils.readObject(UserCourse, RegularTable.class);
                 tableClassCourse=Utils.readObject(ClassCourse,RegularTable.class);
-            }catch (IllegalArgumentException e){/////只能抓这个异常
+            }catch (IllegalArgumentException e){
             }
             IrregularTable tableName=table.sortByName();
             IrregularTable tableClassName=tableClass.sortByName();
@@ -75,7 +70,7 @@ public class ActivityManager implements Boolean_model {
                 System.out.println("8:打印 班级 活动表");
 
                 Calendar tb=Calendar.getInstance();
-                Calendar te=Calendar.getInstance();//引用类型,不新创建对象就共用了同一个
+                Calendar te=Calendar.getInstance();
                 option = readANum(8);
 
                 switch (option) {
@@ -87,7 +82,7 @@ public class ActivityManager implements Boolean_model {
                         String address = sc.next();
                         while (!getTimeBetween(tb, te,1)) ;
                         Activity ac=new Activity(name ,tb,te,address);
-                        if(detect(ac,tableCourse,tableClassCourse,table,tableClass)){//personFirst/////////////
+                        if(detect(ac,tableCourse,tableClassCourse,table,tableClass)){
                             addActivity(table, tableName, ac);
                         }
                     }
@@ -154,7 +149,6 @@ public class ActivityManager implements Boolean_model {
             }
             Utils.writeObject(User,table);
         }else{
-            /*System.out.println("您当前的身份是管理员");*/
             while(true) {
                 File Class;
                 System.out.println();
@@ -162,19 +156,16 @@ public class ActivityManager implements Boolean_model {
                 System.out.println("输入数字 -1 可以*保存并退出*系统");
                 while(true) {
                     optionClass = readANum();
-
                     Class = new File(Directories.UserFiles + "\\Class" + optionClass);
                     if(optionClass==-1)break;
                     if(Class.exists())break;
                     else System.out.println("当前班级不存在,请重新输入");
                 }
                 if(optionClass==-1)break;
-//活动总表
                 //superTable学生活动表 superTableCourse学生课程表 table班级活动表 tableCourse班级课程表 tableName班级活动表名字排序
                 IrregularTable superTable=getTableActivity(Class);
                 RegularTable superTableCourse=getTableCourse(Class);
                 Class=new File(Class,"IrregularTable");
-                File ClassCourse=new File(Class,"IrregularTable");
                 IrregularTable table=new IrregularTable();
                 RegularTable tableCourse=new RegularTable();
                 try {
@@ -204,7 +195,6 @@ public class ActivityManager implements Boolean_model {
                         System.out.println("6:打印 Class"+optionClass+"的 班级活动表");
                         System.out.println("7:查看学生活动时间安排总表,方便避免时间冲突");
                         System.out.println("8:查看学生课程安排总表,方便避免时间冲突");
-
 
                         Calendar tb=Calendar.getInstance();
                         Calendar te=Calendar.getInstance();
@@ -282,8 +272,7 @@ public class ActivityManager implements Boolean_model {
         System.out.println("已退出课外信息管理系统,感谢您的使用!");
         return;
     }
-//给班级文件夹,找下面的学生文件夹
-
+    //给班级文件夹,找下面的学生文件夹
     private static File[] getFiles(File file,String name){
         File[] files=file.listFiles(new FileFilter() {
             @Override
@@ -307,7 +296,7 @@ public class ActivityManager implements Boolean_model {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日,HH:mm:ss");
 
         System.out.println("请参照下面的时间格式样例,输入活动开始时间");
-        System.out.println("样例:2011年04月05日,14:00:00");
+        System.out.println("样例:2022年04月05日,14:00:00");
         input=false;
         while(!input) {
             String timeBegin = sc.next();
@@ -360,7 +349,7 @@ public class ActivityManager implements Boolean_model {
         tableName.getList().add(index,ac);
         System.out.println("添加活动成功");
         return;
-    }//changed
+    }
 
     public void searchActivityByTime(IrregularTable table,Calendar tb,Calendar te){
         Calendar ca=Calendar.getInstance();
@@ -396,7 +385,7 @@ public class ActivityManager implements Boolean_model {
         }
         System.out.println("已经成功删除对应时间段内的活动!");
     }
-//同名的活动,新后添加的活动在前面
+    //同名的活动,新后添加的活动在前面
     public void searchActivityByName(IrregularTable table,String name){
         int seq=table.getSeq(name);
         if( ((--seq)==-1) || (!table.getList().get(seq).getName().equals(name)) ){
@@ -514,7 +503,7 @@ public class ActivityManager implements Boolean_model {
             }
         }
     }
-//传进来班级文件夹
+    //传进来班级文件夹
     public static RegularTable getTableCourse(File file){
         File[] student=ActivityManager.getFiles(file,"StudentRegularTable");
         RegularTable superTableCourse=new RegularTable();
@@ -619,5 +608,4 @@ public class ActivityManager implements Boolean_model {
     public static void main(String[] args) {
         new ActivityManager().Main();
     }
-
 }
