@@ -810,9 +810,6 @@ public class CourseManager {
         Utils.writeObject(courseFile, course);
         System.out.println("添加课程信息成功。");
     }
-    public static void HomeWorkDuplicateChecking() {
-
-    }
     public static void main(String[] args) {
        Course[] courses= {new Course("计算机组成原理","S208","综合实验教学楼"),
         new Course("计算机网络", "N516","综合实验教学楼"),
