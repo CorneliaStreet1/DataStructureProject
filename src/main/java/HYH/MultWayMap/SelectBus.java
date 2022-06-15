@@ -44,23 +44,23 @@ public class SelectBus {
         tempCalendar1.setTime(sFormat.parse(time));
         specialTime.add(tempCalendar1);
     }
-        public int run(){
+    public int run(){
         Calendar nowTime=Total_models.system_time.returnCalendar();
-        int nhour=nowTime.get(Calendar.HOUR),nmin=nowTime.get(Calendar.MINUTE);
+        int nhour=nowTime.get(Calendar.HOUR_OF_DAY),nmin=nowTime.get(Calendar.MINUTE);
         int periodNeed=0,specialNeed=0;
         boolean pkey=false,skey=false;
 
         Calendar tempPeriod=(Calendar) periodStartTime.clone();
-        int phour=tempPeriod.get(Calendar.HOUR),pmin=tempPeriod.get(Calendar.MINUTE);
-        int endHour=periodEndTime.get(Calendar.HOUR),endMin=periodEndTime.get(Calendar.MINUTE);
-        for(    ;phour<=nhour && pmin <=nmin &&
-                phour<=endHour &&pmin <=endMin
+        int phour=tempPeriod.get(Calendar.HOUR_OF_DAY),pmin=tempPeriod.get(Calendar.MINUTE);
+        int endHour=periodEndTime.get(Calendar.HOUR_OF_DAY),endMin=periodEndTime.get(Calendar.MINUTE);
+        for(    ;(phour<nhour || (phour==nhour && pmin <=nmin) )&&
+                (phour<endHour ||(phour==endHour && pmin <=endMin))
                 ;){
             tempPeriod.add(Calendar.MINUTE,periodMin);
-            phour=tempPeriod.get(Calendar.HOUR);
+            phour=tempPeriod.get(Calendar.HOUR_OF_DAY);
             pmin=tempPeriod.get(Calendar.MINUTE);
         }
-        if(phour<=endHour &&pmin <=endMin) {
+        if(phour<endHour ||(phour==endHour && pmin <=endMin)) {
             periodNeed = (phour-nhour)*3600 + (pmin-nmin)*60 + periodCost;
             pkey=true;
         }
@@ -69,7 +69,7 @@ public class SelectBus {
         int tshour,tsmin,shour=0,smin=0;
         for(int i=0;i<specialTime.size();++i){
             tempSpecial=specialTime.get(i);
-            tshour=tempSpecial.get(Calendar.HOUR);
+            tshour=tempSpecial.get(Calendar.HOUR_OF_DAY);
             tsmin=tempSpecial.get(Calendar.MINUTE);
             if(tshour>=nhour && tsmin>=nmin && skey==false){
                 shour=tshour;

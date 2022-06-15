@@ -60,7 +60,8 @@ public class TotalMutlWay {
             int bus=new SelectBus().run();
             if(bus==1) System.out.print("=>周期公交=>");
             else if(bus==2) System.out.print("=>定点公交=>");
-            System.out.print(schoolFindWay(0,v2,school2));
+            else System.out.print("=>暂无公交=>");
+            System.out.println(schoolFindWay(0,v2,school2));
         }
     }
 
