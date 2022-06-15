@@ -1,5 +1,6 @@
 package JYQ.CourseManager;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -276,6 +277,9 @@ public class CourseManager {
             try {
                 Files.copy(CommitFile.toPath(), CourseMaterialRepo.toPath().resolve(CommitFile.getName()));
             }
+            catch (FileAlreadyExistsException e) {
+                System.out.println("文件已存在，不重复添加");
+            }
             catch (IOException e) {
                 System.out.println("上传课程资料失败，请检查是否存在如下情况后重试:");
                 System.out.println("1.此资料文件此前已经上传过一次");
@@ -322,6 +326,9 @@ public class CourseManager {
             }
             try {
                 Files.copy(CommitFile.toPath(), CourseMaterialDir.toPath().resolve(CommitFile.getName()));
+            }
+            catch (FileAlreadyExistsException e) {
+                System.out.println("文件已存在，不重复添加");
             }
             catch (IOException e) {
                 System.out.println("上传资料失败，请检查是否存在如下情况后重试:");

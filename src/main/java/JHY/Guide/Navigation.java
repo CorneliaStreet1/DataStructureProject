@@ -1,5 +1,6 @@
 package JHY.Guide;
 
+import HYH.MultWayMap.SelectBus;
 import JYQ.BuptMap.ShaHeMap;
 import JYQ.BuptMap.XiTuChengMap;
 import JYQ.DistanceGraph.ShaHeDistanceGraph;
@@ -49,7 +50,15 @@ public class Navigation {
                 }
                 BenBu.append("=>");
             }
-            System.out.println(ShaHe+"=>公共交通=>" + BenBu);
+            int bus = (new SelectBus()).run();
+            String BusType = "=>公共交通=>";
+            if (bus == 1) {
+                BusType = "=>周期公交";
+            }
+            else {
+                BusType = "=>定点公交=>";
+            }
+            System.out.println(ShaHe+ BusType + BenBu);
         }
         //起点在西土城，终点在沙河
         else if (!SourceIsInShaHe && DestIsInShaHe) {
@@ -73,7 +82,15 @@ public class Navigation {
                 }
                 BenBu.append("=>");
             }
-            System.out.println( BenBu + "=>公共交通=>" +  ShaHe);
+            int bus = (new SelectBus()).run();
+            String BusType = "=>公共交通=>";
+            if (bus == 1) {
+                BusType = "=>周期公交";
+            }
+            else {
+                BusType = "=>定点公交=>";
+            }
+            System.out.println( BenBu + BusType +  ShaHe);
         }//起点和终点都在西土城
         else {
             Deque<Integer> XiTuChengTrace = Navigation.FindPathInXiTuCheng(Source - 30,Dest - 30);

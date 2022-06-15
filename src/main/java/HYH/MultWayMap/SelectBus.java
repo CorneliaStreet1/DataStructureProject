@@ -15,7 +15,7 @@ public class SelectBus {
     private ArrayList<Calendar> specialTime;
     private int specialCost;
 
-    SelectBus(){
+     public SelectBus(){
         SimpleDateFormat sFormat=new SimpleDateFormat("HH:mm");
         periodStartTime=Calendar.getInstance();
         periodEndTime=Calendar.getInstance();
@@ -38,13 +38,13 @@ public class SelectBus {
         }
     }
 
-    void addSpecialCalendar(String time) throws ParseException {
+   public void addSpecialCalendar(String time) throws ParseException {
         SimpleDateFormat sFormat=new SimpleDateFormat("HH:mm");
         Calendar tempCalendar1=Calendar.getInstance();
         tempCalendar1.setTime(sFormat.parse(time));
         specialTime.add(tempCalendar1);
     }
-    int run(){
+        public int run(){
         Calendar nowTime=Total_models.system_time.returnCalendar();
         int nhour=nowTime.get(Calendar.HOUR),nmin=nowTime.get(Calendar.MINUTE);
         int periodNeed=0,specialNeed=0;
