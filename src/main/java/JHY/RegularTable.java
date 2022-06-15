@@ -58,7 +58,41 @@ public class RegularTable implements Serializable {
         int tempLen;
         System.out.print("    ");
         for(int i=0;i<11;i++){
-            String s="第"+(i+1)+"节";
+            StringBuilder s=new StringBuilder("第"+(i+1)+"节");
+            switch (i){
+                case 0:
+                    s.append(" 8:00~8:45");
+                    break;
+                case 1:
+                    s.append(" 8:50~9:35");
+                    break;
+                case 2:
+                    s.append(" 9:50~10:35");
+                case 3:
+                    s.append(" 10:40~11:25");
+                    break;
+                case 4:
+                    s.append(" 11:30~12:15");
+                    break;
+                case 5:
+                    s.append(" 13:00~13:45");
+                    break;
+                case 6:
+                    s.append(" 13:50~14:35");
+                    break;
+                case 7:
+                    s.append(" 14:45~15:30");
+                    break;
+                case 8:
+                    s.append(" 15:40~16:25");
+                    break;
+                case 9:
+                    s.append(" 16:35~17:20");
+                    break;
+                case 10:
+                    s.append(" 17:25~18:10");
+                    break;
+            }
             tempLen=length-1;
             System.out.format("%-"+tempLen+"s",s);
         }
