@@ -68,6 +68,7 @@ public class RegularTable implements Serializable {
                     break;
                 case 2:
                     s.append(" 9:50~10:35");
+                    break;
                 case 3:
                     s.append(" 10:40~11:25");
                     break;
