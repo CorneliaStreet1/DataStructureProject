@@ -79,6 +79,8 @@ public class MultWayMap implements DijkstraGraph{
 
             double walkSpeed=1;
             double bikeSpeed=Double.parseDouble(readerBike.readLine());
+
+            bikeSpeed=1.1;
             //System.out.println("bikeSpeed:"+bikeSpeed);
 
             double fastSpeed;

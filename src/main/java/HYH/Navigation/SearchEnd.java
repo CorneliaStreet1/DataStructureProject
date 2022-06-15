@@ -66,7 +66,7 @@ public class SearchEnd extends SearchStart{
             System.out.println("请输入地点名称");
             String place=scanner.nextLine();
             Guide.endPoint=PathUtils.getBuildingIndexByLocation(place);
-            System.out.println(Guide.endPoint);
+            //System.out.println(Guide.endPoint);
             System.out.println("地点名称搜索完成");
         }
     }
